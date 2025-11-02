@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:framed_v2/ui/main_screen.dart';
+import 'package:framed_v2/ui/theme/theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatefulWidget {
@@ -14,10 +16,11 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "Framed",
       debugShowCheckedModeBanner: false,
       home: MainScreen(),
+      theme: createTheme(),
     );
   }
 }
