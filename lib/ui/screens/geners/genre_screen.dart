@@ -1,13 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framed_v2/sliver_divider.dart';
-// I'm assuming these imports based on your previous code
 import 'package:framed_v2/ui/screens/geners/genre_search_row.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/geners/sort_picker.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/vert_movie_list.dart';
 
+@RoutePage(name: 'GenreRoute')
 class GenreScreen extends ConsumerStatefulWidget {
   const GenreScreen({super.key});
 

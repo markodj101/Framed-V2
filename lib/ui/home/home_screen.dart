@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:framed_v2/ui/home/home_screen_image.dart';
 import 'package:framed_v2/ui/home/horiz_movies.dart';
@@ -6,6 +7,7 @@ import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framed_v2/providers.dart';
 
+@RoutePage(name: 'HomeRoute')
 class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {

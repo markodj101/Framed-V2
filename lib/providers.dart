@@ -1,6 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
+import 'package:framed_v2/router/app_routes.dart';
 part 'providers.g.dart';
+
+@Riverpod(keepAlive: true)
+AppRouter appRouter(AppRouterRef ref) => AppRouter();
 
 @riverpod
 List<String> movieImages(MovieImagesRef ref) => [

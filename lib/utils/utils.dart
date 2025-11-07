@@ -17,3 +17,7 @@ enum Sorting {
   const Sorting({required this.name});
   final String name;
 }
+
+String youtubeUrlFromId(String videoId) {
+  return 'https://www.youtube.com/watch?v=$videoId';
+}

@@ -120,6 +120,21 @@ ThemeData createTheme() {
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
     ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: searchBarBackground,
+      labelTextStyle: WidgetStateTextStyle.resolveWith((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.selected)) {
+          return TextStyle(color: Colors.white);
+        }
+        return TextStyle(color: posterBorder);
+      }),
+      iconTheme: WidgetStatePropertyAll<IconThemeData>(
+        IconThemeData(color: Colors.white),
+      ),
+      indicatorColor: posterBorder,
+    ),
 
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: searchBarBackground,
