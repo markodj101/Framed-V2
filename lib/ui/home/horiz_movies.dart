@@ -11,6 +11,7 @@ class HorizontalMovies extends StatelessWidget {
     return SizedBox(
       height: 142,
       child: ListView.builder(
+        shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
         itemBuilder: (context, index) {

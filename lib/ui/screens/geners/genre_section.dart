@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 
@@ -35,55 +35,70 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
   @override
   Widget build(BuildContext context) {
     final genreChips = getGenreChips();
-    return ExpansionPanelList(
-      expandIconColor: Colors.white,
-      expansionCallback: (int index, bool expanded) {
-        setState(() {
-          widget.onGenresExpanded(expanded);
-        });
-      },
-      children: [
-        ExpansionPanel(
-          isExpanded: widget.isExpanded,
-          backgroundColor: screenBackground,
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 16.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Genres',
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  const SizedBox(width: 8.0),
 
-                  Container(
-                    width: 16,
-                    height: 16,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                    ),
-                    child: Center(
-                      child: Text(
-                        totalSelected().toString(),
-                        style: verySmallText,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
+    return SliverList(
+      delegate: SliverChildListDelegate([
+        ExpansionPanelList(
+          expandIconColor: Colors.white,
+          expansionCallback: (int index, bool expanded) {
+            setState(() {
+              widget.onGenresExpanded(expanded);
+            });
           },
-          body: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: genreChips,
+          children: [
+            ExpansionPanel(
+              isExpanded: widget.isExpanded,
+              backgroundColor: screenBackground,
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Genres',
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                      const SizedBox(width: 8.0),
+
+                      Container(
+                        width: 16,
+                        height: 16,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Center(
+                          child: Text(
+                            totalSelected().toString(),
+                            style: verySmallText,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              body: Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: genreChips.length,
+
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 100,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 1.5,
+                    mainAxisSpacing: 0,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return genreChips[index];
+                  },
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ]),
     );
   }
 
@@ -93,10 +108,11 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
       return FilterChip(
         backgroundColor: searchBarBackground,
         selectedColor: buttonGrey,
-        label: AutoSizeText(
+        label: Text(
           genreState.genre,
           style: Theme.of(context).textTheme.labelSmall,
         ),
+        selected: widget.genreStates[index].isSelected,
         onSelected: (selected) {
           setState(() {
             widget.genreStates[index] = GenreState(

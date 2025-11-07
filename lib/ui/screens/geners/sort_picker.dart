@@ -7,8 +7,13 @@ import 'package:rxdart/utils.dart';
 typedef OnSortSelected = void Function(Sorting);
 
 class SortPicker extends ConsumerStatefulWidget {
+  final bool useSliver;
   final OnSortSelected onSortSelected;
-  const SortPicker({required this.onSortSelected, super.key});
+  const SortPicker({
+    required this.useSliver,
+    required this.onSortSelected,
+    super.key,
+  });
 
   @override
   ConsumerState<SortPicker> createState() => _SortPickerState();
@@ -19,6 +24,14 @@ class _SortPickerState extends ConsumerState<SortPicker> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.useSliver) {
+      return SliverToBoxAdapter(child: buildRow());
+    } else {
+      return buildRow();
+    }
+  }
+
+  Widget buildRow() {
     return Row(
       children: [
         const Spacer(),
