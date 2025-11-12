@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/home/home_screen_image.dart';
 import 'package:framed_v2/ui/home/horiz_movies.dart';
 import 'package:framed_v2/ui/home/title_row.dart';
@@ -26,7 +27,12 @@ class HomeScreen extends ConsumerWidget {
                     child: Text('Now Playing', style: largeTitle),
                   ),
                 ),
-                HomeScreenImage(),
+                HomeScreenImage(
+                  onMovieTap: (id) {
+                    print('Movie tapped');
+                    context.router.push(MovieDetailRoute(movieId: id));
+                  },
+                ),
                 TitleRow(text: 'Trending', onMoreClicked: () {}),
                 HorizontalMovies(movies: images),
                 TitleRow(text: 'Popular', onMoreClicked: () {}),

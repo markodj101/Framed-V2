@@ -1,3 +1,4 @@
+import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:framed_v2/router/app_routes.dart';
 part 'providers.g.dart';
@@ -44,4 +45,27 @@ List<String> movieImages(MovieImagesRef ref) => [
   'http://image.tmdb.org/t/p/w780/upKD8UbH8vQ798aMWgwMxV8t4yk.jpg',
 
   'http://image.tmdb.org/t/p/w780/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg',
+];
+
+@riverpod
+List<GenreState> genres(GenresRef ref) => [
+  GenreState(genre: 'Action', isSelected: false),
+  GenreState(genre: 'Adventure', isSelected: false),
+  GenreState(genre: 'Crime', isSelected: false),
+  GenreState(genre: 'Mystery', isSelected: false),
+  GenreState(genre: 'War', isSelected: false),
+  GenreState(genre: 'Comedy', isSelected: false),
+  GenreState(genre: 'Romance', isSelected: false),
+  GenreState(genre: 'History', isSelected: false),
+  GenreState(genre: 'Music', isSelected: false),
+  GenreState(genre: 'Drama', isSelected: false),
+  GenreState(genre: 'Thriller', isSelected: false),
+  GenreState(genre: 'Family', isSelected: false),
+  GenreState(genre: 'Horror', isSelected: false),
+  GenreState(genre: 'Western', isSelected: false),
+  GenreState(genre: 'Science Fiction', isSelected: false),
+  GenreState(genre: 'Animation', isSelected: false),
+  GenreState(genre: 'Documentation', isSelected: false),
+  GenreState(genre: 'TV Movie', isSelected: false),
+  GenreState(genre: 'Fantasy', isSelected: false),
 ];

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage(name: 'VideoPageRoute')
-
 class VideoPage extends ConsumerStatefulWidget {
   final String movieVideo;
   const VideoPage(this.movieVideo, {super.key});
@@ -41,7 +40,12 @@ class _VideoPageState extends ConsumerState<VideoPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: screenBackground,
-        leading: BackButton(color: Colors.white, onPressed: () {}),
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            context.router.maybePopTop();
+          },
+        ),
         centerTitle: false,
         title: Text('Back', style: Theme.of(context).textTheme.headlineMedium),
       ),
