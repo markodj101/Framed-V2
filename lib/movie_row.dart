@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/utils/utils.dart';
 
-class MovieRow extends StatelessWidget {
-  final String movie;
-  const MovieRow({super.key, required this.movie});
+class MovieRow extends ConsumerWidget {
+  final int movieId;
+  final String movieUrl;
+  final OnMovieTap onMovieTap;
+  const MovieRow({
+    super.key,
+    required this.movieId,
+    required this.movieUrl,
+    required this.onMovieTap,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    if (movie.isNotEmpty) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    late String uniqueHeroTag = movieUrl + 'MovieRow';
+    if (movieUrl.isNotEmpty) {
       return GestureDetector(
-        onTap: () => {},
+        onTap: () {
+          ref.read(heroTagProvider.notifier).state = uniqueHeroTag;
+          onMovieTap(movieId);
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
@@ -23,12 +36,15 @@ class MovieRow extends StatelessWidget {
                 SizedBox(
                   height: 142,
                   width: 100,
-                  child: CachedNetworkImage(
-                    imageUrl: movie,
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.cover,
-                    height: 142,
-                    width: 100,
+                  child: Hero(
+                    tag: uniqueHeroTag,
+                    child: CachedNetworkImage(
+                      imageUrl: movieUrl,
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.cover,
+                      height: 142,
+                      width: 100,
+                    ),
                   ),
                 ),
                 addHorizontalSpace(16),

@@ -4,7 +4,7 @@ import 'package:framed_v2/ui/text_icon.dart';
 
 typedef OnFavoriteSelected = void Function();
 
-class ButtonRow extends StatelessWidget {
+class ButtonRow extends StatefulWidget {
   final bool favoriteSelected;
   final OnFavoriteSelected onFavoriteSelected;
   const ButtonRow({
@@ -12,6 +12,42 @@ class ButtonRow extends StatelessWidget {
     required this.favoriteSelected,
     required this.onFavoriteSelected,
   });
+
+  @override
+  State<ButtonRow> createState() => _ButtonRowState();
+}
+
+class _ButtonRowState extends State<ButtonRow> with TickerProviderStateMixin {
+  late AnimationController _sizeController;
+  late Animation<double> _sizeAnimation;
+  late AnimationController _colorController;
+  late Animation<Color?> _colorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _sizeController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
+    _sizeAnimation = Tween<double>(begin: 1.0, end: 1.5).animate(
+      CurvedAnimation(parent: _sizeController, curve: Curves.easeInOut),
+    );
+    _colorController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
+    _colorAnimation = ColorTween(begin: Colors.white, end: Colors.red).animate(
+      CurvedAnimation(parent: _colorController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _sizeController.dispose();
+    _colorController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +64,23 @@ class ButtonRow extends StatelessWidget {
             ),
             icon: IconButton(
               onPressed: () {
-                onFavoriteSelected();
+                widget.onFavoriteSelected();
               },
-              icon: Icon(
-                favoriteSelected
-                    ? Icons.favorite_outlined
-                    : Icons.favorite_border,
-                color: favoriteSelected ? Colors.red : Colors.white,
-              ),
+              icon: widget.favoriteSelected
+                  ? AnimatedBuilder(
+                      animation: Listenable.merge([
+                        _sizeController,
+                        _colorController,
+                      ]),
+                      builder: (context, child) {
+                        return Icon(
+                          Icons.favorite_outlined,
+                          size: 21 * _sizeAnimation.value,
+                          color: _colorAnimation.value,
+                        );
+                      },
+                    )
+                  : Icon(Icons.favorite_border, color: Colors.white),
             ),
           ),
           addHorizontalSpace(32),

@@ -23,15 +23,19 @@ class AppRouter extends _$AppRouter {
         AutoRoute(path: 'favorite', page: FavoriteRoute.page),
       ],
     ),
-    AutoRoute(
+    CustomRoute(
       path: '/details/:movieId',
       page: MovieDetailRoute.page,
       maintainState: false,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+      durationInMilliseconds: 500,
     ),
-    AutoRoute(
+    CustomRoute(
       path: '/video/:movieVideo',
       page: VideoPageRoute.page,
       maintainState: false,
+      transitionsBuilder: TransitionsBuilders.slideRight,
+      durationInMilliseconds: 500,
     ),
   ];
 }

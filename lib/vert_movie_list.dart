@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/utils/utils.dart';
 import 'package:framed_v2/ui/home/home_screen_image.dart';
 import 'package:framed_v2/movie_row.dart';
@@ -6,7 +7,8 @@ import 'package:framed_v2/movie_row.dart';
 typedef OnMovieTap = void Function(int movieId);
 
 class VerticalMovieList extends StatelessWidget {
-  final List<String> movies;
+  final List<String>
+  movies; //nisam ovo promijenio pa ako ne bude radilo do ovga je 9,. glava anmiacije pa custom animacije
   final OnMovieTap onMovieTap;
   const VerticalMovieList({
     super.key,
@@ -21,7 +23,11 @@ class VerticalMovieList extends StatelessWidget {
         BuildContext context,
         int index,
       ) {
-        return MovieRow(movie: movies[index]);
+        return MovieRow(
+          movieId: index,
+          movieUrl: movies[index],
+          onMovieTap: onMovieTap,
+        );
       }),
     );
   }

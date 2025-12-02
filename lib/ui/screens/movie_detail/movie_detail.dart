@@ -26,6 +26,8 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   Widget build(BuildContext context) {
     final favoriteNotifier = ValueNotifier<bool>(false);
     final genres = ref.read(genresProvider);
+    final movies = ref.read(movieImagesProvider);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -52,7 +54,11 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate([
-                        Stack(children: [DetailImage()]),
+                        Stack(
+                          children: [
+                            DetailImage(movieUrl: movies[widget.movieId]),
+                          ],
+                        ),
                         GenreRow(genres: genres),
                         MovieOverview(
                           details:

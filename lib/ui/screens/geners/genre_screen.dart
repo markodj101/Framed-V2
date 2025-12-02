@@ -8,6 +8,7 @@ import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/geners/sort_picker.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/vert_movie_list.dart';
+import 'package:framed_v2/router/app_routes.dart';
 
 @RoutePage(name: 'GenreRoute')
 class GenreScreen extends ConsumerStatefulWidget {
@@ -70,7 +71,12 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                       // Handle sort selection here
                     },
                   ),
-                  VerticalMovieList(movies: [], onMovieTap: (movieId) {}),
+                  VerticalMovieList(
+                    movies: [],
+                    onMovieTap: (movieId) {
+                      context.router.push(MovieDetailRoute(movieId: movieId));
+                    },
+                  ),
                 ],
               ),
             ),
