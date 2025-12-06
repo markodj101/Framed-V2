@@ -20,33 +20,20 @@ final appRouterProvider = Provider<AppRouter>.internal(
 );
 
 typedef AppRouterRef = ProviderRef<AppRouter>;
-String _$movieImagesHash() => r'ab0af63f63500d01396449915937308906321006';
+String _$movieViewModelHash() => r'16cbfdde58b8cc036eaf559b55ae65c7ecc8f88c';
 
-/// See also [movieImages].
-@ProviderFor(movieImages)
-final movieImagesProvider = AutoDisposeProvider<List<String>>.internal(
-  movieImages,
-  name: r'movieImagesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$movieImagesHash,
+/// See also [movieViewModel].
+@ProviderFor(movieViewModel)
+final movieViewModelProvider = FutureProvider<MovieViewModel>.internal(
+  movieViewModel,
+  name: r'movieViewModelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$movieViewModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MovieImagesRef = AutoDisposeProviderRef<List<String>>;
-String _$genresHash() => r'1e0fe8758feb6b8b68ad99ceb1486e97bfc776d6';
-
-/// See also [genres].
-@ProviderFor(genres)
-final genresProvider = AutoDisposeProvider<List<GenreState>>.internal(
-  genres,
-  name: r'genresProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$genresHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef GenresRef = AutoDisposeProviderRef<List<GenreState>>;
+typedef MovieViewModelRef = FutureProviderRef<MovieViewModel>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

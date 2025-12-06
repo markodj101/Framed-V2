@@ -3,17 +3,22 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framed_v2/providers.dart';
+import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/utils/utils.dart';
 
 const delayTime = 1000 * 10;
 const animationTime = 1000;
 
 class HomeScreenImage extends ConsumerWidget {
+  final MovieViewModel movieViewModel;
   final OnMovieTap onMovieTap;
-  HomeScreenImage({super.key, required this.onMovieTap});
+  HomeScreenImage({
+    required this.movieViewModel,
+    required this.onMovieTap,
+    super.key,
+  });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movies = ref.read(movieImagesProvider);
     final screenWidth = MediaQuery.of(context).size.width - 32;
     return SizedBox(
       height: 374,
@@ -22,18 +27,19 @@ class HomeScreenImage extends ConsumerWidget {
         duration: animationTime,
         itemWidth: screenWidth,
         autoplay: true,
-        itemCount: movies.length,
+        itemCount: movieViewModel.nowPlayingMovies.length,
         itemBuilder: (BuildContext context, int index) {
+          final currentMovie = movieViewModel.nowPlayingMovies[index];
+          String uniqueHeroTag = '${currentMovie.image}swiper';
           return GestureDetector(
             onTap: () {
-              ref.read(heroTagProvider.notifier).state =
-                  movies[index] + 'swiper';
-              onMovieTap(index);
+              ref.read(heroTagProvider.notifier).state = uniqueHeroTag;
+              onMovieTap(currentMovie.movieId);
             },
             child: Hero(
-              tag: movies[index] + 'swiper',
+              tag: uniqueHeroTag,
               child: CachedNetworkImage(
-                imageUrl: movies[index],
+                imageUrl: currentMovie.image,
                 alignment: Alignment.topCenter,
                 fit: BoxFit.fitHeight,
                 height: 374,

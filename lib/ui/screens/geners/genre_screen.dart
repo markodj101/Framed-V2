@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/data/models/movie.dart';
+import 'package:framed_v2/not_ready.dart';
 import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/sliver_divider.dart';
+import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/ui/screens/geners/genre_search_row.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/geners/sort_picker.dart';
@@ -20,8 +23,32 @@ class GenreScreen extends ConsumerStatefulWidget {
 
 class _GenreScreenState extends ConsumerState<GenreScreen> {
   final expandedNotifier = ValueNotifier<bool>(false);
+
+  late MovieViewModel movieViewModel;
+  List<GenreState> genreStates = [];
+  List<Movie> currentMovieList = [];
   @override
   Widget build(BuildContext context) {
+    final movieViewModelAsync = ref.watch(movieViewModelProvider);
+    return movieViewModelAsync.when(
+      error: (e, st) => Text(e.toString()),
+      loading: () => NotReady(),
+      data: (viewModel) {
+        movieViewModel = viewModel;
+        buildGenreState();
+        return buildScreen();
+      },
+    );
+  }
+
+  void buildGenreState() {
+    genreStates.clear();
+    for (final genre in movieViewModel.movieGenres) {
+      genreStates.add(GenreState(genre: genre, isSelected: false));
+    }
+  }
+
+  Widget buildScreen() {
     return SafeArea(
       child: Container(
         color: screenBackground,
@@ -51,9 +78,8 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                   ValueListenableBuilder<bool>(
                     valueListenable: expandedNotifier,
                     builder: (BuildContext context, bool value, Widget? child) {
-                      final genres = ref.read(genresProvider);
                       return GenreSection(
-                        genreStates: genres,
+                        genreStates: genreStates,
                         isExpanded: value,
                         onGenresExpanded: (expanded) {
                           expandedNotifier.value = expanded;
@@ -72,7 +98,7 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                     },
                   ),
                   VerticalMovieList(
-                    movies: [],
+                    movies: currentMovieList,
                     onMovieTap: (movieId) {
                       context.router.push(MovieDetailRoute(movieId: movieId));
                     },

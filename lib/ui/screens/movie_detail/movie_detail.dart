@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:framed_v2/not_ready.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/horiz_cast.dart';
+import 'package:framed_v2/ui/movie_viewmodel.dart';
+import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/movie_detail/button_row.dart';
 import 'package:framed_v2/ui/screens/movie_detail/detail_image.dart';
 import 'package:framed_v2/ui/screens/movie_detail/genre_row.dart';
@@ -10,6 +13,7 @@ import 'package:framed_v2/ui/screens/movie_detail/movie_overview.dart';
 import 'package:framed_v2/ui/screens/movie_detail/trailer.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/providers.dart';
+import 'package:framed_v2/data/models/movie.dart';
 
 @RoutePage(name: 'MovieDetailRoute')
 class MovieDetail extends ConsumerStatefulWidget {
@@ -22,12 +26,32 @@ class MovieDetail extends ConsumerStatefulWidget {
 }
 
 class _MovieDetailState extends ConsumerState<MovieDetail> {
+  late MovieViewModel movieViewModel;
+  List<GenreState> genreStates = [];
+  late Movie currentMovie;
   @override
   Widget build(BuildContext context) {
-    final favoriteNotifier = ValueNotifier<bool>(false);
-    final genres = ref.read(genresProvider);
-    final movies = ref.read(movieImagesProvider);
+    final movieViewModelAsync = ref.watch(movieViewModelProvider);
+    return movieViewModelAsync.when(
+      error: (e, st) => Text(e.toString()),
+      loading: () => const NotReady(),
+      data: (viewModel) {
+        movieViewModel = viewModel;
+        currentMovie = movieViewModel.findMovieById(widget.movieId);
+        buildGenreState();
+        return buildScreen();
+      },
+    );
+  }
 
+  void buildGenreState() {
+    for (final genre in movieViewModel.movieGenres) {
+      genreStates.add(GenreState(genre: genre, isSelected: false));
+    }
+  }
+
+  Widget buildScreen() {
+    final favoriteNotifier = ValueNotifier<bool>(false);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -55,11 +79,9 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                     SliverList(
                       delegate: SliverChildListDelegate([
                         Stack(
-                          children: [
-                            DetailImage(movieUrl: movies[widget.movieId]),
-                          ],
+                          children: [DetailImage(movieUrl: currentMovie.image)],
                         ),
-                        GenreRow(genres: genres),
+                        GenreRow(genres: genreStates),
                         MovieOverview(
                           details:
                               'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.',
