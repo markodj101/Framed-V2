@@ -1,32 +1,33 @@
+import 'package:framed_v2/data/models/favorite.dart';
 import 'package:framed_v2/data/models/movie.dart';
 
 class MovieViewModel {
   late List<String> movieGenres;
+  Stream<List<Favorite>>? favoriteStream;
+  List<Favorite> favoriteList = [];
   List<Movie> trendingMovies = [];
   List<Movie> topRatedMovies = [];
   List<Movie> popularMovies = [];
   List<Movie> nowPlayingMovies = [];
   List<Movie> allMovies = [];
 
-  Future setup() async {
-    await Future.wait([setupConfiguration(), setupGenres(), loadMovies()]);
+  Movie findMovieById(int movieId) {
+    return allMovies.firstWhere((movie) => movie.movieId == movieId);
   }
 
-  Future setupConfiguration() async {}
-
-  Future<List<Movie>> getTrendingMovies(int page) async {
-    if (trendingMovies.isEmpty) {
-      trendingMovies = [
-        allMovies[0],
-        allMovies[2],
-        allMovies[4],
-        allMovies[6],
+  Future<List<Movie>> getNowPlaying(int page) async {
+    if (nowPlayingMovies.isEmpty) {
+      nowPlayingMovies = [
         allMovies[8],
         allMovies[10],
         allMovies[12],
+        allMovies[14],
+        allMovies[16],
+        allMovies[18],
+        allMovies[1],
       ];
     }
-    return trendingMovies;
+    return nowPlayingMovies;
   }
 
   Future<List<Movie>> getPopular(int page) async {
@@ -59,61 +60,19 @@ class MovieViewModel {
     return topRatedMovies;
   }
 
-  Future<List<Movie>> getNowPlaying(int page) async {
-    if (nowPlayingMovies.isEmpty) {
-      nowPlayingMovies = [
+  Future<List<Movie>> getTrendingMovies(int page) async {
+    if (trendingMovies.isEmpty) {
+      trendingMovies = [
+        allMovies[0],
+        allMovies[2],
+        allMovies[4],
+        allMovies[6],
         allMovies[8],
         allMovies[10],
         allMovies[12],
-        allMovies[14],
-        allMovies[16],
-        allMovies[18],
-        allMovies[1],
       ];
     }
-    return nowPlayingMovies;
-  }
-
-  Future setupGenres() async {
-    movieGenres = [
-      'Action',
-
-      'Adventure',
-
-      'Crime',
-
-      'Mystery',
-
-      'War',
-
-      'Comedy',
-
-      'Romance',
-
-      'History',
-
-      'Music',
-
-      'Drama',
-
-      'Thriller',
-
-      'Family',
-
-      'Horror',
-
-      'Western',
-
-      'Science Fiction',
-
-      'Animation',
-
-      'Documentation',
-
-      'TV Movie',
-
-      'Fantasy',
-    ];
+    return trendingMovies;
   }
 
   Future loadMovies() async {
@@ -428,7 +387,134 @@ class MovieViewModel {
     ];
   }
 
-  Movie findMovieById(int movieId) {
-    return allMovies.firstWhere((movie) => movie.movieId == movieId);
+  Future setup() async {
+    await Future.wait([setupConfiguration(), setupGenres(), loadMovies()]);
+  }
+
+  Future setupConfiguration() async {}
+
+  Future setupGenres() async {
+    movieGenres = [
+      'Action',
+
+      'Adventure',
+
+      'Crime',
+
+      'Mystery',
+
+      'War',
+
+      'Comedy',
+
+      'Romance',
+
+      'History',
+
+      'Music',
+
+      'Drama',
+
+      'Thriller',
+
+      'Family',
+
+      'Horror',
+
+      'Western',
+
+      'Science Fiction',
+
+      'Animation',
+
+      'Documentation',
+
+      'TV Movie',
+
+      'Fantasy',
+    ];
+  }
+
+  Stream<List<Favorite>> streamFavorites() {
+    favoriteList = [
+      Favorite(
+        movieId: 1,
+        image: 'http://image.tmdb.org/t/p/w780/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg',
+        favorite: false,
+        title: 'Title',
+        overview: 'Overview',
+        popularity: 1.0,
+        releaseDate: DateTime.now(),
+      ),
+
+      Favorite(
+        movieId: 2,
+        image: 'http://image.tmdb.org/t/p/w780/gKkl37BQuKTanygYQG1pyYgLVgf.jpg',
+        favorite: false,
+        title: 'Title',
+        overview: 'Overview',
+        popularity: 1.0,
+        releaseDate: DateTime.now(),
+      ),
+
+      Favorite(
+        movieId: 3,
+
+        image: 'http://image.tmdb.org/t/p/w780/4xJd3uwtL1vCuZgEfEc8JXI9Uyx.jpg',
+
+        favorite: false,
+
+        title: 'Title',
+
+        overview: 'Overview',
+
+        popularity: 1.0,
+
+        releaseDate: DateTime.now(),
+      ),
+
+      Favorite(
+        movieId: 4,
+
+        image: 'http://image.tmdb.org/t/p/w780/uuA01PTtPombRPvL9dvsBqOBJWm.jpg',
+
+        favorite: false,
+
+        title: 'Title',
+
+        overview: 'Overview',
+
+        popularity: 1.0,
+
+        releaseDate: DateTime.now(),
+      ),
+
+      Favorite(
+        movieId: 5,
+
+        image: 'http://image.tmdb.org/t/p/w780/H6vke7zGiuLsz4v4RPeReb9rsv.jpg',
+
+        favorite: false,
+
+        title: 'Title',
+
+        overview: 'Overview',
+
+        popularity: 1.0,
+
+        releaseDate: DateTime.now(),
+      ),
+    ];
+    favoriteStream = Stream.value(favoriteList);
+    return favoriteStream!;
+  }
+
+  void updateFavorite(Favorite favorite) {
+    final index = favoriteList!.indexWhere(
+      (favItem) => favItem.movieId == favorite.movieId,
+    );
+    if (index != -1) {
+      favoriteList![index] = favorite;
+    }
   }
 }
