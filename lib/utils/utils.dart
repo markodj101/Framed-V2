@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:framed_v2/data/models/favorite.dart';
 import 'package:framed_v2/vert_movie_list.dart';
+import 'package:intl/intl.dart';
 
 Widget addVerticalSpace(double amount) {
   return SizedBox(height: amount);
@@ -8,6 +9,25 @@ Widget addVerticalSpace(double amount) {
 
 Widget addHorizontalSpace(double amount) {
   return SizedBox(width: amount);
+}
+
+enum ImageSize { small, large }
+
+String getImageUrl(ImageSize size, String? path) {
+  if (path == null) {
+    return '';
+  }
+  switch (size) {
+    case ImageSize.small:
+      return 'https://image.tmdb.org/t/p/w154/$path';
+    case ImageSize.large:
+      return 'https://image.tmdb.org/t/p/w780/$path';
+  }
+}
+
+final yearFormat = DateFormat('yyyy');
+String youtubeImageFromId(String videoId) {
+  return 'https://img.youtube.com/vi/$videoId/hqdefault.jpg';
 }
 
 enum Sorting {

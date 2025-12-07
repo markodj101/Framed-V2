@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/providers.dart';
+import 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart';
+import 'package:framed_v2/utils/utils.dart';
 
 class DetailImage extends ConsumerStatefulWidget {
-  final String movieUrl;
-  DetailImage({required this.movieUrl, super.key});
+  final MovieDetails details;
+  const DetailImage({required this.details, super.key});
   @override
   ConsumerState<DetailImage> createState() => _DetailImageState();
 }
@@ -38,6 +41,7 @@ class _DetailImageState extends ConsumerState<DetailImage>
   Widget build(BuildContext context) {
     final heroTag = ref.watch(heroTagProvider);
     final screenWidth = MediaQuery.of(context).size.width;
+    final imageUrl = getImageUrl(ImageSize.large, widget.details.backdropPath);
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: SizedBox(
@@ -52,7 +56,7 @@ class _DetailImageState extends ConsumerState<DetailImage>
                 child: Hero(
                   tag: heroTag,
                   child: CachedNetworkImage(
-                    imageUrl: widget.movieUrl,
+                    imageUrl: imageUrl,
                     alignment: Alignment.topCenter,
                     fit: BoxFit.fitWidth,
                     height: 200,
@@ -70,7 +74,10 @@ class _DetailImageState extends ConsumerState<DetailImage>
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Dune', style: Theme.of(context).textTheme.bodyMedium),
+                    Text(
+                      widget.details.title,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ],
                 ),
               ),

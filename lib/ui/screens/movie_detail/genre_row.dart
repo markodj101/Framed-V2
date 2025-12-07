@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:framed_v2/data/models/genre.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 
 class GenreRow extends StatefulWidget {
-  final List<GenreState> genres;
+  final List<Genre> genres;
   const GenreRow({super.key, required this.genres});
 
   @override
@@ -56,7 +57,7 @@ class _GenreRowState extends State<GenreRow>
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      genre.genre,
+                      genre.name,
                       style: Theme.of(
                         context,
                       ).textTheme.bodyLarge?.copyWith(color: Colors.white),

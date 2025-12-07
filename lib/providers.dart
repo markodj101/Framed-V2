@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/network/movie_api_service.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:framed_v2/router/app_routes.dart';
@@ -14,7 +15,12 @@ final heroTagProvider = StateProvider<String>((ref) {
 
 @Riverpod(keepAlive: true)
 Future<MovieViewModel> movieViewModel(MovieViewModelRef ref) async {
-  final model = MovieViewModel();
+  final model = MovieViewModel(
+    movieApiService: ref.read(movieApiServiceProvider),
+  );
   await model.setup();
   return model;
 }
+
+@Riverpod(keepAlive: true)
+MovieApiService movieApiService(MovieApiServiceRef ref) => MovieApiService();

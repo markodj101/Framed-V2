@@ -9,11 +9,13 @@ import 'package:framed_v2/data/models/movie.dart';
 enum MovieType { trending, popular, topRated, nowPlaying }
 
 class MovieWidget extends ConsumerStatefulWidget {
-  final Movie movie;
+  final int movieId;
+  final String movieUrl;
   final OnMovieTap onMovieTap;
   final MovieType movieType;
   const MovieWidget({
-    required this.movie,
+    required this.movieId,
+    required this.movieUrl,
     required this.onMovieTap,
     required this.movieType,
     super.key,
@@ -35,7 +37,7 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
   @override
   void initState() {
     super.initState();
-    uniqueHeroTag = widget.movie.image + widget.movieType.name;
+    uniqueHeroTag = widget.movieUrl + widget.movieType.name;
   }
 
   @override
@@ -57,7 +59,7 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
               Hero(
                     tag: uniqueHeroTag,
                     child: CachedNetworkImage(
-                      imageUrl: widget.movie.image,
+                      imageUrl: widget.movieUrl,
                       alignment: Alignment.topCenter,
                       fit: BoxFit.fitHeight,
                       height: 100,
@@ -70,7 +72,7 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
                     onComplete: (controller) {
                       if (animateImage) {
                         animateImage = false;
-                        widget.onMovieTap(widget.movie.movieId);
+                        widget.onMovieTap(widget.movieId);
                       }
                     },
                   )

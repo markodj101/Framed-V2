@@ -20,7 +20,7 @@ final appRouterProvider = Provider<AppRouter>.internal(
 );
 
 typedef AppRouterRef = ProviderRef<AppRouter>;
-String _$movieViewModelHash() => r'16cbfdde58b8cc036eaf559b55ae65c7ecc8f88c';
+String _$movieViewModelHash() => r'703efcff4ab625aa09da1ecaf2e372f14bb0af14';
 
 /// See also [movieViewModel].
 @ProviderFor(movieViewModel)
@@ -35,5 +35,20 @@ final movieViewModelProvider = FutureProvider<MovieViewModel>.internal(
 );
 
 typedef MovieViewModelRef = FutureProviderRef<MovieViewModel>;
+String _$movieApiServiceHash() => r'0949062b7db0643fbb76838af5cff227b710f7a6';
+
+/// See also [movieApiService].
+@ProviderFor(movieApiService)
+final movieApiServiceProvider = Provider<MovieApiService>.internal(
+  movieApiService,
+  name: r'movieApiServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$movieApiServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef MovieApiServiceRef = ProviderRef<MovieApiService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

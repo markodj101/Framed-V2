@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/not_ready.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/horiz_cast.dart';
@@ -14,6 +15,7 @@ import 'package:framed_v2/ui/screens/movie_detail/trailer.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/data/models/movie.dart';
+import 'package:lumberdash/lumberdash.dart';
 
 @RoutePage(name: 'MovieDetailRoute')
 class MovieDetail extends ConsumerStatefulWidget {
@@ -27,8 +29,6 @@ class MovieDetail extends ConsumerStatefulWidget {
 
 class _MovieDetailState extends ConsumerState<MovieDetail> {
   late MovieViewModel movieViewModel;
-  List<GenreState> genreStates = [];
-  late Movie currentMovie;
   @override
   Widget build(BuildContext context) {
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
@@ -37,102 +37,114 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
       loading: () => const NotReady(),
       data: (viewModel) {
         movieViewModel = viewModel;
-        currentMovie = movieViewModel.findMovieById(widget.movieId);
-        buildGenreState();
         return buildScreen();
       },
     );
   }
 
-  void buildGenreState() {
-    for (final genre in movieViewModel.movieGenres) {
-      genreStates.add(GenreState(genre: genre, isSelected: false));
-    }
-  }
-
   Widget buildScreen() {
     final favoriteNotifier = ValueNotifier<bool>(false);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: screenBackground,
-          leading: BackButton(
-            color: Colors.white,
-            onPressed: () {
-              context.router.maybePopTop();
-            },
-          ),
-          centerTitle: false,
-          title: Text(
-            'Back',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ),
-        body: Container(
-          color: screenBackground,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate([
-                        Stack(
-                          children: [DetailImage(movieUrl: currentMovie.image)],
-                        ),
-                        GenreRow(genres: genreStates),
-                        MovieOverview(
-                          details:
-                              'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.',
-                        ),
-                        ValueListenableBuilder<bool>(
-                          valueListenable: favoriteNotifier,
-                          builder:
-                              (
-                                BuildContext context,
-                                bool value,
-                                Widget? child,
-                              ) {
-                                return ButtonRow(
-                                  favoriteSelected: favoriteNotifier.value,
-                                  onFavoriteSelected: () async {
-                                    if (favoriteNotifier.value) {
-                                      favoriteNotifier.value = false;
-                                    } else {
-                                      favoriteNotifier.value = true;
-                                    }
+
+    return FutureBuilder(
+      future: loadData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const NotReady();
+        }
+        if (snapshot.hasError) {
+          logMessage('Error: ${snapshot.error.toString()}');
+          return Text(snapshot.error.toString());
+        }
+        final movieDetails = snapshot.data as MovieDetails?;
+        if (movieDetails == null) {
+          return const NotReady();
+        }
+        return SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: screenBackground,
+              leading: BackButton(
+                color: Colors.white,
+                onPressed: () {
+                  context.router.maybePopTop();
+                },
+              ),
+              centerTitle: false,
+              title: Text(
+                'Back',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
+            body: Container(
+              color: screenBackground,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverList(
+                          delegate: SliverChildListDelegate([
+                            Stack(
+                              children: [DetailImage(details: movieDetails)],
+                            ),
+                            GenreRow(genres: movieDetails.genres),
+                            MovieOverview(details: movieDetails),
+                            ValueListenableBuilder<bool>(
+                              valueListenable: favoriteNotifier,
+                              builder:
+                                  (
+                                    BuildContext context,
+                                    bool value,
+                                    Widget? child,
+                                  ) {
+                                    return ButtonRow(
+                                      favoriteSelected: favoriteNotifier.value,
+                                      onFavoriteSelected: () async {
+                                        favoriteNotifier.value =
+                                            !favoriteNotifier.value;
+                                      },
+                                    );
                                   },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                bottom: 8,
+                              ),
+                              child: Text(
+                                "Trailers",
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.headlineLarge,
+                              ),
+                            ),
+                            Trailer(
+                              movieVideos: [
+                                "https://img.youtube.com/vi/U2Qp5pL3ovA/hqdefault.jpg",
+                              ],
+                              onVideoTap: (video) {
+                                context.router.push(
+                                  VideoPageRoute(movieVideo: "U2Qp5pL3ovA"),
                                 );
                               },
+                            ),
+                          ]),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, bottom: 8),
-                          child: Text(
-                            "Trailers",
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                        ),
-                        Trailer(
-                          movieVideos: [
-                            "https://img.youtube.com/vi/U2Qp5pL3ovA/hqdefault.jpg",
-                          ],
-                          onVideoTap: (video) {
-                            context.router.push(
-                              VideoPageRoute(movieVideo: "U2Qp5pL3ovA"),
-                            );
-                          },
-                        ),
-                      ]),
+                        HorizontalCast(castList: ["", ""]),
+                      ],
                     ),
-                    HorizontalCast(castList: ["", ""]),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  Future loadData() async {
+    return movieViewModel.getMovieDetails(widget.movieId);
   }
 }

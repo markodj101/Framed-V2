@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:framed_v2/data/models/movie_response.dart';
 import 'package:framed_v2/movie_widget.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/home/home_screen_image.dart';
@@ -22,7 +23,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late MovieViewModel movieViewModel;
-  Future<List<List<Movie>>>? movieFuture;
+  Future<List<MovieResponse?>>? movieFuture;
   @override
   Widget build(BuildContext context) {
     final MovieViewModelAsync = ref.watch(movieViewModelProvider);

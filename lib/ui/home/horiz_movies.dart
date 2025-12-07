@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:framed_v2/data/models/movie_results.dart';
 import 'package:framed_v2/utils/utils.dart';
 import 'package:framed_v2/movie_widget.dart';
 import 'package:framed_v2/data/models/movie.dart';
@@ -7,7 +8,7 @@ import 'package:framed_v2/data/models/movie.dart';
 class HorizontalMovies extends StatelessWidget {
   final MovieType movieType;
   final OnMovieTap onMovieTap;
-  final List<Movie> movies;
+  final List<MovieResults> movies;
 
   const HorizontalMovies({
     required this.onMovieTap,
@@ -25,13 +26,18 @@ class HorizontalMovies extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
         itemBuilder: (context, index) {
+          final imageUrl = getImageUrl(
+            ImageSize.small,
+            movies[index].posterPath,
+          );
           return MovieWidget(
-            movie: movies[index],
+            movieId: movies[index].id,
+            movieUrl: imageUrl,
             onMovieTap: onMovieTap,
             movieType: movieType,
           );
         },
       ),
-    );
+    ); 
   }
 }
