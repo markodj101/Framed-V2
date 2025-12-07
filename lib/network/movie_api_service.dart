@@ -12,6 +12,8 @@ const pageParameterName = 'page';
 const movieIdParameterName = 'movie_id';
 const apiKeyParameterName = 'api_key';
 const movieUrl = 'movie';
+const videosParameter = 'videos';
+const creditsParameter = 'credits';
 
 class MovieApiService {
   late final Dio dio;
@@ -66,6 +68,14 @@ class MovieApiService {
       queryParameters: {pageParameterName: page},
     );
     return response;
+  }
+
+  Future<Response> getMovieVideos(int movieId) async {
+    return dio.get('$movieUrl/$movieId/$videosParameter');
+  }
+
+  Future<Response> getMovieCredits(int movieId) async {
+    return dio.get('$movieUrl/$movieId/$creditsParameter');
   }
 
   Future<Response> getNowPlaying([int page = 1]) async {

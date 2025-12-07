@@ -23,7 +23,6 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     screens.add(HomeScreen());
     screens.add(GenreScreen());
-    screens.add(VideoPage('QwW5RD02uJo'));
   }
 
   @override

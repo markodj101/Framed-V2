@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:framed_v2/data/models/favorite.dart';
+import 'package:framed_v2/data/models/movie.dart';
+import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/vert_movie_list.dart';
 import 'package:intl/intl.dart';
 
@@ -46,6 +48,6 @@ String youtubeUrlFromId(String videoId) {
 
 typedef OnMovieTap = void Function(int movieId);
 
-typedef OnMovieVideoTap = void Function(String videoId);
+typedef OnMovieVideoTap = void Function(MovieVideo video);
 
 typedef OnFavoriteResultsTap = void Function(Favorite favorite);

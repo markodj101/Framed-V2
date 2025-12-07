@@ -160,7 +160,7 @@ class MovieDetailRouteArgs {
 /// [VideoPage]
 class VideoPageRoute extends PageRouteInfo<VideoPageRouteArgs> {
   VideoPageRoute({
-    required String movieVideo,
+    required MovieVideo movieVideo,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -184,7 +184,7 @@ class VideoPageRouteArgs {
     this.key,
   });
 
-  final String movieVideo;
+  final MovieVideo movieVideo;
 
   final Key? key;
 

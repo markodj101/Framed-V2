@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:framed_v2/data/models/favorite.dart';
 import 'package:framed_v2/data/models/movie.dart';
+import 'package:framed_v2/data/models/movie_credits.dart';
 import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/data/models/movie_response.dart';
 import 'package:framed_v2/data/models/movie_results.dart';
+import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/network/movie_api_service.dart';
 import 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart';
 import 'package:lumberdash/lumberdash.dart';
@@ -206,6 +208,40 @@ class MovieViewModel {
     );
     if (index != -1) {
       favoriteList![index] = favorite;
+    }
+  }
+
+  Future<MovieVideos?> getMovieVideos(int movieId) async {
+    final response = await movieApiService.getMovieVideos(movieId);
+    if (response.statusCode == 200) {
+      try {
+        return MovieVideos.fromJson(response.data);
+      } catch (e) {
+        logError('Failed to parse movie videos with error: $e');
+        return null;
+      }
+    } else {
+      logError(
+        'Failed to load movie videos with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+      return null;
+    }
+  }
+
+  Future<MovieCredits?> getMovieCredits(int movieId) async {
+    final response = await movieApiService.getMovieCredits(movieId);
+    if (response.statusCode == 200) {
+      try {
+        return MovieCredits.fromJson(response.data);
+      } catch (e) {
+        logError('Failed to parse movie credits with error: $e');
+        return null;
+      }
+    } else {
+      logError(
+        'Failed to load movie credits with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+      return null;
     }
   }
 

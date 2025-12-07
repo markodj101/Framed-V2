@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/data/models/movie_credits.dart';
 import 'package:framed_v2/ui/cast_image.dart';
+import 'package:framed_v2/utils/utils.dart';
 
 class HorizontalCast extends ConsumerWidget {
-  final List<String> castList;
+  final List<MovieCast> castList;
   const HorizontalCast({required this.castList, super.key});
 
   @override
@@ -19,9 +21,8 @@ class HorizontalCast extends ConsumerWidget {
         ),
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           return CastImage(
-            imageUrl:
-                "http://image.tmdb.org/t/p/w780/BE2sdjpgsa2rNTFa66f7upkaOP.jpg'",
-            name: 'Timothée Chalamet',
+            imageUrl: getImageUrl(ImageSize.small, castList[index].profilePath),
+            name: castList[index].name,
           );
         }, childCount: castList.length),
       ),

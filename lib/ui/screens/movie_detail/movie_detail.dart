@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:framed_v2/data/models/movie_credits.dart';
 import 'package:framed_v2/data/models/movie_details.dart';
+import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/not_ready.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/horiz_cast.dart';
@@ -29,6 +31,9 @@ class MovieDetail extends ConsumerStatefulWidget {
 
 class _MovieDetailState extends ConsumerState<MovieDetail> {
   late MovieViewModel movieViewModel;
+  MovieCredits? credits;
+  MovieVideos? movieVideos;
+
   @override
   Widget build(BuildContext context) {
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
@@ -120,18 +125,29 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                               ),
                             ),
                             Trailer(
-                              movieVideos: [
-                                "https://img.youtube.com/vi/U2Qp5pL3ovA/hqdefault.jpg",
-                              ],
+                              movieVideos: movieVideos?.results,
                               onVideoTap: (video) {
                                 context.router.push(
-                                  VideoPageRoute(movieVideo: "U2Qp5pL3ovA"),
+                                  VideoPageRoute(movieVideo: video),
                                 );
                               },
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                bottom: 16,
+                                top: 16,
+                              ),
+                              child: Text(
+                                "Cast",
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.headlineLarge,
+                              ),
+                            ),
                           ]),
                         ),
-                        HorizontalCast(castList: ["", ""]),
+                        HorizontalCast(castList: credits?.cast ?? []),
                       ],
                     ),
                   ),
@@ -145,6 +161,8 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   }
 
   Future loadData() async {
+    credits = await movieViewModel.getMovieCredits(widget.movieId);
+    movieVideos = await movieViewModel.getMovieVideos(widget.movieId);
     return movieViewModel.getMovieDetails(widget.movieId);
   }
 }

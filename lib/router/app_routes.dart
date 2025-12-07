@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/ui/home/home_screen.dart';
 import 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart';
 import 'package:framed_v2/ui/screens/videos/video_page.dart';

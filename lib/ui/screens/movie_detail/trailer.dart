@@ -2,10 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/utils/utils.dart';
 
 class Trailer extends ConsumerStatefulWidget {
-  final List<String>? movieVideos;
+  final List<MovieVideo>? movieVideos;
   final OnMovieVideoTap onVideoTap;
   const Trailer({this.movieVideos, required this.onVideoTap, super.key});
 
@@ -46,13 +47,13 @@ class _TrailerState extends ConsumerState<Trailer> {
                     children: [
                       CachedNetworkImage(
                         httpHeaders: const {'Access-Control-Allow-Origin': '*'},
-                        imageUrl: movieVideo,
+                        imageUrl: youtubeImageFromId(movieVideo.key),
                         alignment: Alignment.topLeft,
                         fit: BoxFit.fitHeight,
                         height: 98,
                       ),
                       AutoSizeText(
-                        'Dune',
+                        movieVideo.name,
                         style: Theme.of(context).textTheme.labelSmall,
                         maxLines: 1,
                         minFontSize: 10,

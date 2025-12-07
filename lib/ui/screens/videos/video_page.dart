@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/services.dart';
+import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/utils/utils.dart';
 import 'package:pod_player/pod_player.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage(name: 'VideoPageRoute')
 class VideoPage extends ConsumerStatefulWidget {
-  final String movieVideo;
+  final MovieVideo movieVideo;
   const VideoPage(this.movieVideo, {super.key});
   @override
   ConsumerState<VideoPage> createState() => _VideoPageState();
@@ -21,7 +22,7 @@ class _VideoPageState extends ConsumerState<VideoPage> {
   void initState() {
     super.initState();
     final playVideoFrom = PlayVideoFrom.youtube(
-      youtubeUrlFromId(widget.movieVideo),
+      youtubeUrlFromId(widget.movieVideo.key),
     );
 
     podPlayerController = PodPlayerController(
