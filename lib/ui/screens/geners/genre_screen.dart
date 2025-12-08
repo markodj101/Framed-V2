@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framed_v2/data/models/movie.dart';
+import 'package:framed_v2/data/models/movie_response.dart';
+import 'package:framed_v2/data/models/movie_results.dart';
 import 'package:framed_v2/not_ready.dart';
 import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/sliver_divider.dart';
@@ -10,8 +13,12 @@ import 'package:framed_v2/ui/screens/geners/genre_search_row.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/geners/sort_picker.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
+import 'package:framed_v2/utils/utils.dart';
 import 'package:framed_v2/vert_movie_list.dart';
 import 'package:framed_v2/router/app_routes.dart';
+import 'package:framed_v2/data/models/genre_state.dart';
+
+const String genreStringKey = 'GenreKey';
 
 @RoutePage(name: 'GenreRoute')
 class GenreScreen extends ConsumerStatefulWidget {
@@ -26,7 +33,12 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
 
   late MovieViewModel movieViewModel;
   List<GenreState> genreStates = [];
-  List<Movie> currentMovieList = [];
+  String currentSearchString = '';
+  List<MovieResults> currentMovieList = [];
+  final movieNotifier = ValueNotifier<List<MovieResults>>([]);
+  MovieResponse? currentMovieResponse;
+  Sorting selectedSort = Sorting.aToz;
+
   @override
   Widget build(BuildContext context) {
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
@@ -43,8 +55,36 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
 
   void buildGenreState() {
     genreStates.clear();
-    for (final genre in movieViewModel.movieGenres) {
+    for (final genre in movieViewModel.movieGenres!) {
       genreStates.add(GenreState(genre: genre, isSelected: false));
+    }
+    getSelectedSort();
+  }
+
+  void saveSelectedGenres() async {
+    final prefs = await ref.read(prefsProvider.future);
+    final selectedGenres = genreStates
+        .where((genre) => genre.isSelected)
+        .map((genre) => genre.genre.name)
+        .toList();
+    prefs.setString(genreStringKey, selectedGenres.join(','));
+  }
+
+  void getSelectedSort() async {
+    final prefs = await ref.read(prefsProvider.future);
+
+    final genreNameList = prefs.getString(genreStringKey)?.split(',');
+    if (genreNameList?.isNotEmpty == true) {
+      for (final genreName in genreNameList!) {
+        var genreState = genreStates.firstWhereOrNull(
+          (genre) => genre.genre.name == genreName,
+        );
+        if (genreState != null) {
+          final index = genreStates.indexOf(genreState);
+          genreState = genreState.copyWith(isSelected: true);
+          genreStates[index] = genreState;
+        }
+      }
     }
   }
 
@@ -70,8 +110,11 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                         ),
                       ),
                       GenreSearchRow((searchString) {
-                        // Implement search functionality here
-                        print('Searching for: $searchString');
+                        currentSearchString = searchString;
+                        currentMovieResponse = null;
+                        FocusScope.of(context).unfocus();
+                        expandedNotifier.value = false;
+                        search();
                       }),
                     ]),
                   ),
@@ -84,8 +127,10 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                         onGenresExpanded: (expanded) {
                           expandedNotifier.value = expanded;
                         },
-                        onGenresSelected: (List<GenreState> states) {
-                          // Handle genre selection here
+                        onGenresSelected: (genres) {
+                          genreStates = genres;
+                          saveSelectedGenres();
+                          currentMovieResponse = null;
                         },
                       );
                     },
@@ -94,14 +139,28 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                   SortPicker(
                     useSliver: true,
                     onSortSelected: (sorting) {
-                      // Handle sort selection here
+                      selectedSort = sorting;
+                      sortMovies();
                     },
                   ),
-                  VerticalMovieList(
-                    movies: currentMovieList,
-                    onMovieTap: (movieId) {
-                      context.router.push(MovieDetailRoute(movieId: movieId));
-                    },
+                  ValueListenableBuilder<List<MovieResults>>(
+                    valueListenable: movieNotifier,
+                    builder:
+                        (
+                          BuildContext context,
+                          List<MovieResults> value,
+                          Widget? child,
+                        ) {
+                          return VerticalMovieList(
+                            movies: value,
+                            movieViewModel: movieViewModel,
+                            onMovieTap: (movieId) {
+                              context.router.push(
+                                MovieDetailRoute(movieId: movieId),
+                              );
+                            },
+                          );
+                        },
                   ),
                 ],
               ),
@@ -110,5 +169,80 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
         ),
       ),
     );
+  }
+
+  Future<List<MovieResults>?> search() async {
+    if (currentSearchString.isEmpty && genreStates.isEmpty) {
+      movieNotifier.value = <MovieResults>[];
+      return <MovieResults>[];
+    }
+
+    final pageNumber = (currentMovieResponse?.page == null)
+        ? 1
+        : (currentMovieResponse!.page + 1);
+
+    if (currentSearchString.isNotEmpty) {
+      currentMovieResponse = await movieViewModel.searchMovies(
+        currentSearchString,
+        pageNumber,
+      );
+      currentMovieList = currentMovieResponse!.results;
+    }
+
+    if (currentSearchString.isEmpty && genreStates.isNotEmpty) {
+      final buffer = getGenreString();
+      currentMovieResponse = await movieViewModel.searchMoviesByGenre(
+        buffer.toString(),
+        pageNumber,
+      );
+      currentMovieList = currentMovieResponse!.results;
+    } else if (currentMovieList.isNotEmpty && genreStates.isNotEmpty) {
+      currentMovieList = currentMovieList.where((movie) {
+        for (final selectedGenre in genreStates) {
+          if (movie.genreIds.contains(selectedGenre.genre.id)) {
+            return true;
+          }
+        }
+        return false;
+      }).toList();
+    }
+
+    sortMovies();
+    return currentMovieList;
+  }
+
+  StringBuffer getGenreString() {
+    final buffer = StringBuffer();
+    genreStates.map((e) {
+      if (e.isSelected) {
+        if (buffer.isNotEmpty) {
+          buffer.write('|');
+        }
+        buffer.write(e.genre.id);
+      }
+    }).toList();
+    return buffer;
+  }
+
+  void sortMovies() {
+    if (currentMovieList.isEmpty) {
+      return;
+    }
+    currentMovieList = currentMovieList.sorted((a, b) {
+      switch (selectedSort) {
+        case Sorting.aToz:
+          return a.originalTitle.compareTo(b.originalTitle);
+        case Sorting.zToa:
+          return b.originalTitle.compareTo(a.originalTitle);
+        case Sorting.rating:
+          return b.popularity.compareTo(a.popularity);
+        case Sorting.year:
+          if (a.releaseDate != null && b.releaseDate != null) {
+            return a.releaseDate!.compareTo(b.releaseDate!);
+          }
+      }
+      return 0;
+    });
+    movieNotifier.value = currentMovieList;
   }
 }

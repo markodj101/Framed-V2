@@ -14,6 +14,12 @@ const apiKeyParameterName = 'api_key';
 const movieUrl = 'movie';
 const videosParameter = 'videos';
 const creditsParameter = 'credits';
+const genreUrl = 'genre/movie/list';
+const searchMovieUrl = 'search/movie';
+const discoverMovieUrl = 'discover/movie';
+const configurationUrl = 'configuration';
+const queryParameterName = 'query';
+const genreParameterName = 'with_genres';
 
 class MovieApiService {
   late final Dio dio;
@@ -104,5 +110,28 @@ class MovieApiService {
       queryParameters: {pageParameterName: page},
     );
     return response;
+  }
+
+  Future<Response> getGenres() async {
+    final response = await dio.get(genreUrl);
+    return response;
+  }
+
+  Future<Response> searchMovies(String query, [int page = 1]) async {
+    return dio.get(
+      searchMovieUrl,
+      queryParameters: {queryParameterName: query},
+    );
+  }
+
+  Future<Response> searchMoviesByGenre(String genre, [int page = 1]) async {
+    return dio.get(
+      searchMovieUrl,
+      queryParameters: {genreParameterName: genre, pageParameterName: page},
+    );
+  }
+
+  Future<Response> getMovieConfiguration() async {
+    return dio.get(configurationUrl);
   }
 }

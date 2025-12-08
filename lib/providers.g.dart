@@ -6,6 +6,34 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$sharedPrefsHash() => r'0ebc135ba0bea1685cfcb6d3e19119eec07a339a';
+
+/// See also [sharedPrefs].
+@ProviderFor(sharedPrefs)
+final sharedPrefsProvider = FutureProvider<SharedPreferences>.internal(
+  sharedPrefs,
+  name: r'sharedPrefsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sharedPrefsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SharedPrefsRef = FutureProviderRef<SharedPreferences>;
+String _$prefsHash() => r'17cdb26eee576ff65fcfde9a84ac9146206202ba';
+
+/// See also [prefs].
+@ProviderFor(prefs)
+final prefsProvider = FutureProvider<Prefs>.internal(
+  prefs,
+  name: r'prefsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$prefsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef PrefsRef = FutureProviderRef<Prefs>;
 String _$appRouterHash() => r'42599edccdcfb58d05fc5c5c1776f848db2a5b20';
 
 /// See also [appRouter].

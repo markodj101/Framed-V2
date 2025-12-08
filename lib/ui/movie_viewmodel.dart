@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:framed_v2/data/models/favorite.dart';
+import 'package:framed_v2/data/models/genre.dart';
 import 'package:framed_v2/data/models/movie.dart';
 import 'package:framed_v2/data/models/movie_credits.dart';
 import 'package:framed_v2/data/models/movie_details.dart';
@@ -13,7 +14,7 @@ import 'package:lumberdash/lumberdash.dart';
 
 class MovieViewModel {
   final MovieApiService movieApiService;
-  late List<String> movieGenres;
+  List<Genre>? movieGenres;
   Stream<List<Favorite>>? favoriteStream;
   List<Favorite> favoriteList = [];
   List<MovieResults> trendingMovies = [];
@@ -87,45 +88,40 @@ class MovieViewModel {
   Future setupConfiguration() async {}
 
   Future setupGenres() async {
-    movieGenres = [
-      'Action',
+    final response = await movieApiService.getGenres();
+    if (response.statusCode == 200) {
+      movieGenres = Genres.fromJson(response.data).genres;
+    } else {
+      logError(
+        'Failed to load genres with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+    }
+  }
 
-      'Adventure',
+  Future<MovieResponse?> searchMoviesByGenre(String genres, int page) async {
+    final response = await movieApiService.searchMoviesByGenre(genres, page);
+    if (response.statusCode == 200) {
+      var movieResponse = MovieResponse.fromJson(response.data);
+      return movieResponse;
+    } else {
+      logError(
+        'Failed to load movies with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+      return null;
+    }
+  }
 
-      'Crime',
-
-      'Mystery',
-
-      'War',
-
-      'Comedy',
-
-      'Romance',
-
-      'History',
-
-      'Music',
-
-      'Drama',
-
-      'Thriller',
-
-      'Family',
-
-      'Horror',
-
-      'Western',
-
-      'Science Fiction',
-
-      'Animation',
-
-      'Documentation',
-
-      'TV Movie',
-
-      'Fantasy',
-    ];
+  Future<MovieResponse?> searchMovies(String searchText, int page) async {
+    final response = await movieApiService.searchMovies(searchText, page);
+    if (response.statusCode == 200) {
+      var movieResponse = MovieResponse.fromJson(response.data);
+      return movieResponse;
+    } else {
+      logError(
+        'Failed to load movies with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+      return null;
+    }
   }
 
   Stream<List<Favorite>> streamFavorites() {
