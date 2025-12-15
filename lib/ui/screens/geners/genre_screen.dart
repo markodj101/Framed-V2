@@ -38,6 +38,7 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
   final movieNotifier = ValueNotifier<List<MovieResults>>([]);
   MovieResponse? currentMovieResponse;
   Sorting selectedSort = Sorting.aToz;
+  bool _genresLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,10 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
       loading: () => NotReady(),
       data: (viewModel) {
         movieViewModel = viewModel;
-        buildGenreState();
+        if (!_genresLoaded) {
+          buildGenreState();
+          _genresLoaded = true;
+        }
         return buildScreen();
       },
     );
@@ -58,7 +62,7 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
     for (final genre in movieViewModel.movieGenres!) {
       genreStates.add(GenreState(genre: genre, isSelected: false));
     }
-    getSelectedSort();
+    loadSelectedGenres();
   }
 
   void saveSelectedGenres() async {
@@ -70,11 +74,12 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
     prefs.setString(genreStringKey, selectedGenres.join(','));
   }
 
-  void getSelectedSort() async {
+  void loadSelectedGenres() async {
     final prefs = await ref.read(prefsProvider.future);
 
     final genreNameList = prefs.getString(genreStringKey)?.split(',');
     if (genreNameList?.isNotEmpty == true) {
+      bool changed = false;
       for (final genreName in genreNameList!) {
         var genreState = genreStates.firstWhereOrNull(
           (genre) => genre.genre.name == genreName,
@@ -83,7 +88,11 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
           final index = genreStates.indexOf(genreState);
           genreState = genreState.copyWith(isSelected: true);
           genreStates[index] = genreState;
+          changed = true;
         }
+      }
+      if (changed && mounted) {
+        setState(() {});
       }
     }
   }
@@ -213,14 +222,14 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
 
   StringBuffer getGenreString() {
     final buffer = StringBuffer();
-    genreStates.map((e) {
-      if (e.isSelected) {
-        if (buffer.isNotEmpty) {
-          buffer.write('|');
+    // Filter only selected genres
+    final selected = genreStates.where((e) => e.isSelected).toList();
+    for (int i = 0; i < selected.length; i++) {
+        if (i > 0) {
+            buffer.write('|');
         }
-        buffer.write(e.genre.id);
-      }
-    }).toList();
+        buffer.write(selected[i].genre.id);
+    }
     return buffer;
   }
 

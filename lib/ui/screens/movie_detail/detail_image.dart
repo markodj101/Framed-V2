@@ -1,14 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/data/models/movie_configuration.dart';
 import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart';
 import 'package:framed_v2/utils/utils.dart';
 
 class DetailImage extends ConsumerStatefulWidget {
+  final MovieConfiguration movieConfiguration;
   final MovieDetails details;
-  const DetailImage({required this.details, super.key});
+  const DetailImage({
+    required this.movieConfiguration,
+    required this.details,
+    super.key,
+  });
   @override
   ConsumerState<DetailImage> createState() => _DetailImageState();
 }
@@ -41,7 +47,10 @@ class _DetailImageState extends ConsumerState<DetailImage>
   Widget build(BuildContext context) {
     final heroTag = ref.watch(heroTagProvider);
     final screenWidth = MediaQuery.of(context).size.width;
-    final imageUrl = getImageUrl(ImageSize.large, widget.details.backdropPath);
+    final imageUrl = getMovieDetailsImagePath(
+      widget.details,
+      widget.movieConfiguration,
+    );
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: SizedBox(
@@ -55,13 +64,15 @@ class _DetailImageState extends ConsumerState<DetailImage>
                 opacity: _animation,
                 child: Hero(
                   tag: heroTag,
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrl,
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.fitWidth,
-                    height: 200,
-                    width: screenWidth,
-                  ),
+                  child: imageUrl != null
+                      ? CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          alignment: Alignment.topCenter,
+                          fit: BoxFit.fitWidth,
+                          height: 200,
+                          width: screenWidth,
+                        )
+                      : emptyWidget,
                 ),
               ),
             ),

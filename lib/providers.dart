@@ -5,8 +5,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/utils/prefs.dart';
+import 'package:framed_v2/data/storage/hive_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 part 'providers.g.dart';
+
+@Riverpod(keepAlive: true)
+MovieApiService movieApiService(MovieApiServiceRef ref) => MovieApiService();
 
 @Riverpod(keepAlive: true)
 Future<SharedPreferences> sharedPrefs(SharedPrefsRef ref) =>
@@ -27,7 +31,9 @@ final heroTagProvider = StateProvider<String>((ref) {
 
 @Riverpod(keepAlive: true)
 Future<MovieViewModel> movieViewModel(MovieViewModelRef ref) async {
+  final storage = ref.read(hiveStorageProvider);
   final model = MovieViewModel(
+    storage: storage,
     movieApiService: ref.read(movieApiServiceProvider),
   );
   await model.setup();
@@ -35,4 +41,6 @@ Future<MovieViewModel> movieViewModel(MovieViewModelRef ref) async {
 }
 
 @Riverpod(keepAlive: true)
-MovieApiService movieApiService(MovieApiServiceRef ref) => MovieApiService();
+HiveStorage hiveStorage(HiveStorageRef ref) {
+  return HiveStorage();
+}

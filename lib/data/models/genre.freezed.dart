@@ -20,7 +20,9 @@ Genre _$GenreFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Genre {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +35,7 @@ abstract class $GenreCopyWith<$Res> {
   factory $GenreCopyWith(Genre value, $Res Function(Genre) then) =
       _$GenreCopyWithImpl<$Res, Genre>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({@HiveField(0) int id, @HiveField(1) String name});
 }
 
 /// @nodoc
@@ -72,7 +74,7 @@ abstract class _$$GenreImplCopyWith<$Res> implements $GenreCopyWith<$Res> {
       __$$GenreImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({@HiveField(0) int id, @HiveField(1) String name});
 }
 
 /// @nodoc
@@ -104,15 +106,19 @@ class __$$GenreImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 1, adapterName: 'GenreAdapter')
 class _$GenreImpl implements _Genre {
-  const _$GenreImpl({required this.id, required this.name});
+  const _$GenreImpl(
+      {@HiveField(0) required this.id, @HiveField(1) required this.name});
 
   factory _$GenreImpl.fromJson(Map<String, dynamic> json) =>
       _$$GenreImplFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
+  @HiveField(1)
   final String name;
 
   @override
@@ -148,14 +154,17 @@ class _$GenreImpl implements _Genre {
 }
 
 abstract class _Genre implements Genre {
-  const factory _Genre({required final int id, required final String name}) =
-      _$GenreImpl;
+  const factory _Genre(
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String name}) = _$GenreImpl;
 
   factory _Genre.fromJson(Map<String, dynamic> json) = _$GenreImpl.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
+  @HiveField(1)
   String get name;
   @override
   @JsonKey(ignore: true)

@@ -1,0 +1,417 @@
+﻿Analyzing framed_v2...                                          
+
+  error - The method 'get' isn't defined for the type '$$DriftFavoriteTableTableManager' - lib\data\database\drift\drift_database.dart:15:66 - undefined_method
+  error - The method 'get' isn't defined for the type '$$DriftGenreTableTableManager' - lib\data\database\drift\drift_database.dart:37:60 - undefined_method
+  error - The method 'get' isn't defined for the type '$$DriftConfigurationImagesTableTableManager' - lib\data\database\drift\drift_database.dart:49:74 - undefined_method
+  error - The method 'create' isn't defined for the type '$$DriftFavoriteTableTableManager' - lib\data\database\drift\drift_database.dart:87:42 - undefined_method
+warning - The method doesn't override an inherited method - lib\data\database\drift\drift_database.dart:103:10 - override_on_non_overriding_member
+  error - The method 'create' isn't defined for the type '$$DriftGenreTableTableManager' - lib\data\database\drift\drift_database.dart:105:41 - undefined_method
+  error - The method 'create' isn't defined for the type '$$DriftConfigurationImagesTableTableManager' - lib\data\database\drift\drift_database.dart:117:53 - undefined_method
+  error - The method 'watch' isn't defined for the type '$$DriftFavoriteTableTableManager' - lib\data\database\drift\drift_database.dart:132:49 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1178:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1180:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1181:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1182:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1183:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1184:11 - super_formal_parameter_without_associated_named
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1186:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1186:32 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1187:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1187:47 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1189:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1189:37 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1190:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1190:52 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1192:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1192:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1193:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1193:57 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1195:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1195:43 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1196:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1196:55 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1198:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1198:39 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1199:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1199:53 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1201:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1201:43 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1202:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1202:55 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1204:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1204:46 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1205:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1205:56 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1207:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1207:38 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1208:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1208:50 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1210:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1210:41 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1211:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftFavoriteTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1211:53 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1215:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1217:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1218:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1219:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1220:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1221:11 - super_formal_parameter_without_associated_named
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1223:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1223:34 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1224:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1224:47 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1226:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1226:39 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1227:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1227:52 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1229:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1229:47 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1230:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1231:28 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1233:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1233:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1234:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1234:55 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1236:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1236:41 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1237:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1237:53 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1239:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1239:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1240:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1240:55 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1242:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1242:48 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1243:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1243:56 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1245:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1245:40 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1246:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1246:50 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1248:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1248:43 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1249:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftFavoriteTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1249:53 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1253:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1255:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1256:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1257:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1258:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1259:11 - super_formal_parameter_without_associated_named
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1262:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1262:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1265:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1265:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1267:47 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1268:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1270:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1271:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1274:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1274:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1276:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1277:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1279:48 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1280:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1283:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1283:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftFavoriteTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1286:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1286:34 - undefined_identifier
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1289:48 - extends_non_class
+  error - Undefined class 'BaseReferences' - lib\data\database\drift\movie_database.g.dart:1300:7 - undefined_class
+  error - Undefined class 'PrefetchHooks' - lib\data\database\drift\movie_database.g.dart:1303:5 - undefined_class
+  error - The method 'TableManagerState' isn't defined for the type '$$DriftFavoriteTableTableManager' - lib\data\database\drift\movie_database.g.dart:1306:15 - undefined_method
+  error - Too many positional arguments: 0 expected, but 1 found - lib\data\database\drift\movie_database.g.dart:1306:15 - extra_positional_arguments
+  error - The method 'BaseReferences' isn't defined for the type '$$DriftFavoriteTableTableManager' - lib\data\database\drift\movie_database.g.dart:1360:48 - undefined_method
+  error - Undefined class 'ProcessedTableManager' - lib\data\database\drift\movie_database.g.dart:1366:53 - undefined_class
+  error - Undefined class 'BaseReferences' - lib\data\database\drift\movie_database.g.dart:1377:7 - undefined_class
+  error - Undefined class 'PrefetchHooks' - lib\data\database\drift\movie_database.g.dart:1380:5 - undefined_class
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1405:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1407:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1408:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1409:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1410:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1411:11 - super_formal_parameter_without_associated_named
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1413:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1413:32 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1414:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1414:47 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1416:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1416:40 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1417:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1417:52 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1419:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1419:46 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1420:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1420:58 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1422:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1422:46 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1423:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1423:58 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1425:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1425:42 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1426:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1426:54 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1428:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1428:44 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1429:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1429:56 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1431:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1431:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1432:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1432:57 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1434:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1434:43 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1435:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftConfigurationImagesTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1435:55 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1439:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1441:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1442:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1443:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1444:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1445:11 - super_formal_parameter_without_associated_named
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1447:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1447:34 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1448:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1448:47 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1450:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1450:42 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1451:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1451:52 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1453:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1453:48 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1454:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1455:28 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1457:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1457:48 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1458:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1459:28 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1461:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1461:44 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1462:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1462:54 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1464:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1464:46 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1465:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1465:56 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1467:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1467:47 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1468:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1469:28 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1471:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1471:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1472:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftConfigurationImagesTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1472:55 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1476:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1478:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1479:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1480:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1481:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1482:11 - super_formal_parameter_without_associated_named
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1485:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1485:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1488:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1488:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1490:48 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1491:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1493:48 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1494:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1497:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1497:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1499:46 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1500:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1502:47 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1503:15 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftConfigurationImagesTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1505:45 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1506:15 - undefined_identifier
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1509:59 - extends_non_class
+  error - Undefined class 'BaseReferences' - lib\data\database\drift\movie_database.g.dart:1520:7 - undefined_class
+  error - Undefined class 'PrefetchHooks' - lib\data\database\drift\movie_database.g.dart:1524:5 - undefined_class
+  error - The method 'TableManagerState' isn't defined for the type '$$DriftConfigurationImagesTableTableManager' - lib\data\database\drift\movie_database.g.dart:1527:15 - undefined_method
+  error - Too many positional arguments: 0 expected, but 1 found - lib\data\database\drift\movie_database.g.dart:1527:15 - extra_positional_arguments
+  error - The method 'BaseReferences' isn't defined for the type '$$DriftConfigurationImagesTableTableManager' - lib\data\database\drift\movie_database.g.dart:1580:48 - undefined_method
+  error - Undefined class 'ProcessedTableManager' - lib\data\database\drift\movie_database.g.dart:1587:7 - undefined_class
+  error - Undefined class 'BaseReferences' - lib\data\database\drift\movie_database.g.dart:1598:11 - undefined_class
+  error - Undefined class 'PrefetchHooks' - lib\data\database\drift\movie_database.g.dart:1602:9 - undefined_class
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1615:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1617:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1618:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1619:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1620:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1621:11 - super_formal_parameter_without_associated_named
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1623:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1623:32 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1624:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftGenreTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1624:47 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1626:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1626:38 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1627:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftGenreTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1627:53 - undefined_method
+  error - Undefined class 'ColumnFilters' - lib\data\database\drift\movie_database.g.dart:1629:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1629:37 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1630:15 - undefined_identifier
+  error - The method 'ColumnFilters' isn't defined for the type '$$DriftGenreTableFilterComposer' - lib\data\database\drift\movie_database.g.dart:1630:49 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1634:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1636:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1637:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1638:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1639:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1640:11 - super_formal_parameter_without_associated_named
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1642:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1642:34 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1643:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftGenreTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1643:47 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1645:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1645:40 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1646:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftGenreTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1646:53 - undefined_method
+  error - Undefined class 'ColumnOrderings' - lib\data\database\drift\movie_database.g.dart:1648:3 - undefined_class
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1648:39 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1649:15 - undefined_identifier
+  error - The method 'ColumnOrderings' isn't defined for the type '$$DriftGenreTableOrderingComposer' - lib\data\database\drift\movie_database.g.dart:1649:49 - undefined_method
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1653:13 - extends_non_class
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1655:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1656:20 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1657:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1658:11 - super_formal_parameter_without_associated_named
+  error - No associated named super constructor parameter - lib\data\database\drift\movie_database.g.dart:1659:11 - super_formal_parameter_without_associated_named
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1662:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1662:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1665:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1665:34 - undefined_identifier
+  error - The method '$composableBuilder' isn't defined for the type '$$DriftGenreTableAnnotationComposer' - lib\data\database\drift\movie_database.g.dart:1668:7 - undefined_method
+  error - Undefined name '$table' - lib\data\database\drift\movie_database.g.dart:1668:34 - undefined_identifier
+  error - Classes can only extend other classes - lib\data\database\drift\movie_database.g.dart:1671:45 - extends_non_class
+  error - Undefined class 'BaseReferences' - lib\data\database\drift\movie_database.g.dart:1682:7 - undefined_class
+  error - Undefined class 'PrefetchHooks' - lib\data\database\drift\movie_database.g.dart:1685:5 - undefined_class
+  error - The method 'TableManagerState' isn't defined for the type '$$DriftGenreTableTableManager' - lib\data\database\drift\movie_database.g.dart:1687:15 - undefined_method
+  error - Too many positional arguments: 0 expected, but 1 found - lib\data\database\drift\movie_database.g.dart:1687:15 - extra_positional_arguments
+  error - The method 'BaseReferences' isn't defined for the type '$$DriftGenreTableTableManager' - lib\data\database\drift\movie_database.g.dart:1717:48 - undefined_method
+  error - Undefined class 'ProcessedTableManager' - lib\data\database\drift\movie_database.g.dart:1723:50 - undefined_class
+  error - Undefined class 'BaseReferences' - lib\data\database\drift\movie_database.g.dart:1734:7 - undefined_class
+  error - Undefined class 'PrefetchHooks' - lib\data\database\drift\movie_database.g.dart:1737:5 - undefined_class
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:9:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:10:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:20:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:21:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:22:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:23:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:24:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:25:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_configuration.dart:26:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:8:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:9:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:10:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:19:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:20:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:21:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:22:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:23:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:24:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:25:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:26:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:27:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:28:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:29:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_credits.dart:30:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:10:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:11:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:12:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:13:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:14:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:15:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:16:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:17:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:18:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:19:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:20:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:21:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:22:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:23:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:24:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:25:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:26:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:27:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:28:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:29:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:30:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_details.dart:31:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_response.dart:12:6 - invalid_annotation_target
+   info - The variable name 'total_pages' isn't a lowerCamelCase identifier - lib\data\models\movie_response.dart:12:48 - non_constant_identifier_names
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_response.dart:13:6 - invalid_annotation_target
+   info - The variable name 'total_results' isn't a lowerCamelCase identifier - lib\data\models\movie_response.dart:13:50 - non_constant_identifier_names
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:16:6 - invalid_annotation_target
+   info - The variable name 'backdrop_path' isn't a lowerCamelCase identifier - lib\data\models\movie_results.dart:16:45 - non_constant_identifier_names
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:19:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:21:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:22:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:25:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:26:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:29:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:31:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_results.dart:32:6 - invalid_annotation_target
+warning - Duplicate import - lib\data\models\movie_videos.dart:2:8 - duplicate_import
+   info - The import of 'package:json_annotation/json_annotation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:freezed_annotation/freezed_annotation.dart' - lib\data\models\movie_videos.dart:3:8 - unnecessary_import
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:11:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:12:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:21:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:22:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:23:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:24:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:25:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\data\models\movie_videos.dart:26:6 - invalid_annotation_target
+warning - Unused import: 'package:framed_v2/data/models/favorite.dart' - lib\favorite_row.dart:5:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/main_screen.dart' - lib\main.dart:5:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\movie_row.dart:5:8 - unused_import
+   info - Use 'package:' imports for files in the 'lib' directory - lib\movie_widget.dart:5:8 - always_use_package_imports
+   info - Use 'package:' imports for files in the 'lib' directory - lib\movie_widget.dart:6:8 - always_use_package_imports
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\movie_widget.dart:7:8 - unused_import
+warning - Unused import: 'package:auto_route/annotations.dart' - lib\network\movie_api_service.dart:1:8 - unused_import
+warning - The value of the local variable 'key' isn't used - lib\network\movie_api_service.dart:30:19 - unused_local_variable
+   info - 'DioError' is deprecated and shouldn't be used. Use DioException instead. This will be removed in 6.0.0 - lib\network\movie_api_service.dart:53:19 - deprecated_member_use
+warning - Unused import: 'package:framed_v2/ui/screens/geners/genre_section.dart' - lib\providers.dart:4:8 - unused_import
+   info - 'ProviderRef' is deprecated and shouldn't be used. will be removed in 3.0.0. Use Ref instead - lib\providers.g.dart:23:30 - deprecated_member_use
+   info - 'FutureProviderRef' is deprecated and shouldn't be used. will be removed in 3.0.0. Use Ref instead - lib\providers.g.dart:37:26 - deprecated_member_use
+   info - 'FutureProviderRef' is deprecated and shouldn't be used. will be removed in 3.0.0. Use Ref instead - lib\providers.g.dart:51:20 - deprecated_member_use
+   info - 'ProviderRef' is deprecated and shouldn't be used. will be removed in 3.0.0. Use Ref instead - lib\providers.g.dart:65:24 - deprecated_member_use
+   info - 'FutureProviderRef' is deprecated and shouldn't be used. will be removed in 3.0.0. Use Ref instead - lib\providers.g.dart:80:29 - deprecated_member_use
+   info - 'FutureProviderRef' is deprecated and shouldn't be used. will be removed in 3.0.0. Use Ref instead - lib\providers.g.dart:95:28 - deprecated_member_use
+warning - A value for optional parameter 'navigatorKey' isn't ever given - lib\router\app_routes.gr.dart:14:22 - unused_element_parameter
+   info - Use 'package:' imports for files in the 'lib' directory - lib\sliver_divider.dart:2:8 - always_use_package_imports
+warning - Unused import: 'package:framed_v2/vert_movie_list.dart' - lib\ui\home\home_screen.dart:12:8 - unused_import
+warning - Duplicate import - lib\ui\home\home_screen.dart:13:8 - duplicate_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\ui\home\home_screen.dart:14:8 - unused_import
+   info - Constructors for public widgets should have a named 'key' parameter - lib\ui\home\home_screen.dart:19:7 - use_key_in_widget_constructors
+   info - The variable name 'MovieViewModelAsync' isn't a lowerCamelCase identifier - lib\ui\home\home_screen.dart:29:11 - non_constant_identifier_names
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\ui\home\home_screen_image.dart:16:3 - prefer_const_constructors_in_immutables
+warning - Unused import: 'package:cached_network_image/cached_network_image.dart' - lib\ui\home\horiz_movies.dart:1:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\ui\home\horiz_movies.dart:8:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/screens/videos/video_page.dart' - lib\ui\main_screen.dart:6:8 - unused_import
+warning - Unused import: 'dart:math' - lib\ui\movie_viewmodel.dart:1:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\ui\movie_viewmodel.dart:7:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart' - lib\ui\movie_viewmodel.dart:15:8 - unused_import
+   info - Don't invoke 'print' in production code - lib\ui\movie_viewmodel.dart:79:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\ui\movie_viewmodel.dart:213:5 - avoid_print
+warning - Unused import: 'package:framed_v2/data/models/favorite.dart' - lib\ui\screens\favorites\favorite_screen.dart:6:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\ui\screens\geners\genre_screen.dart:5:8 - unused_import
+warning - Unused import: 'package:auto_size_text/auto_size_text.dart' - lib\ui\screens\geners\genre_section.dart:1:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/genre.dart' - lib\ui\screens\geners\genre_section.dart:5:8 - unused_import
+   info - The imported package 'rxdart' isn't a dependency of the importing package - lib\ui\screens\geners\sort_picker.dart:5:8 - depend_on_referenced_packages
+warning - Unused import: 'package:rxdart/utils.dart' - lib\ui\screens\geners\sort_picker.dart:5:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart' - lib\ui\screens\movie_detail\detail_image.dart:7:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/screens/geners/genre_section.dart' - lib\ui\screens\movie_detail\genre_row.dart:4:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/screens/geners/genre_section.dart' - lib\ui\screens\movie_detail\movie_detail.dart:13:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\ui\screens\movie_detail\movie_detail.dart:21:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart' - lib\ui\screens\movie_detail\movie_overview.dart:3:8 - unused_import
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\ui\text_icon.dart:8:3 - prefer_const_constructors_in_immutables
+warning - Unused import: 'package:framed_v2/data/models/favorite.dart' - lib\utils\utils.dart:3:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\utils\utils.dart:5:8 - unused_import
+   info - The import of 'package:framed_v2/data/models/movie_results.dart' is unnecessary because all of the used elements are also provided by the import of 'package:framed_v2/data/models/models.dart' - lib\utils\utils.dart:6:8 - unnecessary_import
+   info - The import of 'package:framed_v2/data/models/movie_videos.dart' is unnecessary because all of the used elements are also provided by the import of 'package:framed_v2/data/models/models.dart' - lib\utils\utils.dart:7:8 - unnecessary_import
+warning - Unused import: 'package:framed_v2/vert_movie_list.dart' - lib\utils\utils.dart:8:8 - unused_import
+warning - Unused import: 'package:framed_v2/data/models/favorite.dart' - lib\vert_favorite_list.dart:3:8 - unused_import
+   info - Use 'package:' imports for files in the 'lib' directory - lib\vert_favorite_list.dart:6:8 - always_use_package_imports
+warning - Unused import: 'package:framed_v2/data/models/movie.dart' - lib\vert_movie_list.dart:2:8 - unused_import
+warning - Unused import: 'package:framed_v2/providers.dart' - lib\vert_movie_list.dart:4:8 - unused_import
+warning - Unused import: 'package:framed_v2/utils/utils.dart' - lib\vert_movie_list.dart:6:8 - unused_import
+warning - Unused import: 'package:framed_v2/ui/home/home_screen_image.dart' - lib\vert_movie_list.dart:7:8 - unused_import
+

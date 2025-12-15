@@ -1,0 +1,335 @@
+﻿[INFO] Generating build script...
+[INFO] Generating build script completed, took 338ms
+
+[INFO] Initializing inputs
+[INFO] Reading cached asset graph...
+[INFO] Reading cached asset graph completed, took 161ms
+
+[INFO] Checking for updates since last build...
+[INFO] Checking for updates since last build completed, took 1.1s
+
+[INFO] Running build...
+[INFO] Running build completed, took 29ms
+
+[INFO] Caching finalized dependency graph...
+[INFO] Caching finalized dependency graph completed, took 176ms
+
+[SEVERE] drift_dev on lib/data/database/models/database_interface.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/database_models.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/favorite.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/drift/movie_database.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/favorite.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/genre_state.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/drift/drift_database.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/models.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_configuration.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_credits.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_results.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/movie_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_videos.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/movie_widget.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/sliver_divider.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/network/movie_api_service.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/main.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/home_screen_image.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/horiz_movies.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/horiz_cast.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/main_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/genre_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/title_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/genre_section.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/favorite_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/movie_viewmodel.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/home_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/genre_search_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/button_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/detail_image.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/vert_favorite_list.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/utils/utils.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/utils/prefs.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/sort_picker.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/vert_movie_list.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/drift/drift_database.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/cast_image.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/genre_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/theme/theme.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/movie_detail.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_details.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/drift/movie_database.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/configuration.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/router/app_routes.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/database_models.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/database_interface.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/favorite.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/genre.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/favorite.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/genre.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/not_ready.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_details.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/configuration.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_videos.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/models.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/movie_widget.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/favorite_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/not_ready.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_credits.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/sliver_divider.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/movie_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/main_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/favorites/favorite_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/cast_image.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/horiz_movies.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_response.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/home_screen_image.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/providers.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/horiz_cast.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/title_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/favorites/favorite_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_results.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/movie_viewmodel.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/main.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/genre_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/genre_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/sort_picker.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/genre_section.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/geners/genre_search_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/providers.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/movie_overview.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/text_icon.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/videos/video_page.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/movie_detail.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/videos/video_page.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/utils/utils.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/vert_favorite_list.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/theme/theme.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/utils/prefs.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/trailer.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_configuration.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/movie_response.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/movie_overview.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/router/app_routes.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/trailer.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/genre.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/database/models/genre.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/text_icon.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/button_row.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/vert_movie_list.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/screens/movie_detail/detail_image.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/data/models/genre_state.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/network/movie_api_service.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] drift_dev on lib/ui/home/home_screen.dart (cached):
+
+type 'Null' is not a subtype of type 'InterfaceElement' in type cast
+[SEVERE] Failed after 306ms

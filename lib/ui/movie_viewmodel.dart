@@ -1,28 +1,30 @@
 import 'dart:math';
 
+import 'package:framed_v2/data/storage/hive_storage.dart';
 import 'package:framed_v2/data/models/favorite.dart';
 import 'package:framed_v2/data/models/genre.dart';
-import 'package:framed_v2/data/models/movie.dart';
+import 'package:framed_v2/data/models/movie_configuration.dart';
 import 'package:framed_v2/data/models/movie_credits.dart';
 import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/data/models/movie_response.dart';
 import 'package:framed_v2/data/models/movie_results.dart';
 import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/network/movie_api_service.dart';
-import 'package:framed_v2/ui/screens/movie_detail/movie_detail.dart';
+import 'package:framed_v2/utils/utils.dart';
 import 'package:lumberdash/lumberdash.dart';
 
 class MovieViewModel {
   final MovieApiService movieApiService;
+  final HiveStorage storage;
+  MovieConfiguration? movieConfiguration;
   List<Genre>? movieGenres;
-  Stream<List<Favorite>>? favoriteStream;
   List<Favorite> favoriteList = [];
   List<MovieResults> trendingMovies = [];
   List<MovieResults> topRatedMovies = [];
   List<MovieResults> popularMovies = [];
   List<MovieResults> nowPlayingMovies = [];
 
-  MovieViewModel({required this.movieApiService});
+  MovieViewModel({required this.movieApiService, required this.storage});
 
   Future<MovieResponse?> getNowPlaying(int page) async {
     final response = await movieApiService.getNowPlaying(page);
@@ -85,7 +87,24 @@ class MovieViewModel {
     await Future.wait([setupConfiguration(), setupGenres()]);
   }
 
-  Future setupConfiguration() async {}
+  Future setupConfiguration() async {
+    final response = await movieApiService.getMovieConfiguration();
+    if (response.statusCode == 200) {
+      movieConfiguration = MovieConfiguration.fromJson(response.data);
+    } else {
+      logError(
+        'Failed to load configuration with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+    }
+  }
+
+  String? getImageUrl(ImageSize size, String? file) {
+    if (file == null || movieConfiguration == null) {
+      logMessage('movieConfiguration is null or getImageUrl file: $file');
+      return null;
+    }
+    return getSizedImageUrl(size, movieConfiguration!, file);
+  }
 
   Future setupGenres() async {
     final response = await movieApiService.getGenres();
@@ -124,87 +143,30 @@ class MovieViewModel {
     }
   }
 
-  Stream<List<Favorite>> streamFavorites() {
-    favoriteList = [
+  Future saveFavorite(MovieDetails movieDetails) async {
+    await storage.saveFavorite(
       Favorite(
-        movieId: 1,
-        image: 'http://image.tmdb.org/t/p/w780/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg',
-        favorite: false,
-        title: 'Title',
-        overview: 'Overview',
-        popularity: 1.0,
-        releaseDate: DateTime.now(),
+        movieId: movieDetails.id,
+        image: movieDetails.posterPath ?? '',
+        favorite: true,
+        title: movieDetails.title,
+        overview: movieDetails.overview,
+        popularity: movieDetails.popularity,
+        releaseDate: movieDetails.releaseDate,
       ),
-
-      Favorite(
-        movieId: 2,
-        image: 'http://image.tmdb.org/t/p/w780/gKkl37BQuKTanygYQG1pyYgLVgf.jpg',
-        favorite: false,
-        title: 'Title',
-        overview: 'Overview',
-        popularity: 1.0,
-        releaseDate: DateTime.now(),
-      ),
-
-      Favorite(
-        movieId: 3,
-
-        image: 'http://image.tmdb.org/t/p/w780/4xJd3uwtL1vCuZgEfEc8JXI9Uyx.jpg',
-
-        favorite: false,
-
-        title: 'Title',
-
-        overview: 'Overview',
-
-        popularity: 1.0,
-
-        releaseDate: DateTime.now(),
-      ),
-
-      Favorite(
-        movieId: 4,
-
-        image: 'http://image.tmdb.org/t/p/w780/uuA01PTtPombRPvL9dvsBqOBJWm.jpg',
-
-        favorite: false,
-
-        title: 'Title',
-
-        overview: 'Overview',
-
-        popularity: 1.0,
-
-        releaseDate: DateTime.now(),
-      ),
-
-      Favorite(
-        movieId: 5,
-
-        image: 'http://image.tmdb.org/t/p/w780/H6vke7zGiuLsz4v4RPeReb9rsv.jpg',
-
-        favorite: false,
-
-        title: 'Title',
-
-        overview: 'Overview',
-
-        popularity: 1.0,
-
-        releaseDate: DateTime.now(),
-      ),
-    ];
-    favoriteStream = Stream.value(favoriteList);
-    return favoriteStream!;
+    );
   }
 
-  void updateFavorite(Favorite favorite) {
-    final index = favoriteList!.indexWhere(
-      (favItem) => favItem.movieId == favorite.movieId,
-    );
-    if (index != -1) {
-      favoriteList![index] = favorite;
-    }
+  Future<void> removeFavorite(int id) async {
+    await storage.removeFavorite(id);
+  }
+
+  Future<List<Favorite>> getFavorites() async {
+    return storage.getFavorites();
+  }
+
+  Stream<List<Favorite>> streamFavorites() {
+    return storage.streamFavorites();
   }
 
   Future<MovieVideos?> getMovieVideos(int movieId) async {

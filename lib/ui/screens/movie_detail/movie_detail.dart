@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:framed_v2/data/models/favorite.dart';
 import 'package:framed_v2/data/models/movie_credits.dart';
 import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/data/models/movie_videos.dart';
@@ -33,6 +35,7 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   late MovieViewModel movieViewModel;
   MovieCredits? credits;
   MovieVideos? movieVideos;
+  int currentFavoriteId = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +51,6 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   }
 
   Widget buildScreen() {
-    final favoriteNotifier = ValueNotifier<bool>(false);
-
     return FutureBuilder(
       future: loadData(),
       builder: (context, snapshot) {
@@ -91,26 +92,36 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                         SliverList(
                           delegate: SliverChildListDelegate([
                             Stack(
-                              children: [DetailImage(details: movieDetails)],
+                              children: [
+                                DetailImage(
+                                  details: movieDetails,
+                                  movieConfiguration:
+                                      movieViewModel.movieConfiguration!,
+                                ),
+                              ],
                             ),
                             GenreRow(genres: movieDetails.genres),
                             MovieOverview(details: movieDetails),
-                            ValueListenableBuilder<bool>(
-                              valueListenable: favoriteNotifier,
-                              builder:
-                                  (
-                                    BuildContext context,
-                                    bool value,
-                                    Widget? child,
-                                  ) {
-                                    return ButtonRow(
-                                      favoriteSelected: favoriteNotifier.value,
-                                      onFavoriteSelected: () async {
-                                        favoriteNotifier.value =
-                                            !favoriteNotifier.value;
-                                      },
-                                    );
+                            StreamBuilder<List<Favorite>>(
+                              stream: movieViewModel.streamFavorites(),
+                              builder: (context, snapshot) {
+                                final favorites = snapshot.data ?? [];
+                                final isFavorite = favorites.any((element) => element.movieId == widget.movieId);
+                                return ButtonRow(
+                                  favoriteSelected: isFavorite,
+                                  onFavoriteSelected: () async {
+                                    if (isFavorite) {
+                                      await movieViewModel.removeFavorite(
+                                        widget.movieId,
+                                      );
+                                    } else {
+                                      await movieViewModel.saveFavorite(
+                                        movieDetails,
+                                      );
+                                    }
                                   },
+                                );
+                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
@@ -147,7 +158,10 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                             ),
                           ]),
                         ),
-                        HorizontalCast(castList: credits?.cast ?? []),
+                        HorizontalCast(
+                          castList: credits?.cast ?? [],
+                          movieViewModel: movieViewModel,
+                        ),
                       ],
                     ),
                   ),

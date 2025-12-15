@@ -85,10 +85,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                             );
                           },
                           onFavoriteResultsTap: (Favorite favorite) {
-                            setState(() {
-                              favorite.favorite = !favorite.favorite;
-                              movieViewModel.updateFavorite(favorite);
-                            });
+                            removeFavorite(favorite);
                           },
                         ),
                       ],
@@ -127,8 +124,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
   }
 
   Future removeFavorite(Favorite favorite) async {
-    setState(() {
-      currentFavorites.remove(favorite);
-    });
+    await movieViewModel.removeFavorite(favorite.movieId);
+    setState(() {});
   }
 }

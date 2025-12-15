@@ -6,6 +6,21 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$movieApiServiceHash() => r'0949062b7db0643fbb76838af5cff227b710f7a6';
+
+/// See also [movieApiService].
+@ProviderFor(movieApiService)
+final movieApiServiceProvider = Provider<MovieApiService>.internal(
+  movieApiService,
+  name: r'movieApiServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$movieApiServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef MovieApiServiceRef = ProviderRef<MovieApiService>;
 String _$sharedPrefsHash() => r'0ebc135ba0bea1685cfcb6d3e19119eec07a339a';
 
 /// See also [sharedPrefs].
@@ -48,7 +63,7 @@ final appRouterProvider = Provider<AppRouter>.internal(
 );
 
 typedef AppRouterRef = ProviderRef<AppRouter>;
-String _$movieViewModelHash() => r'703efcff4ab625aa09da1ecaf2e372f14bb0af14';
+String _$movieViewModelHash() => r'bf2c09b37ec7cc2f9edbbb4645ca628cc747ecf3';
 
 /// See also [movieViewModel].
 @ProviderFor(movieViewModel)
@@ -63,20 +78,19 @@ final movieViewModelProvider = FutureProvider<MovieViewModel>.internal(
 );
 
 typedef MovieViewModelRef = FutureProviderRef<MovieViewModel>;
-String _$movieApiServiceHash() => r'0949062b7db0643fbb76838af5cff227b710f7a6';
+String _$hiveStorageHash() => r'bc605dbd62fc2e4e0fd5ac7efe6241bc126cdda1';
 
-/// See also [movieApiService].
-@ProviderFor(movieApiService)
-final movieApiServiceProvider = Provider<MovieApiService>.internal(
-  movieApiService,
-  name: r'movieApiServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$movieApiServiceHash,
+/// See also [hiveStorage].
+@ProviderFor(hiveStorage)
+final hiveStorageProvider = Provider<HiveStorage>.internal(
+  hiveStorage,
+  name: r'hiveStorageProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$hiveStorageHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MovieApiServiceRef = ProviderRef<MovieApiService>;
+typedef HiveStorageRef = ProviderRef<HiveStorage>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

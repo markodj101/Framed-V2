@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:framed_v2/data/models/favorite.dart';
+import 'package:framed_v2/data/models/models.dart';
 import 'package:framed_v2/data/models/movie.dart';
 import 'package:framed_v2/data/models/movie_results.dart';
 import 'package:framed_v2/data/models/movie_videos.dart';
@@ -16,16 +17,36 @@ Widget addHorizontalSpace(double amount) {
 
 enum ImageSize { small, large }
 
-String getImageUrl(ImageSize size, String? path) {
-  if (path == null) {
-    return '';
-  }
+String imageUrl(String baseUrl, String size, String file) =>
+    '$baseUrl$size$file';
+
+String? getSizedImageUrl(
+  ImageSize size,
+  MovieConfiguration configuration,
+  String? file,
+) {
+  if (file == null) return null;
   switch (size) {
     case ImageSize.small:
-      return 'https://image.tmdb.org/t/p/w154/$path';
+      return imageUrl(
+        configuration.images.baseUrl,
+        configuration.images.posterSizes[1],
+        file,
+      );
     case ImageSize.large:
-      return 'https://image.tmdb.org/t/p/w780/$path';
+      return imageUrl(
+        configuration.images.baseUrl,
+        configuration.images.posterSizes[5],
+        file,
+      );
   }
+}
+
+String? getMovieDetailsImagePath(
+  MovieDetails details,
+  MovieConfiguration configuration,
+) {
+  return getSizedImageUrl(ImageSize.large, configuration, details.backdropPath);
 }
 
 final yearFormat = DateFormat('yyyy');

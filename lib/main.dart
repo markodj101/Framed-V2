@@ -6,12 +6,22 @@ import 'package:framed_v2/ui/main_screen.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lumberdash/lumberdash.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:framed_v2/data/models/movie.dart';
+import 'package:framed_v2/data/models/genre.dart';
+import 'package:framed_v2/data/models/favorite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   putLumberdashToWork(withClients: [ColorizeLumberdash()]);
 
   await dotenv.load(fileName: '.env');
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(MovieAdapter());
+  Hive.registerAdapter(GenreAdapter());
+  Hive.registerAdapter(FavoriteAdapter());
+
   runApp(const ProviderScope(child: MainApp()));
 }
 

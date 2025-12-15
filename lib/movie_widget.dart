@@ -47,7 +47,7 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
         setState(() {
           ref.read(heroTagProvider.notifier).state = uniqueHeroTag;
           animateImage = true;
-          _controller.forward();
+          _controller.forward(from: 0);
         });
       },
       child: Padding(
