@@ -71,11 +71,13 @@ var verySmallText = roboto.copyWith(
 
 // Colors
 
-const screenBackground = Color(0xFF111111);
+const screenBackground = Colors.black;
 const searchBarBackground = Color(0xFF1E1E1E);
 const primaryButton = Color(0xFFD9D9D9);
 const posterBorder = Color(0xFFB5A9A9);
 const buttonGrey = Color(0xFF504F4F);
+const matchGreen = Color(0xFF00C853);
+const badgeGrey = Color(0xFF424242);
 
 ThemeData createTheme() {
   return ThemeData(

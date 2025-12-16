@@ -15,6 +15,9 @@ import 'package:framed_v2/data/models/movie.dart';
 import 'package:framed_v2/not_ready.dart';
 import 'package:auto_route/auto_route.dart';
 
+
+
+
 @RoutePage(name: 'HomeRoute')
 class HomeScreen extends ConsumerStatefulWidget {
   @override
@@ -24,6 +27,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late MovieViewModel movieViewModel;
   Future<List<MovieResponse?>>? movieFuture;
+
+
+  @override
+
   @override
   Widget build(BuildContext context) {
     final MovieViewModelAsync = ref.watch(movieViewModelProvider);
@@ -40,60 +47,61 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget buildScreen() {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder(
-          future: loadData(),
-          builder: (context, snapshot) {
-            if ((snapshot.connectionState != ConnectionState.active) &&
-                (snapshot.connectionState != ConnectionState.done)) {
-              return const NotReady();
-            }
-            return SingleChildScrollView(
-              child: Container(
-                color: screenBackground,
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 16.0, 0, 24),
-                        child: Text('Now Playing', style: largeTitle),
+        body: SafeArea(
+          child: Stack(
+            children: [
+               FutureBuilder(
+                future: loadData(),
+                builder: (context, snapshot) {
+                  if ((snapshot.connectionState != ConnectionState.active) &&
+                      (snapshot.connectionState != ConnectionState.done)) {
+                    return const NotReady();
+                  }
+                  return SingleChildScrollView(
+                    child: Container(
+                      color: screenBackground,
+                      child: Column(
+                        children: [
+                          HomeScreenImage(
+                            movieViewModel: movieViewModel,
+                            onMovieTap: (movieId) {
+                              context.router.push(MovieDetailRoute(movieId: movieId));
+                            },
+                          ),
+                          TitleRow(text: 'Trending', onMoreClicked: () {}),
+                          HorizontalMovies(
+                            movies: movieViewModel.trendingMovies,
+                            onMovieTap: (movieId) {
+                              context.router.push(MovieDetailRoute(movieId: movieId));
+                            },
+                            movieType: MovieType.trending,
+                          ),
+                          TitleRow(text: 'Popular', onMoreClicked: () {}),
+                          HorizontalMovies(
+                            movies: movieViewModel.popularMovies,
+                            onMovieTap: (movieId) {
+                              context.router.push(MovieDetailRoute(movieId: movieId));
+                            },
+                            movieType: MovieType.popular,
+                          ),
+                          TitleRow(text: 'Top Rated', onMoreClicked: () {}),
+                          HorizontalMovies(
+                            movies: movieViewModel.topRatedMovies,
+                            onMovieTap: (movieId) {
+                              context.router.push(MovieDetailRoute(movieId: movieId));
+                            },
+                            movieType: MovieType.topRated,
+                          ),
+                        ],
                       ),
                     ),
-                    HomeScreenImage(
-                      movieViewModel: movieViewModel,
-                      onMovieTap: (movieId) {
-                        context.router.push(MovieDetailRoute(movieId: movieId));
-                      },
-                    ),
-                    TitleRow(text: 'Trending', onMoreClicked: () {}),
-                    HorizontalMovies(
-                      movies: movieViewModel.trendingMovies,
-                      onMovieTap: (movieId) {
-                        context.router.push(MovieDetailRoute(movieId: movieId));
-                      },
-                      movieType: MovieType.trending,
-                    ),
-                    TitleRow(text: 'Popular', onMoreClicked: () {}),
-                    HorizontalMovies(
-                      movies: movieViewModel.popularMovies,
-                      onMovieTap: (movieId) {
-                        context.router.push(MovieDetailRoute(movieId: movieId));
-                      },
-                      movieType: MovieType.popular,
-                    ),
-                    TitleRow(text: 'Top Rated', onMoreClicked: () {}),
-                    HorizontalMovies(
-                      movies: movieViewModel.topRatedMovies,
-                      onMovieTap: (movieId) {
-                        context.router.push(MovieDetailRoute(movieId: movieId));
-                      },
-                      movieType: MovieType.topRated,
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
+            
+
+            ],
+          ),
         ),
       ),
     );

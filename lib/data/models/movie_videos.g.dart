@@ -28,6 +28,7 @@ _$MovieVideoImpl _$$MovieVideoImplFromJson(Map<String, dynamic> json) =>
       official: json['official'] as bool,
       publishedAt: DateTime.parse(json['published_at'] as String),
       id: json['id'] as String,
+      type: json['type'] as String,
     );
 
 Map<String, dynamic> _$$MovieVideoImplToJson(_$MovieVideoImpl instance) =>
@@ -38,4 +39,5 @@ Map<String, dynamic> _$$MovieVideoImplToJson(_$MovieVideoImpl instance) =>
       'official': instance.official,
       'published_at': instance.publishedAt.toIso8601String(),
       'id': instance.id,
+      'type': instance.type,
     };

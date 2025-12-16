@@ -27,8 +27,9 @@ class HorizontalMovies extends ConsumerWidget {
       loading: () => Container(),
       data: (viewModel) {
         return SizedBox(
-          height: 142,
+          height: 190,
           child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: movies.length,
@@ -38,11 +39,13 @@ class HorizontalMovies extends ConsumerWidget {
                 movies[index].posterPath,
               );
               return imageUrl != null
-                  ? MovieWidget(
-                      movieId: movies[index].id,
-                      movieUrl: imageUrl,
-                      onMovieTap: onMovieTap,
-                      movieType: movieType,
+                  ? Center(
+                      child: MovieWidget(
+                        movieId: movies[index].id,
+                        movieUrl: imageUrl,
+                        onMovieTap: onMovieTap,
+                        movieType: movieType,
+                      ),
                     )
                   : emptyWidget;
             },

@@ -24,6 +24,7 @@ class MovieVideo with _$MovieVideo {
     @JsonKey(name: 'official') required bool official,
     @JsonKey(name: 'published_at') required DateTime publishedAt,
     @JsonKey(name: 'id') required String id,
+    @JsonKey(name: 'type') required String type,
   }) = _MovieVideo;
 
   factory MovieVideo.fromJson(Map<String, dynamic> json) =>

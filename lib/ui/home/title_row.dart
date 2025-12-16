@@ -13,28 +13,12 @@ class TitleRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16.0, 0.0, 8.0),
+          padding: const EdgeInsets.fromLTRB(20, 24.0, 0.0, 12.0),
           child: Text(
             text,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
               color: Colors.white,
-            ),
-          ),
-        ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16.0, 0.0, 8.0),
-          child: TextButton(
-            onPressed: onMoreClicked,
-            child: const Text(
-              "More",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              ),
             ),
           ),
         ),

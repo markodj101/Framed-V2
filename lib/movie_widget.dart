@@ -51,34 +51,49 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
         });
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: SizedBox(
-          width: 100,
-          height: 142,
-          child:
+          width: 110,
+          height: 160,
+          child: Stack(
+            children: [
+              // Movie Image
               Hero(
-                    tag: uniqueHeroTag,
+                tag: uniqueHeroTag,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15), // Slightly less to fit inside border
                     child: CachedNetworkImage(
                       imageUrl: widget.movieUrl,
                       alignment: Alignment.topCenter,
-                      fit: BoxFit.fitHeight,
-                      height: 100,
-                      width: 142,
+                      fit: BoxFit.cover,
+                      height: 160,
+                      width: 110,
                     ),
-                  )
-                  .animate(
-                    autoPlay: false,
-                    controller: _controller,
-                    onComplete: (controller) {
-                      if (animateImage) {
-                        animateImage = false;
-                        widget.onMovieTap(widget.movieId);
-                      }
-                    },
-                  )
-                  .scaleXY(begin: 1.0, end: 1.1, duration: 600.ms)
-                  .then(delay: 600.ms)
-                  .scaleXY(begin: 1.1, end: 1.0, duration: 600.ms),
+                  ),
+                ),
+              )
+              .animate(
+                autoPlay: false,
+                controller: _controller,
+                onComplete: (controller) {
+                  if (animateImage) {
+                    animateImage = false;
+                    widget.onMovieTap(widget.movieId);
+                  }
+                },
+              )
+              .scaleXY(begin: 1.0, end: 1.05, duration: 150.ms, curve: Curves.easeOut)
+              .then()
+              .scaleXY(begin: 1.05, end: 1.0, duration: 150.ms, curve: Curves.easeIn),
+
+
+            ],
+          ),
         ),
       ),
     );

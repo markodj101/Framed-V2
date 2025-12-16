@@ -206,6 +206,8 @@ mixin _$MovieVideo {
   DateTime get publishedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type')
+  String get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -225,7 +227,8 @@ abstract class $MovieVideoCopyWith<$Res> {
       @JsonKey(name: 'size') int size,
       @JsonKey(name: 'official') bool official,
       @JsonKey(name: 'published_at') DateTime publishedAt,
-      @JsonKey(name: 'id') String id});
+      @JsonKey(name: 'id') String id,
+      @JsonKey(name: 'type') String type});
 }
 
 /// @nodoc
@@ -247,6 +250,7 @@ class _$MovieVideoCopyWithImpl<$Res, $Val extends MovieVideo>
     Object? official = null,
     Object? publishedAt = null,
     Object? id = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -273,6 +277,10 @@ class _$MovieVideoCopyWithImpl<$Res, $Val extends MovieVideo>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -291,7 +299,8 @@ abstract class _$$MovieVideoImplCopyWith<$Res>
       @JsonKey(name: 'size') int size,
       @JsonKey(name: 'official') bool official,
       @JsonKey(name: 'published_at') DateTime publishedAt,
-      @JsonKey(name: 'id') String id});
+      @JsonKey(name: 'id') String id,
+      @JsonKey(name: 'type') String type});
 }
 
 /// @nodoc
@@ -311,6 +320,7 @@ class __$$MovieVideoImplCopyWithImpl<$Res>
     Object? official = null,
     Object? publishedAt = null,
     Object? id = null,
+    Object? type = null,
   }) {
     return _then(_$MovieVideoImpl(
       name: null == name
@@ -337,6 +347,10 @@ class __$$MovieVideoImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -350,7 +364,8 @@ class _$MovieVideoImpl implements _MovieVideo {
       @JsonKey(name: 'size') required this.size,
       @JsonKey(name: 'official') required this.official,
       @JsonKey(name: 'published_at') required this.publishedAt,
-      @JsonKey(name: 'id') required this.id});
+      @JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'type') required this.type});
 
   factory _$MovieVideoImpl.fromJson(Map<String, dynamic> json) =>
       _$$MovieVideoImplFromJson(json);
@@ -373,10 +388,13 @@ class _$MovieVideoImpl implements _MovieVideo {
   @override
   @JsonKey(name: 'id')
   final String id;
+  @override
+  @JsonKey(name: 'type')
+  final String type;
 
   @override
   String toString() {
-    return 'MovieVideo(name: $name, key: $key, size: $size, official: $official, publishedAt: $publishedAt, id: $id)';
+    return 'MovieVideo(name: $name, key: $key, size: $size, official: $official, publishedAt: $publishedAt, id: $id, type: $type)';
   }
 
   @override
@@ -391,13 +409,14 @@ class _$MovieVideoImpl implements _MovieVideo {
                 other.official == official) &&
             (identical(other.publishedAt, publishedAt) ||
                 other.publishedAt == publishedAt) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, key, size, official, publishedAt, id);
+  int get hashCode => Object.hash(
+      runtimeType, name, key, size, official, publishedAt, id, type);
 
   @JsonKey(ignore: true)
   @override
@@ -420,7 +439,8 @@ abstract class _MovieVideo implements MovieVideo {
       @JsonKey(name: 'size') required final int size,
       @JsonKey(name: 'official') required final bool official,
       @JsonKey(name: 'published_at') required final DateTime publishedAt,
-      @JsonKey(name: 'id') required final String id}) = _$MovieVideoImpl;
+      @JsonKey(name: 'id') required final String id,
+      @JsonKey(name: 'type') required final String type}) = _$MovieVideoImpl;
 
   factory _MovieVideo.fromJson(Map<String, dynamic> json) =
       _$MovieVideoImpl.fromJson;
@@ -443,6 +463,9 @@ abstract class _MovieVideo implements MovieVideo {
   @override
   @JsonKey(name: 'id')
   String get id;
+  @override
+  @JsonKey(name: 'type')
+  String get type;
   @override
   @JsonKey(ignore: true)
   _$$MovieVideoImplCopyWith<_$MovieVideoImpl> get copyWith =>
