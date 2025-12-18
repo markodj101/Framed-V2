@@ -8,6 +8,7 @@ const trendingUrl = 'trending/movie/week';
 const nowPlayingUrl = 'movie/now_playing';
 const topRatedUrl = 'movie/top_rated';
 const popularUrl = 'movie/popular';
+const upcomingUrl = 'movie/upcoming';
 const pageParameterName = 'page';
 const movieIdParameterName = 'movie_id';
 const apiKeyParameterName = 'api_key';
@@ -95,6 +96,14 @@ class MovieApiService {
   Future<Response> getPopular([int page = 1]) async {
     final response = await dio.get(
       popularUrl,
+      queryParameters: {pageParameterName: page},
+    );
+    return response;
+  }
+
+  Future<Response> getUpcoming([int page = 1]) async {
+    final response = await dio.get(
+      upcomingUrl,
       queryParameters: {pageParameterName: page},
     );
     return response;

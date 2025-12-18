@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ExploreRoute.name: (routeData) {
+      final args = routeData.argsAs<ExploreRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ExploreScreen(
+          key: args.key,
+          movieType: args.movieType,
+        ),
+      );
+    },
     FavoriteRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -60,6 +70,44 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ExploreScreen]
+class ExploreRoute extends PageRouteInfo<ExploreRouteArgs> {
+  ExploreRoute({
+    Key? key,
+    required MovieType movieType,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ExploreRoute.name,
+          args: ExploreRouteArgs(
+            key: key,
+            movieType: movieType,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ExploreRoute';
+
+  static const PageInfo<ExploreRouteArgs> page =
+      PageInfo<ExploreRouteArgs>(name);
+}
+
+class ExploreRouteArgs {
+  const ExploreRouteArgs({
+    this.key,
+    required this.movieType,
+  });
+
+  final Key? key;
+
+  final MovieType movieType;
+
+  @override
+  String toString() {
+    return 'ExploreRouteArgs{key: $key, movieType: $movieType}';
+  }
 }
 
 /// generated route for

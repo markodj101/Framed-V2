@@ -82,28 +82,16 @@ const badgeGrey = Color(0xFF424242);
 ThemeData createTheme() {
   return ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFF2196F3),
-      // Base blue color
-      primary: const Color(0xFF2196F3),
-      // Primary color (can be same as seed)
-      onPrimary: Colors.white,
-      // Text/icon color on primary background
-      secondary: const Color(0xFF90CAF9),
-      // Secondary color (lighter blue)
-      onSecondary: Colors.black,
-      // Background color (very light blue)
-      surfaceContainerHighest: Colors.black,
-      // Text/icon color on background
-      surface: const Color(0xFFBBDEFB),
-      // Surface color (cards, menus, etc.)
-      onSurface: Colors.black,
-      // Text/icon color on surface
-      error: const Color(0xFFB00020),
-      // Error color (red)
-      onError: Colors.white,
-      // Text/icon color on error background
-      brightness: Brightness.light, // Overall brightness (light or dark)
+      seedColor: Colors.black,
+      brightness: Brightness.dark,
+      primary: Colors.white,
+      onPrimary: Colors.black,
+      secondary: Colors.grey,
+      onSecondary: Colors.white,
+      surface: Colors.black,
+      onSurface: Colors.white,
     ),
+    scaffoldBackgroundColor: Colors.black,
     textTheme: Typography.material2021().englishLike.copyWith(
       headlineLarge: heading1,
       headlineMedium: heading2,

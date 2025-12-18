@@ -35,7 +35,7 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   late MovieViewModel movieViewModel;
   MovieCredits? credits;
   MovieVideos? movieVideos;
-  int currentFavoriteId = -1;
+  Future<MovieDetails?>? _movieDetailFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -45,136 +45,130 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
       loading: () => const NotReady(),
       data: (viewModel) {
         movieViewModel = viewModel;
+        _movieDetailFuture ??= loadData();
         return buildScreen();
       },
     );
   }
 
   Widget buildScreen() {
-    return FutureBuilder(
-      future: loadData(),
+    return FutureBuilder<MovieDetails?>(
+      future: _movieDetailFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return const NotReady();
         }
         if (snapshot.hasError) {
           logMessage('Error: ${snapshot.error.toString()}');
-          return Text(snapshot.error.toString());
+          return Scaffold(body: Center(child: Text(snapshot.error.toString())));
         }
-        final movieDetails = snapshot.data as MovieDetails?;
+        final movieDetails = snapshot.data;
         if (movieDetails == null) {
           return const NotReady();
         }
-        return SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: screenBackground,
-              leading: BackButton(
-                color: Colors.white,
-                onPressed: () {
-                  context.router.maybePopTop();
-                },
-              ),
-              centerTitle: false,
-              title: Text(
-                'Back',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+        return Scaffold(
+          backgroundColor: screenBackground,
+          appBar: AppBar(
+            backgroundColor: screenBackground,
+            leading: BackButton(
+              color: Colors.white,
+              onPressed: () {
+                context.router.maybePopTop();
+              },
             ),
-            body: Container(
-              color: screenBackground,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverList(
-                          delegate: SliverChildListDelegate([
-                            Stack(
-                              children: [
-                                DetailImage(
-                                  details: movieDetails,
-                                  movieConfiguration:
-                                      movieViewModel.movieConfiguration!,
-                                ),
-                              ],
-                            ),
-                            GenreRow(genres: movieDetails.genres),
-                            MovieOverview(details: movieDetails),
-                            StreamBuilder<List<Favorite>>(
-                              stream: movieViewModel.streamFavorites(),
-                              builder: (context, snapshot) {
-                                final favorites = snapshot.data ?? [];
-                                final isFavorite = favorites.any((element) => element.movieId == widget.movieId);
-                                return ButtonRow(
-                                  favoriteSelected: isFavorite,
-                                  onFavoriteSelected: () async {
-                                    if (isFavorite) {
-                                      await movieViewModel.removeFavorite(
-                                        widget.movieId,
-                                      );
-                                    } else {
-                                      await movieViewModel.saveFavorite(
-                                        movieDetails,
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 16,
-                                bottom: 8,
-                              ),
-                              child: Text(
-                                "Trailers",
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.headlineLarge,
-                              ),
-                            ),
-                            Trailer(
-                              movieVideos: movieVideos?.results,
-                              onVideoTap: (video) {
-                                context.router.push(
-                                  VideoPageRoute(movieVideo: video),
-                                );
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 16,
-                                bottom: 16,
-                                top: 16,
-                              ),
-                              child: Text(
-                                "Cast",
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.headlineLarge,
-                              ),
-                            ),
-                          ]),
-                        ),
-                        HorizontalCast(
-                          castList: credits?.cast ?? [],
-                          movieViewModel: movieViewModel,
-                        ),
-                      ],
-                    ),
+            centerTitle: false,
+            title: Text(
+              'Back',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: DetailImage(
+                  details: movieDetails,
+                  movieConfiguration: movieViewModel.movieConfiguration!,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: GenreRow(genres: movieDetails.genres),
+              ),
+              SliverToBoxAdapter(
+                child: MovieOverview(details: movieDetails),
+              ),
+              SliverToBoxAdapter(
+                child: StreamBuilder<List<Favorite>>(
+                  stream: movieViewModel.streamFavorites(),
+                  builder: (context, snapshot) {
+                    final favorites = snapshot.data ?? [];
+                    final isFavorite = favorites.any((element) => element.movieId == widget.movieId);
+                    return ButtonRow(
+                      favoriteSelected: isFavorite,
+                      onFavoriteSelected: () async {
+                        if (isFavorite) {
+                          await movieViewModel.removeFavorite(
+                            widget.movieId,
+                          );
+                        } else {
+                          await movieViewModel.saveFavorite(
+                            movieDetails,
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    bottom: 8,
                   ),
-                ],
+                  child: Text(
+                    "Trailers",
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                ),
               ),
-            ),
+              SliverToBoxAdapter(
+                child: Trailer(
+                  movieVideos: movieVideos?.results,
+                  onVideoTap: (video) {
+                    context.router.push(
+                      VideoPageRoute(movieVideo: video),
+                    );
+                  },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    bottom: 16,
+                    top: 16,
+                  ),
+                  child: Text(
+                    "Cast",
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                ),
+              ),
+              HorizontalCast(
+                castList: credits?.cast ?? [],
+                movieViewModel: movieViewModel,
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 50),
+              ),
+            ],
           ),
         );
       },
     );
   }
 
-  Future loadData() async {
+  Future<MovieDetails?> loadData() async {
     credits = await movieViewModel.getMovieCredits(widget.movieId);
     movieVideos = await movieViewModel.getMovieVideos(widget.movieId);
     return movieViewModel.getMovieDetails(widget.movieId);

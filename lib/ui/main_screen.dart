@@ -7,7 +7,7 @@ import 'package:framed_v2/ui/screens/geners/genre_screen.dart';
 import 'package:framed_v2/ui/screens/videos/video_page.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'package:framed_v2/ui/home/hover_button.dart';
+
 import 'package:glass_kit/glass_kit.dart';
 
 @RoutePage()

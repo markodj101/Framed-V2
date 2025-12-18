@@ -11,6 +11,7 @@ import 'package:framed_v2/data/models/movie_results.dart';
 import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/network/movie_api_service.dart';
 import 'package:framed_v2/utils/utils.dart';
+import 'package:framed_v2/data/models/movie_type.dart';
 import 'package:lumberdash/lumberdash.dart';
 
 class MovieViewModel {
@@ -23,14 +24,27 @@ class MovieViewModel {
   List<MovieResults> topRatedMovies = [];
   List<MovieResults> popularMovies = [];
   List<MovieResults> nowPlayingMovies = [];
+  List<MovieResults> upcomingMovies = [];
+  
+  // Pagination tracking
+  int _trendingPage = 1;
+  int _popularPage = 1;
+  int _topRatedPage = 1;
+  int _nowPlayingPage = 1;
+  int _upcomingPage = 1;
 
   MovieViewModel({required this.movieApiService, required this.storage});
 
-  Future<MovieResponse?> getNowPlaying(int page) async {
+  Future<MovieResponse?> getNowPlaying(int page, {bool append = false}) async {
     final response = await movieApiService.getNowPlaying(page);
     if (response.statusCode == 200) {
       var movieResponse = MovieResponse.fromJson(response.data);
-      nowPlayingMovies = movieResponse.results;
+      if (append) {
+        nowPlayingMovies.addAll(movieResponse.results);
+      } else {
+        nowPlayingMovies = movieResponse.results;
+      }
+      _nowPlayingPage = page;
       return movieResponse;
     } else {
       logError(
@@ -40,11 +54,16 @@ class MovieViewModel {
     }
   }
 
-  Future<MovieResponse?> getPopular(int page) async {
+  Future<MovieResponse?> getPopular(int page, {bool append = false}) async {
     final response = await movieApiService.getPopular(page);
     if (response.statusCode == 200) {
       var movieResponse = MovieResponse.fromJson(response.data);
-      popularMovies = movieResponse.results;
+      if (append) {
+        popularMovies.addAll(movieResponse.results);
+      } else {
+        popularMovies = movieResponse.results;
+      }
+      _popularPage = page;
       return movieResponse;
     } else {
       logError(
@@ -54,11 +73,16 @@ class MovieViewModel {
     }
   }
 
-  Future<MovieResponse?> getTopRated(int page) async {
+  Future<MovieResponse?> getTopRated(int page, {bool append = false}) async {
     final response = await movieApiService.getTopRated(page);
     if (response.statusCode == 200) {
       var movieResponse = MovieResponse.fromJson(response.data);
-      topRatedMovies = movieResponse.results;
+      if (append) {
+        topRatedMovies.addAll(movieResponse.results);
+      } else {
+        topRatedMovies = movieResponse.results;
+      }
+      _topRatedPage = page;
       return movieResponse;
     } else {
       logError(
@@ -68,11 +92,16 @@ class MovieViewModel {
     }
   }
 
-  Future<MovieResponse?> getTrendingMovies(int page) async {
+  Future<MovieResponse?> getTrendingMovies(int page, {bool append = false}) async {
     final response = await movieApiService.getTrending(page);
     if (response.statusCode == 200) {
       var movieResponse = MovieResponse.fromJson(response.data);
-      trendingMovies = movieResponse.results;
+      if (append) {
+        trendingMovies.addAll(movieResponse.results);
+      } else {
+        trendingMovies = movieResponse.results;
+      }
+      _trendingPage = page;
       print('Trending movies loaded');
       return movieResponse;
     } else {
@@ -80,6 +109,45 @@ class MovieViewModel {
         'Failed to load movies with error ${response.statusCode} and message ${response.statusMessage}',
       );
       return null;
+    }
+  }
+
+  Future<MovieResponse?> getUpcomingMovies(int page, {bool append = false}) async {
+    final response = await movieApiService.getUpcoming(page);
+    if (response.statusCode == 200) {
+      var movieResponse = MovieResponse.fromJson(response.data);
+      if (append) {
+        upcomingMovies.addAll(movieResponse.results);
+      } else {
+        upcomingMovies = movieResponse.results;
+      }
+      _upcomingPage = page;
+      return movieResponse;
+    } else {
+      logError(
+        'Failed to load movies with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+      return null;
+    }
+  }
+
+  Future<void> loadMore(MovieType type) async {
+    switch (type) {
+      case MovieType.trending:
+        await getTrendingMovies(_trendingPage + 1, append: true);
+        break;
+      case MovieType.popular:
+        await getPopular(_popularPage + 1, append: true);
+        break;
+      case MovieType.topRated:
+        await getTopRated(_topRatedPage + 1, append: true);
+        break;
+      case MovieType.nowPlaying:
+        await getNowPlaying(_nowPlayingPage + 1, append: true);
+        break;
+      case MovieType.upcoming:
+        await getUpcomingMovies(_upcomingPage + 1, append: true);
+        break;
     }
   }
 
@@ -100,7 +168,6 @@ class MovieViewModel {
 
   String? getImageUrl(ImageSize size, String? file) {
     if (file == null || movieConfiguration == null) {
-      logMessage('movieConfiguration is null or getImageUrl file: $file');
       return null;
     }
     return getSizedImageUrl(size, movieConfiguration!, file);

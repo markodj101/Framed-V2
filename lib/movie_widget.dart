@@ -4,9 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'utils/utils.dart';
 import 'providers.dart';
+import 'package:framed_v2/data/models/movie_type.dart';
 import 'package:framed_v2/data/models/movie.dart';
-
-enum MovieType { trending, popular, topRated, nowPlaying }
 
 class MovieWidget extends ConsumerStatefulWidget {
   final int movieId;
@@ -63,7 +62,6 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15), // Slightly less to fit inside border
