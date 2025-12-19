@@ -5,7 +5,7 @@ import 'package:framed_v2/ui/cast_image.dart';
 import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/utils/utils.dart';
 
-class HorizontalCast extends ConsumerWidget {
+class HorizontalCast extends StatelessWidget {
   final List<MovieCast> castList;
   final MovieViewModel movieViewModel;
   const HorizontalCast({
@@ -15,26 +15,47 @@ class HorizontalCast extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SliverPadding(
-      padding: const EdgeInsets.only(left: 16, right: 16),
-      sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 100.0,
-          mainAxisExtent: 100.0,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16, bottom: 8, top: 24),
+            child: Text(
+              "Cast",
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+          ),
+          SizedBox(
+            height: 150, // Increased height for character name
+            child: ListView.separated(
+
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          itemCount: castList.length,
+          separatorBuilder: (context, index) => const SizedBox(width: 16),
+
+          itemBuilder: (context, index) {
+            var imageUrl = movieViewModel.getImageUrl(
+              ImageSize.small,
+              castList[index].profilePath,
+            );
+            return SizedBox(
+              width: 90, // Slightly wider
+              child: CastImage(
+                imageUrl: imageUrl ?? '',
+                name: castList[index].name,
+                character: castList[index].character,
+              ),
+            );
+          },
         ),
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          var imageUrl = movieViewModel.getImageUrl(
-            ImageSize.small,
-            castList[index].profilePath,
-          );
-          return imageUrl != null
-              ? CastImage(imageUrl: imageUrl, name: castList[index].name)
-              : emptyWidget;
-        }, childCount: castList.length),
+      ),
+        ],
       ),
     );
   }
+
 }

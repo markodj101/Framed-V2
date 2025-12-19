@@ -71,7 +71,7 @@ var verySmallText = roboto.copyWith(
 
 // Colors
 
-const screenBackground = Colors.black;
+const screenBackground = Color(0xFF0F0E0E);
 const searchBarBackground = Color(0xFF1E1E1E);
 const primaryButton = Color(0xFFD9D9D9);
 const posterBorder = Color(0xFFB5A9A9);

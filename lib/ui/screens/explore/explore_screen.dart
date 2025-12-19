@@ -11,6 +11,8 @@ import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/vert_movie_list.dart';
 import 'package:glass_kit/glass_kit.dart';
 
+
+
 @RoutePage()
 class ExploreScreen extends ConsumerStatefulWidget {
   final MovieType movieType;
@@ -171,6 +173,8 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                           ),
                         ),
                       ),
+
+
                       const SizedBox(width: 12),
                       // Rectangular Title Box
                       Expanded(

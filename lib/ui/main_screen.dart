@@ -9,6 +9,9 @@ import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 import 'package:glass_kit/glass_kit.dart';
+import 'package:framed_v2/ui/ui_utils.dart';
+
+
 
 @RoutePage()
 class MainScreen extends StatefulWidget {
@@ -61,20 +64,20 @@ class _MainScreenState extends State<MainScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _buildNavItem(tabsRouter, 0, Symbols.movie, 'Movies'),
-                        _buildNavItem(
-                          tabsRouter,
-                          2,
-                          Symbols.tv,
-                          'TV Shows',
-                          isPlaceholder: true,
-                        ),
+                        _buildNavItem(tabsRouter, 2, Symbols.favorite, 'Saved'),
                         _buildNavItem(
                           tabsRouter,
                           1,
                           Symbols.search,
                           'Search',
                         ),
-                        _buildNavItem(tabsRouter, 2, Symbols.favorite, 'Saved'),
+                        _buildNavItem(
+                          tabsRouter,
+                          2,
+                          Symbols.person,
+                          'Profile',
+                          isPlaceholder: true,
+                        ),
                       ],
                     ),
                   ),
@@ -102,7 +105,10 @@ class _MainScreenState extends State<MainScreen> {
         onTap: () {
           if (!isPlaceholder) {
             tabsRouter.setActiveIndex(index);
+          } else if (label == 'Profile') {
+            showComingSoonDialog(context);
           }
+
         },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -133,3 +139,6 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+
+

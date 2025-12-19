@@ -11,6 +11,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+
+
 import 'dart:ui';
 
 const delayTime = 1000 * 10;
@@ -104,11 +106,12 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                     Colors.black.withOpacity(0.3), // Top darkening
                     Colors.transparent,
                     Colors.black.withOpacity(0.0),
-                    Colors.black.withOpacity(0.8), // Bottom darkening
-                    Colors.black,
+                    screenBackground.withOpacity(0.8), // Bottom darkening
+                    screenBackground,
                   ],
                   stops: const [0.0, 0.2, 0.5, 0.8, 1.0],
                 ),
+
               ),
             ),
           ),
@@ -275,6 +278,8 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                             .scale(begin: const Offset(1, 1), end: const Offset(0.95, 0.95), duration: 100.ms, curve: Curves.easeOut),
                          ),
                        ),
+
+
                      ],
                    ),
                 ],

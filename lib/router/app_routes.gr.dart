@@ -50,11 +50,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     MovieDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<MovieDetailRouteArgs>();
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<MovieDetailRouteArgs>(
+          orElse: () =>
+              MovieDetailRouteArgs(movieId: pathParams.getInt('movieId')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: MovieDetail(
-          args.movieId,
+          movieId: args.movieId,
           key: args.key,
         ),
       );
@@ -179,6 +182,7 @@ class MovieDetailRoute extends PageRouteInfo<MovieDetailRouteArgs> {
             movieId: movieId,
             key: key,
           ),
+          rawPathParams: {'movieId': movieId},
           initialChildren: children,
         );
 

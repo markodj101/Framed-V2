@@ -13,19 +13,32 @@ import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/movie_detail/button_row.dart';
 import 'package:framed_v2/ui/screens/movie_detail/detail_image.dart';
-import 'package:framed_v2/ui/screens/movie_detail/genre_row.dart';
+import 'package:framed_v2/ui/screens/movie_detail/horizontal_crew.dart';
+import 'package:framed_v2/ui/screens/movie_detail/movie_stats_row.dart';
+import 'package:framed_v2/ui/screens/movie_detail/movie_ai_section.dart';
 import 'package:framed_v2/ui/screens/movie_detail/movie_overview.dart';
-import 'package:framed_v2/ui/screens/movie_detail/trailer.dart';
+
+
+
 import 'package:framed_v2/ui/theme/theme.dart';
+
+
+
 import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/data/models/movie.dart';
 import 'package:lumberdash/lumberdash.dart';
+
+
+
+import 'package:glass_kit/glass_kit.dart';
 
 @RoutePage(name: 'MovieDetailRoute')
 class MovieDetail extends ConsumerStatefulWidget {
   final int movieId;
 
-  const MovieDetail(this.movieId, {super.key});
+  const MovieDetail({@PathParam('movieId') required this.movieId, super.key});
+
+
 
   @override
   ConsumerState<MovieDetail> createState() => _MovieDetailState();
@@ -68,18 +81,30 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
         }
         return Scaffold(
           backgroundColor: screenBackground,
+          extendBodyBehindAppBar: true,
           appBar: AppBar(
-            backgroundColor: screenBackground,
-            leading: BackButton(
-              color: Colors.white,
-              onPressed: () {
-                context.router.maybePopTop();
-              },
-            ),
-            centerTitle: false,
-            title: Text(
-              'Back',
-              style: Theme.of(context).textTheme.headlineMedium,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leadingWidth: 80,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 20, top: 10),
+              child: GestureDetector(
+                onTap: () => context.router.back(),
+
+
+                child: GlassContainer.frostedGlass(
+                  height: 50,
+                  width: 50,
+                  shape: BoxShape.circle,
+                  borderWidth: 1,
+                  borderColor: Colors.white.withOpacity(0.1),
+                  blur: 20,
+                  child: const Center(
+                    child: Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white, size: 20),
+                  ),
+                ),
+              ),
             ),
           ),
           body: CustomScrollView(
@@ -88,10 +113,14 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                 child: DetailImage(
                   details: movieDetails,
                   movieConfiguration: movieViewModel.movieConfiguration!,
+                  onTrailerPressed: () {
+                    if (movieVideos?.results.isNotEmpty ?? false) {
+                      context.router.push(
+                        VideoPageRoute(movieVideo: movieVideos!.results.first),
+                      );
+                    }
+                  },
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: GenreRow(genres: movieDetails.genres),
               ),
               SliverToBoxAdapter(
                 child: MovieOverview(details: movieDetails),
@@ -101,10 +130,13 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                   stream: movieViewModel.streamFavorites(),
                   builder: (context, snapshot) {
                     final favorites = snapshot.data ?? [];
-                    final isFavorite = favorites.any((element) => element.movieId == widget.movieId);
+                    final isFavorite = favorites
+                        .any((element) => element.movieId == widget.movieId);
                     return ButtonRow(
+                      movieId: widget.movieId,
                       favoriteSelected: isFavorite,
                       onFavoriteSelected: () async {
+
                         if (isFavorite) {
                           await movieViewModel.removeFavorite(
                             widget.movieId,
@@ -119,45 +151,19 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                   },
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    bottom: 8,
-                  ),
-                  child: Text(
-                    "Trailers",
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Trailer(
-                  movieVideos: movieVideos?.results,
-                  onVideoTap: (video) {
-                    context.router.push(
-                      VideoPageRoute(movieVideo: video),
-                    );
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    bottom: 16,
-                    top: 16,
-                  ),
-                  child: Text(
-                    "Cast",
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                ),
-              ),
               HorizontalCast(
                 castList: credits?.cast ?? [],
                 movieViewModel: movieViewModel,
               ),
+              HorizontalCrew(
+                crewList: credits?.crew ?? [],
+                movieViewModel: movieViewModel,
+              ),
+              MovieStatsRow(details: movieDetails),
+              const MovieAiSection(),
+
+
+
               const SliverToBoxAdapter(
                 child: SizedBox(height: 50),
               ),
@@ -167,6 +173,8 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
       },
     );
   }
+
+
 
   Future<MovieDetails?> loadData() async {
     credits = await movieViewModel.getMovieCredits(widget.movieId);

@@ -27,7 +27,7 @@ class _VideoPageState extends ConsumerState<VideoPage> {
 
     podPlayerController = PodPlayerController(
       playVideoFrom: playVideoFrom,
-      podPlayerConfig: const PodPlayerConfig(autoPlay: false),
+      podPlayerConfig: const PodPlayerConfig(autoPlay: true),
     )..initialise();
   }
 
@@ -44,7 +44,7 @@ class _VideoPageState extends ConsumerState<VideoPage> {
         leading: BackButton(
           color: Colors.white,
           onPressed: () {
-            context.router.maybePopTop();
+            context.router.back();
           },
         ),
         centerTitle: false,
