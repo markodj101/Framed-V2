@@ -29,7 +29,8 @@ class AppRouter extends _$AppRouter {
     CustomRoute(
       path: '/explore',
       page: ExploreRoute.page,
-      maintainState: false,
+      maintainState: true,
+      opaque: false,
       transitionsBuilder: TransitionsBuilders.slideBottom,
       durationInMilliseconds: 500,
     ),

@@ -60,21 +60,21 @@ class _MainScreenState extends State<MainScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildNavItem(tabsRouter, 0, Icons.movie, 'Movies'),
+                        _buildNavItem(tabsRouter, 0, Symbols.movie, 'Movies'),
                         _buildNavItem(
                           tabsRouter,
                           2,
-                          Icons.tv,
+                          Symbols.tv,
                           'TV Shows',
                           isPlaceholder: true,
                         ),
                         _buildNavItem(
                           tabsRouter,
                           1,
-                          Icons.select_all,
-                          'Genres',
+                          Symbols.search,
+                          'Search',
                         ),
-                        _buildNavItem(tabsRouter, 2, Icons.favorite, 'Saved'),
+                        _buildNavItem(tabsRouter, 2, Symbols.favorite, 'Saved'),
                       ],
                     ),
                   ),

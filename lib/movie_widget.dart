@@ -50,21 +50,25 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
         });
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: SizedBox(
-          width: 110,
-          height: 160,
-          child: Stack(
-            children: [
-              // Movie Image
-              Hero(
+        padding: const EdgeInsets.symmetric(horizontal: 6.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 110,
+              height: 160,
+              child: Hero(
                 tag: uniqueHeroTag,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.15),
+                      width: 1.0,
+                    ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15), // Slightly less to fit inside border
+                    borderRadius: BorderRadius.circular(15),
                     child: CachedNetworkImage(
                       imageUrl: widget.movieUrl,
                       alignment: Alignment.topCenter,
@@ -74,7 +78,8 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
                     ),
                   ),
                 ),
-              )
+              ),
+            )
               .animate(
                 autoPlay: false,
                 controller: _controller,
@@ -93,7 +98,6 @@ class _MovieWidgetState extends ConsumerState<MovieWidget>
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

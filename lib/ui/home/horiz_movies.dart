@@ -28,12 +28,12 @@ class HorizontalMovies extends ConsumerWidget {
       loading: () => Container(),
       data: (viewModel) {
         return SizedBox(
-          height: 190,
+          height: 200,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: movies.length,
+            itemCount: movies.length > 10 ? 10 : movies.length,
             itemBuilder: (context, index) {
               final imageUrl = viewModel.getImageUrl(
                 ImageSize.small,

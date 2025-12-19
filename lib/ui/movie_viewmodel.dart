@@ -42,7 +42,7 @@ class MovieViewModel {
       if (append) {
         nowPlayingMovies.addAll(movieResponse.results);
       } else {
-        nowPlayingMovies = movieResponse.results;
+        nowPlayingMovies = List.from(movieResponse.results);
       }
       _nowPlayingPage = page;
       return movieResponse;
@@ -61,7 +61,7 @@ class MovieViewModel {
       if (append) {
         popularMovies.addAll(movieResponse.results);
       } else {
-        popularMovies = movieResponse.results;
+        popularMovies = List.from(movieResponse.results);
       }
       _popularPage = page;
       return movieResponse;
@@ -80,7 +80,7 @@ class MovieViewModel {
       if (append) {
         topRatedMovies.addAll(movieResponse.results);
       } else {
-        topRatedMovies = movieResponse.results;
+        topRatedMovies = List.from(movieResponse.results);
       }
       _topRatedPage = page;
       return movieResponse;
@@ -99,7 +99,7 @@ class MovieViewModel {
       if (append) {
         trendingMovies.addAll(movieResponse.results);
       } else {
-        trendingMovies = movieResponse.results;
+        trendingMovies = List.from(movieResponse.results);
       }
       _trendingPage = page;
       print('Trending movies loaded');
@@ -119,7 +119,7 @@ class MovieViewModel {
       if (append) {
         upcomingMovies.addAll(movieResponse.results);
       } else {
-        upcomingMovies = movieResponse.results;
+        upcomingMovies = List.from(movieResponse.results);
       }
       _upcomingPage = page;
       return movieResponse;

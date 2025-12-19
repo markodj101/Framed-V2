@@ -105,59 +105,99 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
 
     return Scaffold(
-      backgroundColor: screenBackground,
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: GlassContainer.frostedGlass(
-          height: 100,
-          width: double.infinity,
-          borderWidth: 0,
-          borderColor: Colors.transparent,
-          blur: 20,
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: Text(
-              _getTitle(),
-              style: const TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 24,
-                color: Colors.white,
-              ),
-            ),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-              onPressed: () => context.router.back(),
-            ),
-          ),
-        ),
-      ),
+      backgroundColor: Colors.transparent,
       body: movieViewModelAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),
         data: (viewModel) {
           final movies = _getMovies(viewModel);
-          return CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              const SliverToBoxAdapter(child: SizedBox(height: 120)),
-              VerticalMovieList(
-                movies: movies,
-                movieViewModel: viewModel,
-                onMovieTap: (movieId) {
-                  context.router.push(MovieDetailRoute(movieId: movieId));
-                },
-              ),
-              if (_isLoadingMore)
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Center(child: CircularProgressIndicator(color: Colors.white)),
+          return GlassContainer.frostedGlass(
+            height: double.infinity,
+            width: double.infinity,
+            borderWidth: 0,
+            borderColor: Colors.transparent,
+            blur: 40, // More blur for the background
+            gradient: LinearGradient(
+              colors: [
+                Colors.black.withOpacity(0.7),
+                Colors.black.withOpacity(0.5),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            child: Stack(
+              children: [
+                CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    const SliverToBoxAdapter(child: SizedBox(height: 140)), // Increased spacing for floating header
+                    VerticalMovieList(
+                      movies: movies,
+                      movieViewModel: viewModel,
+                      onMovieTap: (movieId) {
+                        context.router.push(MovieDetailRoute(movieId: movieId));
+                      },
+                    ),
+                    if (_isLoadingMore)
+                      const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Center(child: CircularProgressIndicator(color: Colors.white)),
+                        ),
+                      ),
+                    const SliverToBoxAdapter(child: SizedBox(height: 40)),
+                  ],
+                ),
+                
+                // Modular Floating Header
+                Positioned(
+                  top: 40,
+                  left: 20,
+                  right: 20,
+                  child: Row(
+                    children: [
+                      // Circular Back Button
+                      GestureDetector(
+                        onTap: () => context.router.back(),
+                        child: GlassContainer.frostedGlass(
+                          height: 50,
+                          width: 50,
+                          shape: BoxShape.circle,
+                          borderWidth: 1,
+                          borderColor: Colors.white.withOpacity(0.1),
+                          blur: 20,
+                          child: const Center(
+                            child: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      // Rectangular Title Box
+                      Expanded(
+                        child: GlassContainer.frostedGlass(
+                          height: 50,
+                          width: double.infinity,
+                          borderRadius: BorderRadius.circular(30),
+                          borderWidth: 1,
+                          borderColor: Colors.white.withOpacity(0.1),
+                          blur: 20,
+                          child: Center(
+                            child: Text(
+                              _getTitle(),
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                letterSpacing: -0.5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              const SliverToBoxAdapter(child: SizedBox(height: 40)),
-            ],
+              ],
+            ),
           );
         },
       ),
