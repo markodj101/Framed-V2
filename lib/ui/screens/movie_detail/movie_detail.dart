@@ -8,7 +8,10 @@ import 'package:framed_v2/data/models/movie_details.dart';
 import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/not_ready.dart';
 import 'package:framed_v2/router/app_routes.dart';
+import 'package:framed_v2/data/models/movie_response.dart';
+import 'package:framed_v2/data/models/movie_type.dart';
 import 'package:framed_v2/ui/horiz_cast.dart';
+import 'package:framed_v2/ui/home/horiz_movies.dart';
 import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/movie_detail/button_row.dart';
@@ -48,6 +51,7 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   late MovieViewModel movieViewModel;
   MovieCredits? credits;
   MovieVideos? movieVideos;
+  MovieResponse? similarMovies;
   Future<MovieDetails?>? _movieDetailFuture;
 
   @override
@@ -55,7 +59,10 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
     return movieViewModelAsync.when(
       error: (e, st) => Text(e.toString()),
-      loading: () => const NotReady(),
+      loading: () => const Scaffold(
+        backgroundColor: screenBackground,
+        body: Center(child: NotReady()),
+      ),
       data: (viewModel) {
         movieViewModel = viewModel;
         _movieDetailFuture ??= loadData();
@@ -69,15 +76,24 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
       future: _movieDetailFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return const NotReady();
+          return const Scaffold(
+            backgroundColor: screenBackground,
+            body: Center(child: NotReady()),
+          );
         }
         if (snapshot.hasError) {
           logMessage('Error: ${snapshot.error.toString()}');
-          return Scaffold(body: Center(child: Text(snapshot.error.toString())));
+          return Scaffold(
+            backgroundColor: screenBackground,
+            body: Center(child: Text(snapshot.error.toString(), style: const TextStyle(color: Colors.white))),
+          );
         }
         final movieDetails = snapshot.data;
         if (movieDetails == null) {
-          return const NotReady();
+          return const Scaffold(
+            backgroundColor: screenBackground,
+            body: Center(child: NotReady()),
+          );
         }
         return Scaffold(
           backgroundColor: screenBackground,
@@ -89,9 +105,9 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
             leading: Padding(
               padding: const EdgeInsets.only(left: 20, top: 10),
               child: GestureDetector(
-                onTap: () => context.router.back(),
-
-
+                onTap: () {
+                   context.router.maybePop(); // Using maybePop is safer
+                },
                 child: GlassContainer.frostedGlass(
                   height: 50,
                   width: 50,
@@ -135,6 +151,7 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                     return ButtonRow(
                       movieId: widget.movieId,
                       favoriteSelected: isFavorite,
+                      voteAverage: movieDetails.voteAverage,
                       onFavoriteSelected: () async {
 
                         if (isFavorite) {
@@ -160,7 +177,61 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
                 movieViewModel: movieViewModel,
               ),
               MovieStatsRow(details: movieDetails),
+
               const MovieAiSection(),
+              if (similarMovies?.results.isNotEmpty ?? false) ...[
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 24, 20, 12),
+                    child: Text(
+                      "More Like This",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: HorizontalMovies(
+                    movies: similarMovies!.results,
+                    onMovieTap: (movieId) {
+                      context.router.push(
+                        MovieDetailRoute(movieId: movieId),
+                      );
+                    },
+                    movieType: MovieType.similar,
+                  ),
+                ),
+              ],
+              
+              if (_directorMovies?.results.isNotEmpty ?? false) ...[
+                 SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
+                    child: Text(
+                      "More from ${_directorName ?? 'Director'}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: HorizontalMovies(
+                    movies: _directorMovies!.results,
+                    onMovieTap: (movieId) {
+                      context.router.push(
+                        MovieDetailRoute(movieId: movieId),
+                      );
+                    },
+                    movieType: MovieType.similar, // Reusing similar type for style
+                  ),
+                ),
+              ],
 
 
 
@@ -179,6 +250,31 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
   Future<MovieDetails?> loadData() async {
     credits = await movieViewModel.getMovieCredits(widget.movieId);
     movieVideos = await movieViewModel.getMovieVideos(widget.movieId);
+    similarMovies = await movieViewModel.getSimilarMovies(widget.movieId, 1);
+    
+    // Fetch director movies
+    if (credits != null) {
+      final director = credits!.crew.firstWhereOrNull((c) => c.job == 'Director');
+      if (director != null) {
+        final directorCredits = await movieViewModel.getPersonMovieCredits(director.id);
+        if (directorCredits != null) {
+          // Filter out current movie without mutating the unmodifiable list
+          final filteredMovies = directorCredits.results
+              .where((m) => m.id != widget.movieId)
+              .toList();
+          
+          setState(() {
+            _directorMovies = directorCredits.copyWith(results: filteredMovies);
+            _directorName = director.name;
+          });
+        }
+      }
+    }
+
     return movieViewModel.getMovieDetails(widget.movieId);
   }
+
+  // Add variables
+  MovieResponse? _directorMovies;
+  String? _directorName;
 }

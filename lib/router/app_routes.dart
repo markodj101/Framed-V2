@@ -38,7 +38,7 @@ class AppRouter extends _$AppRouter {
       path: '/details/:movieId',
       page: MovieDetailRoute.page,
       maintainState: false,
-      transitionsBuilder: TransitionsBuilders.slideBottom,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
       durationInMilliseconds: 500,
     ),
     CustomRoute(

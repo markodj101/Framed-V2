@@ -4,12 +4,14 @@ import 'dart:ui';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/ui/home/home_screen.dart';
 import 'package:framed_v2/ui/screens/geners/genre_screen.dart';
+import 'package:framed_v2/ui/screens/favorites/favorite_screen.dart';
 import 'package:framed_v2/ui/screens/videos/video_page.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 import 'package:glass_kit/glass_kit.dart';
 import 'package:framed_v2/ui/ui_utils.dart';
+import 'package:framed_v2/ui/newtons_cradle_loader.dart';
 
 
 
@@ -23,6 +25,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   var index = 0;
   final List<Widget> screens = <Widget>[];
+  bool _isSavedOpen = false;
 
   @override
   void initState() {
@@ -42,6 +45,10 @@ class _MainScreenState extends State<MainScreen> {
           body: Stack(
             children: [
               child,
+              if (_isSavedOpen)
+                 Positioned.fill(
+                  child: FavoriteScreen(),
+                ),
               Positioned(
                 left: 60,
                 right: 60,
@@ -63,20 +70,60 @@ class _MainScreenState extends State<MainScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildNavItem(tabsRouter, 0, Symbols.movie, 'Movies'),
-                        _buildNavItem(tabsRouter, 2, Symbols.favorite, 'Saved'),
+                        _buildNavItem(
+                          tabsRouter, 
+                          0, 
+                          Symbols.movie, 
+                          'Movies', 
+                          onTap: () {
+                            setState(() {
+                              _isSavedOpen = false;
+                            });
+                            tabsRouter.setActiveIndex(0);
+                          },
+                          isSelected: !_isSavedOpen && tabsRouter.activeIndex == 0,
+                        ),
+                        _buildNavItem(
+                          tabsRouter, 
+                          2, 
+                          Symbols.favorite, 
+                          'Saved',
+                          onTap: () {
+                            setState(() {
+                              _isSavedOpen = true;
+                            });
+                            // Keep background on Home (Movies) so we see them through glass
+                            if (tabsRouter.activeIndex != 0) {
+                              tabsRouter.setActiveIndex(0);
+                            }
+                          },
+                          isSelected: _isSavedOpen,
+                        ),
                         _buildNavItem(
                           tabsRouter,
                           1,
                           Symbols.search,
                           'Search',
+                          onTap: () {
+                             setState(() {
+                              _isSavedOpen = false;
+                            });
+                            tabsRouter.setActiveIndex(1);
+                          },
+                          isSelected: !_isSavedOpen && tabsRouter.activeIndex == 1,
                         ),
                         _buildNavItem(
                           tabsRouter,
-                          2,
+                          2, // Placeholder index, doesn't matter much
                           Symbols.person,
                           'Profile',
                           isPlaceholder: true,
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const Center(child: NewtonsCradleLoader()),
+                            );
+                          }
                         ),
                       ],
                     ),
@@ -96,19 +143,18 @@ class _MainScreenState extends State<MainScreen> {
     IconData icon,
     String label, {
     bool isPlaceholder = false,
+    VoidCallback? onTap,
+    bool? isSelected,
   }) {
-    final isSelected = tabsRouter.activeIndex == index && !isPlaceholder;
+    final selected = isSelected ?? (tabsRouter.activeIndex == index && !isPlaceholder);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () {
+        onTap: onTap ?? () {
           if (!isPlaceholder) {
             tabsRouter.setActiveIndex(index);
-          } else if (label == 'Profile') {
-            showComingSoonDialog(context);
           }
-
         },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -119,17 +165,17 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Icon(
                 icon,
-                color: isSelected ? Colors.white : Colors.grey,
+                color: selected ? Colors.white : Colors.grey,
                 size: 28,
-                fill: isSelected ? 1.0 : 0.0, // Fill if selected (for Symbols)
+                fill: selected ? 1.0 : 0.0, // Fill if selected (for Symbols)
               ),
               const SizedBox(height: 4),
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.grey,
+                  color: selected ? Colors.white : Colors.grey,
                   fontSize: 10,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),
             ],

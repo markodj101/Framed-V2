@@ -67,6 +67,9 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
       case MovieType.upcoming:
         await viewModel.getUpcomingMovies(page, append: append);
         break;
+      case MovieType.similar:
+         // Not supported in ExploreScreen yet
+        break;
     }
     if (mounted) setState(() {});
   }
@@ -220,6 +223,8 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
         return 'Now Playing';
       case MovieType.upcoming:
         return 'Upcoming';
+      case MovieType.similar:
+        return 'Similar';
     }
   }
 
@@ -235,6 +240,8 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
         return viewModel.nowPlayingMovies;
       case MovieType.upcoming:
         return viewModel.upcomingMovies;
+      case MovieType.similar:
+        return [];
     }
   }
 }

@@ -9,12 +9,14 @@ class ButtonRow extends StatelessWidget {
   final bool favoriteSelected;
   final OnFavoriteSelected onFavoriteSelected;
   final int movieId;
+  final double voteAverage;
 
   const ButtonRow({
     super.key,
     required this.favoriteSelected,
     required this.onFavoriteSelected,
     required this.movieId,
+    required this.voteAverage,
   });
 
   @override
@@ -52,10 +54,54 @@ class ButtonRow extends StatelessWidget {
               );
             },
           ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(right: 24),
+            child: _UserScore(voteAverage: voteAverage),
+          ),
         ],
       ),
     );
   }
 }
 
+class _UserScore extends StatelessWidget {
+  final double voteAverage;
 
+  const _UserScore({required this.voteAverage});
+
+  @override
+  Widget build(BuildContext context) {
+    final percentage = (voteAverage * 10).toInt();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 4,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: Colors.white.withOpacity(0.2)),
+      ),
+      child: Text(
+        '$percentage% User Score',
+        style: const TextStyle(
+          color: Color(0xFF00C853), // matchGreen
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Color _getScoreColor(double score) {
+    if (score >= 7.0) {
+      return const Color(0xFF21D07A); // Green
+    } else if (score >= 5.0) {
+      return const Color(0xFFD2D531); // Yellow
+    } else {
+      return const Color(0xFFDB2360); // Red
+    }
+  }
+}

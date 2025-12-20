@@ -143,4 +143,14 @@ class MovieApiService {
   Future<Response> getMovieConfiguration() async {
     return dio.get(configurationUrl);
   }
+
+  Future<Response> getSimilarMovies(int movieId, [int page = 1]) async {
+    return dio.get(
+      '$movieUrl/$movieId/similar',
+      queryParameters: {pageParameterName: page},
+    );
+  }
+  Future<Response> getPersonMovieCredits(int personId) async {
+    return dio.get('person/$personId/movie_credits');
+  }
 }

@@ -148,6 +148,9 @@ class MovieViewModel {
       case MovieType.upcoming:
         await getUpcomingMovies(_upcomingPage + 1, append: true);
         break;
+      case MovieType.similar:
+        // Already handled or no pagination for now
+        break;
     }
   }
 
@@ -283,6 +286,66 @@ class MovieViewModel {
     } else {
       logError(
         'Failed to load movie details with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+      return null;
+    }
+  }
+
+  Future<MovieResponse?> getSimilarMovies(int movieId, int page) async {
+    final response = await movieApiService.getSimilarMovies(movieId, page);
+    if (response.statusCode == 200) {
+      try {
+        return MovieResponse.fromJson(response.data);
+      } catch (e) {
+        logError('Failed to parse similar movies with error: $e');
+        return null;
+      }
+    } else {
+      logError(
+        'Failed to load similar movies with error ${response.statusCode} and message ${response.statusMessage}',
+      );
+    }
+  }
+
+  Future<MovieResponse?> getPersonMovieCredits(int personId) async {
+    final response = await movieApiService.getPersonMovieCredits(personId);
+    if (response.statusCode == 200) {
+      try {
+        // Person credits response has 'cast' and 'crew' lists of movies.
+        // We can reuse MovieCredits model if it fits or map it to a list of movies.
+        // Actually, the structure of 'cast'/'crew' in person credits is a list of movies (with character/job).
+        // Let's return MovieCredits which holds lists of Cast/Crew (but here they represent movies).
+        // Wait, MovieCredits model expects 'cast' to be people. 
+        // Person movie credits returns 'cast' key but it contains movies. 
+        // We might need a generic or different model? 
+        // Let's check MovieCredits model. If it's strictly people, this might fail or be confusing.
+        // However, usually we just want list of movies.
+        // Let's return MovieResponse-like structure or just list of movies?
+        // Checking MovieResponse model... it expects 'results'.
+        // Person credits returns { cast: [...], crew: [...] }.
+        // Let's verify MovieCredits model in next step or use dynamic for now and map to List<MovieResult>.
+        // Actually, best to return MovieCredits if the fields match (id, title, poster_path etc).
+        // But MovieCast/MovieCrew objects usually have 'name' (person name) not 'title' (movie title).
+        // So we likely need a new model or logic.
+        // For now, let's just return the raw data or map it here.
+        // Let's assume we want a List<MovieResults> (movies).
+        
+        // I will map the 'crew' list (where job is Director) to List<MovieResults>.
+        final data = response.data;
+        final crew = data['crew'] as List;
+        final directorMovies = crew.where((c) => c['job'] == 'Director').map((m) => MovieResults.fromJson(m)).toList();
+        
+        // Wrap in MovieResponse for consistency? Or just return List.
+        // Let's return MovieResponse with these results.
+        return MovieResponse(page: 1, results: directorMovies, total_pages: 1, total_results: directorMovies.length);
+
+      } catch (e) {
+        logError('Failed to parse person movie credits: $e');
+        return null;
+      }
+    } else {
+      logError(
+        'Failed to load person movie credits with error ${response.statusCode} and message ${response.statusMessage}',
       );
       return null;
     }

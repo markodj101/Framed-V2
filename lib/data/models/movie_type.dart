@@ -1,1 +1,1 @@
-enum MovieType { trending, popular, topRated, nowPlaying, upcoming }
+enum MovieType { trending, popular, topRated, nowPlaying, upcoming, similar }
