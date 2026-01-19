@@ -1,6 +1,7 @@
 import 'package:colorize_lumberdash/colorize_lumberdash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/ui/main_screen.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
@@ -16,6 +17,11 @@ Future<void> main() async {
   putLumberdashToWork(withClients: [ColorizeLumberdash()]);
 
   await dotenv.load(fileName: '.env');
+
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+  );
 
   await Hive.initFlutter();
   Hive.registerAdapter(MovieAdapter());

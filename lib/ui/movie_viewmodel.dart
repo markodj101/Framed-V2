@@ -14,9 +14,15 @@ import 'package:framed_v2/utils/utils.dart';
 import 'package:framed_v2/data/models/movie_type.dart';
 import 'package:lumberdash/lumberdash.dart';
 
+import 'package:framed_v2/data/services/auth_service.dart';
+import 'package:framed_v2/data/services/supabase_service.dart';
+
 class MovieViewModel {
   final MovieApiService movieApiService;
   final HiveStorage storage;
+  final SupabaseService supabaseService;
+  final AuthService authService;
+  
   MovieConfiguration? movieConfiguration;
   List<Genre>? movieGenres;
   List<Favorite> favoriteList = [];
@@ -33,7 +39,29 @@ class MovieViewModel {
   int _nowPlayingPage = 1;
   int _upcomingPage = 1;
 
-  MovieViewModel({required this.movieApiService, required this.storage});
+  MovieViewModel({
+    required this.movieApiService, 
+    required this.storage,
+    required this.supabaseService,
+    required this.authService,
+  }) {
+    _listenToAuthChanges();
+  }
+
+  void _listenToAuthChanges() {
+    authService.authStateChanges.listen((state) {
+      if (state.session?.user != null) {
+        _syncFavorites();
+      }
+    });
+  }
+
+  Future<void> _syncFavorites() async {
+    final localFavorites = await storage.getFavorites();
+    if (localFavorites.isNotEmpty) {
+      await supabaseService.syncLocalFavoritesToCloud(localFavorites);
+    }
+  }
 
   Future<MovieResponse?> getNowPlaying(int page, {bool append = false}) async {
     final response = await movieApiService.getNowPlaying(page);
@@ -214,29 +242,50 @@ class MovieViewModel {
   }
 
   Future saveFavorite(MovieDetails movieDetails) async {
-    await storage.saveFavorite(
-      Favorite(
-        movieId: movieDetails.id,
-        image: movieDetails.posterPath ?? '',
-        favorite: true,
-        title: movieDetails.title,
-        overview: movieDetails.overview,
-        popularity: movieDetails.popularity,
-        releaseDate: movieDetails.releaseDate,
-      ),
+    final favorite = Favorite(
+      movieId: movieDetails.id,
+      image: movieDetails.posterPath ?? '',
+      favorite: true,
+      title: movieDetails.title,
+      overview: movieDetails.overview,
+      popularity: movieDetails.popularity,
+      releaseDate: movieDetails.releaseDate,
     );
+
+    if (authService.currentUser != null) {
+      await supabaseService.saveFavorite(favorite);
+    } else {
+      await storage.saveFavorite(favorite);
+    }
   }
 
   Future<void> removeFavorite(int id) async {
-    await storage.removeFavorite(id);
+    if (authService.currentUser != null) {
+      await supabaseService.removeFavorite(id);
+    } else {
+      await storage.removeFavorite(id);
+    }
   }
 
   Future<List<Favorite>> getFavorites() async {
-    return storage.getFavorites();
+    if (authService.currentUser != null) {
+      return supabaseService.getFavorites();
+    } else {
+      return storage.getFavorites();
+    }
   }
 
   Stream<List<Favorite>> streamFavorites() {
-    return storage.streamFavorites();
+    if (authService.currentUser != null) {
+      // If user is logged in, return Supabase stream
+      // We also need to listen to auth changes to switch streams dynamically in UI if possible
+      // But StreamBuilder will rebuild when stream changes if we use a provider that watches auth?
+      // For now this returns the stream based on current state.
+      // If auth state changes, the UI calling this needs to know to re-request the stream.
+      return supabaseService.streamFavorites();
+    } else {
+      return storage.streamFavorites();
+    }
   }
 
   Future<MovieVideos?> getMovieVideos(int movieId) async {

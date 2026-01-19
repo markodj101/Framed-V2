@@ -12,6 +12,9 @@ import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/utils/utils.dart';
 import 'package:framed_v2/vert_favorite_list.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:framed_v2/ui/screens/auth/auth_viewmodel.dart';
+import 'package:framed_v2/ui/screens/auth/auth_screen.dart';
+import 'package:framed_v2/ui/screens/auth/profile_screen.dart';
 
 @RoutePage(name: 'FavoriteRoute')
 class FavoriteScreen extends ConsumerStatefulWidget {
@@ -28,6 +31,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
   final valueNotifier = ValueNotifier<List<Favorite>>([]);
   @override
   Widget build(BuildContext context) {
+    ref.watch(authViewModelProvider);
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
     return movieViewModelAsync.when(
       error: (e, st) => Text(e.toString()),
@@ -121,6 +125,8 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                       ],
                     ),
 
+
+
                     // Floating Header
                     Positioned(
                       top: 40,
@@ -138,15 +144,16 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Saved",
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white,
-                                  letterSpacing: -0.5,
-                                ),
-                              ),
-                              FutureBuilder<int>(
+                                  Text(
+                                    "Saved",
+                                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.white,
+                                      letterSpacing: -0.5,
+                                    ),
+                                  ),
+                                  FutureBuilder<int>(
+// ...
                                 future: _calculateTotalRuntime(favorites), // Pass the specific list
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState == ConnectionState.waiting) {

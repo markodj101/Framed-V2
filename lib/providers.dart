@@ -7,6 +7,8 @@ import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/utils/prefs.dart';
 import 'package:framed_v2/data/storage/hive_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:framed_v2/data/services/supabase_service.dart';
+import 'package:framed_v2/data/services/auth_service.dart';
 part 'providers.g.dart';
 
 @Riverpod(keepAlive: true)
@@ -32,9 +34,13 @@ final heroTagProvider = StateProvider<String>((ref) {
 @Riverpod(keepAlive: true)
 Future<MovieViewModel> movieViewModel(MovieViewModelRef ref) async {
   final storage = ref.read(hiveStorageProvider);
+  final supabase = ref.read(supabaseServiceProvider);
+  final auth = ref.read(authServiceProvider);
   final model = MovieViewModel(
     storage: storage,
     movieApiService: ref.read(movieApiServiceProvider),
+    supabaseService: supabase,
+    authService: auth,
   );
   await model.setup();
   return model;
@@ -44,3 +50,9 @@ Future<MovieViewModel> movieViewModel(MovieViewModelRef ref) async {
 HiveStorage hiveStorage(HiveStorageRef ref) {
   return HiveStorage();
 }
+
+@Riverpod(keepAlive: true)
+SupabaseService supabaseService(SupabaseServiceRef ref) => SupabaseService();
+
+@Riverpod(keepAlive: true)
+AuthService authService(AuthServiceRef ref) => AuthService();

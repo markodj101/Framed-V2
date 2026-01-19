@@ -92,5 +92,34 @@ final hiveStorageProvider = Provider<HiveStorage>.internal(
 );
 
 typedef HiveStorageRef = ProviderRef<HiveStorage>;
+String _$supabaseServiceHash() => r'af24d3a8dbf7c4334f23f729f94bb033b8d718d4';
+
+/// See also [supabaseService].
+@ProviderFor(supabaseService)
+final supabaseServiceProvider = Provider<SupabaseService>.internal(
+  supabaseService,
+  name: r'supabaseServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$supabaseServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SupabaseServiceRef = ProviderRef<SupabaseService>;
+String _$authServiceHash() => r'ddbb3131f68b0645caa172d17997abcd8fdfbac5';
+
+/// See also [authService].
+@ProviderFor(authService)
+final authServiceProvider = Provider<AuthService>.internal(
+  authService,
+  name: r'authServiceProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$authServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AuthServiceRef = ProviderRef<AuthService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

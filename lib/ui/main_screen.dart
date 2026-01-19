@@ -11,21 +11,28 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 import 'package:glass_kit/glass_kit.dart';
 import 'package:framed_v2/ui/ui_utils.dart';
+import 'package:framed_v2/ui/ui_utils.dart';
 import 'package:framed_v2/ui/newtons_cradle_loader.dart';
+import 'package:framed_v2/ui/screens/auth/auth_viewmodel.dart';
+import 'package:framed_v2/ui/screens/auth/auth_screen.dart';
+import 'package:framed_v2/ui/screens/auth/profile_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/providers.dart';
 
 
 
 @RoutePage()
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends ConsumerState<MainScreen> {
   var index = 0;
   final List<Widget> screens = <Widget>[];
   bool _isSavedOpen = false;
+  bool _isProfileOpen = false;
 
   @override
   void initState() {
@@ -36,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(authViewModelProvider); // Watch auth state
     return AutoTabsRouter(
       routes: [HomeRoute(), GenreRoute(), FavoriteRoute()],
       builder: (context, child) {
@@ -48,6 +56,36 @@ class _MainScreenState extends State<MainScreen> {
               if (_isSavedOpen)
                  Positioned.fill(
                   child: FavoriteScreen(),
+                ),
+              if (_isProfileOpen)
+                Positioned.fill(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Close on tap outside (optional, but good UX)
+                      // setState(() => _isProfileOpen = false);
+                    },
+                    child: Container(
+                      color: Colors.black.withOpacity(0.8), // Dim background
+                      child: Center(
+                         child: ref.watch(authViewModelProvider).value != null 
+                            ? ProfileScreen(
+                                onSignOut: () {
+                                  setState(() {
+                                    _isProfileOpen = false;
+                                  });
+                                  AutoTabsRouter.of(context).setActiveIndex(0); // Go to Home
+                                },
+                              )
+                            : AuthScreen(
+                                onLoginSuccess: () {
+                                  setState(() {
+                                    _isProfileOpen = false; // Close overlay on success
+                                  });
+                                },
+                              ),
+                      ),
+                    ),
+                  ),
                 ),
               Positioned(
                 left: 60,
@@ -76,55 +114,59 @@ class _MainScreenState extends State<MainScreen> {
                           Symbols.movie, 
                           'Movies', 
                           onTap: () {
-                            setState(() {
-                              _isSavedOpen = false;
-                            });
-                            tabsRouter.setActiveIndex(0);
-                          },
-                          isSelected: !_isSavedOpen && tabsRouter.activeIndex == 0,
-                        ),
-                        _buildNavItem(
-                          tabsRouter, 
-                          2, 
-                          Symbols.favorite, 
-                          'Saved',
-                          onTap: () {
-                            setState(() {
-                              _isSavedOpen = true;
-                            });
-                            // Keep background on Home (Movies) so we see them through glass
-                            if (tabsRouter.activeIndex != 0) {
-                              tabsRouter.setActiveIndex(0);
-                            }
-                          },
-                          isSelected: _isSavedOpen,
-                        ),
-                        _buildNavItem(
-                          tabsRouter,
-                          1,
-                          Symbols.search,
-                          'Search',
-                          onTap: () {
                              setState(() {
-                              _isSavedOpen = false;
-                            });
-                            tabsRouter.setActiveIndex(1);
-                          },
-                          isSelected: !_isSavedOpen && tabsRouter.activeIndex == 1,
-                        ),
-                        _buildNavItem(
-                          tabsRouter,
-                          2, // Placeholder index, doesn't matter much
-                          Symbols.person,
-                          'Profile',
-                          isPlaceholder: true,
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const Center(child: NewtonsCradleLoader()),
-                            );
-                          }
-                        ),
+                               _isSavedOpen = false;
+                               _isProfileOpen = false;
+                             });
+                             tabsRouter.setActiveIndex(0);
+                           },
+                           isSelected: !_isSavedOpen && !_isProfileOpen && tabsRouter.activeIndex == 0,
+                         ),
+                         _buildNavItem(
+                           tabsRouter, 
+                           2, 
+                           Symbols.favorite, 
+                           'Saved',
+                           onTap: () {
+                             setState(() {
+                               _isSavedOpen = true;
+                               _isProfileOpen = false;
+                             });
+                             // Keep background on Home (Movies) so we see them through glass
+                             if (tabsRouter.activeIndex != 0) {
+                               tabsRouter.setActiveIndex(0);
+                             }
+                           },
+                           isSelected: _isSavedOpen,
+                         ),
+                         _buildNavItem(
+                           tabsRouter,
+                           1,
+                           Symbols.search,
+                           'Search',
+                           onTap: () {
+                              setState(() {
+                               _isSavedOpen = false;
+                               _isProfileOpen = false;
+                             });
+                             tabsRouter.setActiveIndex(1);
+                           },
+                           isSelected: !_isSavedOpen && !_isProfileOpen && tabsRouter.activeIndex == 1,
+                         ),
+                         _buildNavItem(
+                           tabsRouter,
+                           2, 
+                           Symbols.person,
+                           'Profile',
+                           isPlaceholder: true,
+                           onTap: () {
+                              setState(() {
+                                _isProfileOpen = !_isProfileOpen; // Toggle
+                                _isSavedOpen = false;
+                              });
+                           },
+                           isSelected: _isProfileOpen,
+                         ),
                       ],
                     ),
                   ),
