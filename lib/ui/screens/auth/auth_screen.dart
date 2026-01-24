@@ -101,8 +101,19 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         setState(() {
                              clickedLogin = true;
                         });
-                        final email = _emailController.text;
-                        final password = _passwordController.text;
+                        final email = _emailController.text.trim();
+                        final password = _passwordController.text.trim();
+
+                        if (email.isEmpty || password.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please fill in all fields'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                          return;
+                        }
+
                         if (_isLogin) {
                           ref.read(authViewModelProvider.notifier).signIn(email, password);
                         } else {

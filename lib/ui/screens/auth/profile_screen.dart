@@ -101,66 +101,123 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         automaticallyImplyLeading: true,
       ),
       body: Center(
-        child: GlassContainer.clearGlass(
-              height: 400,
-              width: 350,
-              borderRadius: BorderRadius.circular(20),
-              borderColor: Colors.white.withOpacity(0.1), // Required for Web
-              padding: const EdgeInsets.all(20),
+        child: GlassContainer.frostedGlass(
+          height: 450,
+          width: 350,
+          borderRadius: BorderRadius.circular(30),
+          borderWidth: 1,
+          borderColor: Colors.white.withOpacity(0.1),
+          blur: 20,
+          gradient: LinearGradient(
+            colors: [
+              Colors.white.withOpacity(0.1),
+              Colors.white.withOpacity(0.05),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          padding: const EdgeInsets.all(24),
           child: _loading 
-            ? const Center(child: CircularProgressIndicator()) 
-            : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+            ? const Center(child: CircularProgressIndicator(color: Colors.white)) 
+            : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   TextField(
-                      controller: _usernameController, 
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Username',
-                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                        filled: true,
-                        fillColor: Colors.white.withOpacity(0.1),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+                   // Avatar Placeholder (optional, keeping it simple for now)
+                   Container(
+                     height: 80,
+                     width: 80,
+                     decoration: BoxDecoration(
+                       shape: BoxShape.circle,
+                       color: Colors.white.withOpacity(0.1),
+                       border: Border.all(color: Colors.white.withOpacity(0.2)),
+                     ),
+                     child: const Icon(Icons.person, size: 40, color: Colors.white),
+                   ),
+                   const SizedBox(height: 32),
+
+                   // Username Input (Glass Pill)
+                   GlassContainer.frostedGlass(
+                     height: 60,
+                     width: double.infinity,
+                     borderRadius: BorderRadius.circular(30),
+                     borderWidth: 1,
+                     borderColor: Colors.white.withOpacity(0.1),
+                     blur: 15,
+                     gradient: LinearGradient(
+                       colors: [
+                         Colors.white.withOpacity(0.05),
+                         Colors.white.withOpacity(0.02),
+                       ],
+                     ),
+                     child: Center(
+                       child: TextField(
+                          controller: _usernameController, 
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            labelStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            filled: false,
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+                          ),
+                        ),
+                     ),
+                   ),
+
+                  const SizedBox(height: 32),
+                  
+                  // Update Button
+                  GestureDetector(
+                    onTap: _updateProfile,
+                    child: GlassContainer.frostedGlass(
+                      height: 50,
+                      width: double.infinity,
+                      borderRadius: BorderRadius.circular(25),
+                      borderWidth: 1,
+                      borderColor: Colors.white.withOpacity(0.2),
+                      blur: 10,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.2),
+                          Colors.white.withOpacity(0.1),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Update Profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _updateProfile,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    child: const Text('Update Profile'),
                   ),
-                   const SizedBox(height: 20),
-                  ElevatedButton(
+
+                   const SizedBox(height: 16),
+
+                  // Sign Out Button
+                  TextButton(
                     onPressed: () {
                       ref.read(authViewModelProvider.notifier).signOut();
                       if (widget.onSignOut != null) {
                         widget.onSignOut!();
                       }
-                      // No Navigator.pop() as it's an overlay
                     },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red[900],
-                        foregroundColor: Colors.white,
-                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                    child: Text(
+                      'Sign Out',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.7),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
                       ),
-                    child: const Text('Sign Out'),
+                    ),
                   ),
                 ],
               ),
-            ),
         ),
       ),
     );

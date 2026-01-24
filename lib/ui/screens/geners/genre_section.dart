@@ -5,9 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framed_v2/data/models/genre.dart';
 import 'package:framed_v2/data/models/genre_state.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
+import 'package:glass_kit/glass_kit.dart';
 
 typedef OnGenresSelected = void Function(List<GenreState>);
 typedef OnGenresExpanded = void Function(bool);
+
+
+
+// ... (imports remain mostly the same, add glass_kit if missing in original which it is)
 
 class GenreSection extends ConsumerStatefulWidget {
   final bool isExpanded;
@@ -36,6 +41,7 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
       delegate: SliverChildListDelegate([
         ExpansionPanelList(
           expandIconColor: Colors.white,
+          elevation: 0,
           expansionCallback: (int index, bool expanded) {
             setState(() {
               widget.onGenresExpanded(expanded);
@@ -44,7 +50,7 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
           children: [
             ExpansionPanel(
               isExpanded: widget.isExpanded,
-              backgroundColor: screenBackground,
+              backgroundColor: Colors.transparent, // Transparent for glass effect
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 16.0, top: 16.0),
@@ -52,39 +58,28 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
                     children: [
                       Text(
                         'Genres',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-                      const SizedBox(width: 8.0),
-
-                      Container(
-                        width: 16,
-                        height: 16,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
-                        ),
-                        child: Center(
-                          child: Text(
-                            totalSelected().toString(),
-                            style: verySmallText,
-                          ),
+                        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
+                      // Red circle removed
                     ],
                   ),
                 );
               },
               body: Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: GridView.builder(
                   shrinkWrap: true,
-                  padding: const EdgeInsets.all(0.0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.only(bottom: 16),
                   itemCount: genreChips.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 2.2,
-                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 2.5,
+                    mainAxisSpacing: 12,
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return genreChips[index];
@@ -101,13 +96,11 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
   List<Widget> getGenreChips() {
     return widget.genreStates.mapIndexed((index, element) {
       final genre = widget.genreStates[index].genre;
-      return FilterChip(
-        backgroundColor: searchBarBackground,
-        selectedColor: buttonGrey,
-        label: Text(genre.name, style: Theme.of(context).textTheme.labelSmall),
-        selected: widget.genreStates[index].isSelected,
-        onSelected: (selected) {
-          setState(() {
+      final isSelected = widget.genreStates[index].isSelected;
+      
+      return GestureDetector(
+        onTap: () {
+           setState(() {
             widget.genreStates[index] = GenreState(
               genre: genre,
               isSelected: !widget.genreStates[index].isSelected,
@@ -115,6 +108,32 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
             widget.onGenresSelected(widget.genreStates);
           });
         },
+        child: GlassContainer.frostedGlass(
+          height: 40,
+          width: double.infinity,
+          borderRadius: BorderRadius.circular(20),
+          borderWidth: 1,
+          borderColor: isSelected 
+              ? Colors.white.withOpacity(0.5) 
+              : Colors.white.withOpacity(0.1),
+          blur: 15,
+          gradient: LinearGradient(
+              colors: isSelected
+                  ? [Colors.white.withOpacity(0.3), Colors.white.withOpacity(0.2)]
+                  : [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          child: Center(
+            child: Text(
+              genre.name, 
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: isSelected ? Colors.white : Colors.white70,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              )
+            ),
+          ),
+        ),
       );
     }).toList();
   }
@@ -123,9 +142,5 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
     return widget.genreStates
         .where((genreState) => genreState.isSelected)
         .toList();
-  }
-
-  int totalSelected() {
-    return getSelectedGenres().length;
   }
 }

@@ -14,6 +14,7 @@ import 'package:framed_v2/ui/screens/geners/genre_section.dart';
 import 'package:framed_v2/ui/screens/geners/sort_picker.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/utils/utils.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:framed_v2/vert_movie_list.dart';
 import 'package:framed_v2/router/app_routes.dart';
 import 'package:framed_v2/data/models/genre_state.dart';
@@ -98,84 +99,102 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
   }
 
   Widget buildScreen() {
-    return SafeArea(
-      child: Container(
-        color: screenBackground,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 24),
-                        child: Text(
-                          "Find a Movie",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false, // Prevent background from resizing with keyboard
+      body: Stack(
+        children: [
+          // Background Layer
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.7),
+                    Colors.black.withOpacity(0.5),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            ),
+          ),
+          
+          // Content Layer
+          SafeArea(
+            bottom: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildListDelegate([
+                          const SizedBox(height: 10), // Reduced spacing
+                          GenreSearchRow((searchString) {
+                            currentSearchString = searchString;
+                            currentMovieResponse = null;
+                            // FocusScope.of(context).unfocus(); // Keep keyboard open for search
+                            expandedNotifier.value = false;
+                            search();
+                          }),
+                        ]),
                       ),
-                      GenreSearchRow((searchString) {
-                        currentSearchString = searchString;
-                        currentMovieResponse = null;
-                        FocusScope.of(context).unfocus();
-                        expandedNotifier.value = false;
-                        search();
-                      }),
-                    ]),
-                  ),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: expandedNotifier,
-                    builder: (BuildContext context, bool value, Widget? child) {
-                      return GenreSection(
-                        genreStates: genreStates,
-                        isExpanded: value,
-                        onGenresExpanded: (expanded) {
-                          expandedNotifier.value = expanded;
-                        },
-                        onGenresSelected: (genres) {
-                          genreStates = genres;
-                          saveSelectedGenres();
-                          currentMovieResponse = null;
-                        },
-                      );
-                    },
-                  ),
-                  const SliverDivider(),
-                  SortPicker(
-                    useSliver: true,
-                    onSortSelected: (sorting) {
-                      selectedSort = sorting;
-                      sortMovies();
-                    },
-                  ),
-                  ValueListenableBuilder<List<MovieResults>>(
-                    valueListenable: movieNotifier,
-                    builder:
-                        (
-                          BuildContext context,
-                          List<MovieResults> value,
-                          Widget? child,
-                        ) {
-                          return VerticalMovieList(
-                            movies: value,
-                            movieViewModel: movieViewModel,
-                            onMovieTap: (movieId) {
-                              context.router.push(
-                                MovieDetailRoute(movieId: movieId),
-                              );
+                      ValueListenableBuilder<bool>(
+                        valueListenable: expandedNotifier,
+                        builder: (BuildContext context, bool value, Widget? child) {
+                          return GenreSection(
+                            genreStates: genreStates,
+                            isExpanded: value,
+                            onGenresExpanded: (expanded) {
+                              expandedNotifier.value = expanded;
+                            },
+                            onGenresSelected: (genres) {
+                              genreStates = genres;
+                              saveSelectedGenres();
+                              currentMovieResponse = null;
                             },
                           );
                         },
+                      ),
+                      // const SliverDivider(), // Removed divider
+                      SortPicker(
+                        useSliver: true,
+                        onSortSelected: (sorting) {
+                          selectedSort = sorting;
+                          sortMovies();
+                        },
+                      ),
+                      ValueListenableBuilder<List<MovieResults>>(
+                        valueListenable: movieNotifier,
+                        builder:
+                            (
+                              BuildContext context,
+                              List<MovieResults> value,
+                              Widget? child,
+                            ) {
+                              return VerticalMovieList(
+                                movies: value,
+                                movieViewModel: movieViewModel,
+                                onMovieTap: (movieId) {
+                                  context.router.push(
+                                    MovieDetailRoute(movieId: movieId),
+                                  );
+                                },
+                              );
+                            },
+                      ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 100)), // Bottom padding
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
