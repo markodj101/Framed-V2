@@ -93,14 +93,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent, // Or transparent if overlay
-      appBar: AppBar(
-        title: Text('Profile', style: GoogleFonts.outfit()),
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: true,
-      ),
-      body: Center(
+    return Material(
+      color: Colors.transparent, 
+      child: Center(
         child: GlassContainer.frostedGlass(
           height: 450,
           width: 350,

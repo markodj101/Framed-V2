@@ -4,6 +4,8 @@ import 'package:framed_v2/ui/screens/auth/auth_viewmodel.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 class AuthScreen extends ConsumerStatefulWidget {
   final VoidCallback? onLoginSuccess;
   const AuthScreen({super.key, this.onLoginSuccess});
@@ -13,22 +15,90 @@ class AuthScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthScreenState extends ConsumerState<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLogin = true;
   bool clickedLogin = false;
+  bool _obscurePassword = true;
+
+  String _getErrorMessage(dynamic error) {
+    if (error is AuthException) {
+      if (error.statusCode == '400' && error.message.contains('Invalid login credentials')) {
+        return 'Wrong email or password (400).'; // Specific request compliance
+      }
+      if (error.message.contains('User already registered')) {
+        return 'Email already used. Please login instead.';
+      }
+      return error.message; // Return Supabase message directly if no override
+    }
+    
+    final message = error.toString();
+    if (message.contains('SocketException') || message.contains('Failed host lookup')) {
+      return 'Network error. Please check your connection.';
+    }
+    return message;
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) {
+       ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fix the errors in red.'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      clickedLogin = true;
+    });
+
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (_isLogin) {
+      await ref.read(authViewModelProvider.notifier).signIn(email, password);
+    } else {
+      final response = await ref.read(authViewModelProvider.notifier).signUp(email, password);
+       // Check for email verification case (success but no session)
+       if (response != null && response.session == null && response.user != null) {
+          if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Account created! Please check your email to verify.'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 5),
+                ),
+              );
+          }
+           return; 
+       }
+    }
+
+    // Check for error in state
+    final authState = ref.read(authViewModelProvider);
+    if (authState.hasError && mounted) {
+       ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_getErrorMessage(authState.error)),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authViewModelProvider);
     
     ref.listen(authViewModelProvider, (previous, next) {
-      if (next.value != null) {
-        // User logged in successfully
+      if (next.valueOrNull != null && (previous?.valueOrNull == null)) {
         if (widget.onLoginSuccess != null) {
           widget.onLoginSuccess!();
         } else {
-             // Fallback if used as standalone
              if (clickedLogin) Navigator.of(context).pop();
         }
       }
@@ -38,130 +108,217 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       backgroundColor: Colors.transparent, // Overlay support
       body: Stack(
         children: [
-          // Background Image (Optional)
+           // Dark Gradient Background
            Positioned.fill(
             child: Container(
-              color: Colors.black, // Placeholder or Image.asset
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF1A1A1A),
+                    Colors.black,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
             ),
           ),
           Center(
-            child: GlassContainer.clearGlass(
-              height: 400,
-              width: 350,
-              borderRadius: BorderRadius.circular(20),
-              borderColor: Colors.white.withOpacity(0.1), // Required for Web
-              padding: const EdgeInsets.all(20),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+
                     Text(
-                      _isLogin ? 'Welcome Back' : 'Join Framed',
+                      'Begin your journey',
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.outfit(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      controller: _emailController, // Added controller
+                    const SizedBox(height: 32),
+
+                    // Social Buttons (Removed as requested)
+                    // Row(children: [...]),
+                    // const SizedBox(height: 24),
+
+                    // Divider
+                    Row(
+                      children: [
+                        Expanded(child: Divider(color: Colors.white24)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Or continue with',
+                            style: TextStyle(color: Colors.white54, fontSize: 12),
+                          ),
+                        ),
+                        Expanded(child: Divider(color: Colors.white24)),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Social Button (Google Only - assuming keeping generic if Apple is "logo")
+                    // Wait, user said "remove apple logo" but maybe meant just the Apple button.
+                    // If I remove Apple, I have 1 button.
+                    _SocialButton(
+                       icon: Icons.g_mobiledata,
+                       label: '',
+                       onTap: () {},
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Inputs
+                    TextFormField(
+                      controller: _emailController,
                       style: const TextStyle(color: Colors.white),
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                         // Validation logic preserved
+                        if (value == null || value.isEmpty) return 'Email cannot be empty';
+                        final emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                        if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
+                        return null;
+                      },
                       decoration: InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.1),
+                        fillColor: Color(0xFF2C2C2E),
+                        hintText: 'Email Address',
+                        hintStyle: TextStyle(color: Colors.white38),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
                         ),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: _passwordController, // Added controller
-                      obscureText: true,
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: _obscurePassword,
                       style: const TextStyle(color: Colors.white),
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) => _submit(),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) return 'Password cannot be empty';
+                        if (value.length < 6) return 'Must be at least 6 characters';
+                        return null;
+                      },
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFF2C2C2E),
                         hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                        filled: true,
-                        fillColor: Colors.white.withOpacity(0.1),
+                        hintStyle: TextStyle(color: Colors.white38),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                            color: Colors.white38,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
                         ),
+                         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                             clickedLogin = true;
-                        });
-                        final email = _emailController.text.trim();
-                        final password = _passwordController.text.trim();
+                    const SizedBox(height: 12),
 
-                        if (email.isEmpty || password.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please fill in all fields'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                          return;
-                        }
 
-                        if (_isLogin) {
-                          ref.read(authViewModelProvider.notifier).signIn(email, password);
-                        } else {
-                          ref.read(authViewModelProvider.notifier).signUp(email, password);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+
+                    // Continue Button
+                    SizedBox(
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: authState.isLoading ? null : _submit,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white.withOpacity(0.1),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(color: Colors.white10),
+                          ),
+                        ),
+                        child: authState.isLoading
+                             ? const CircularProgressIndicator(color: Colors.white)
+                             : Text(
+                                _isLogin ? 'Login' : 'Sign Up',
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    
+                    // Toggle Link
+                    Center(
+                      child: GestureDetector(
+                        onTap: () {
+                           setState(() {
+                            _isLogin = !_isLogin;
+                            _formKey.currentState?.reset();
+                          });
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: Colors.white54),
+                            children: [
+                              TextSpan(text: _isLogin ? 'Not a Member? ' : 'Already a Member? '),
+                              TextSpan(
+                                text: _isLogin ? 'Create an Account' : 'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      child: authState.isLoading
-                          ? const CircularProgressIndicator()
-                          : Text(_isLogin ? 'Login' : 'Sign Up'),
                     ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                        });
-                      },
-                      child: Text(
-                        _isLogin
-                            ? 'Don\'t have an account? Sign Up'
-                            : 'Already have an account? Login',
-                        style: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                    if (authState.hasError)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          authState.error.toString().contains('User already registered')
-                              ? 'This email is already registered. Please login instead.'
-                              : authState.error.toString(),
-                          style: const TextStyle(color: Colors.red, fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
                   ],
                 ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _SocialButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _SocialButton({required this.icon, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56,
+        decoration: BoxDecoration(
+          color: Color(0xFF2C2C2E),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Icon(icon, color: Colors.white, size: 28),
+        ),
       ),
     );
   }

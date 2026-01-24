@@ -25,21 +25,23 @@ class AuthViewModel extends StateNotifier<AsyncValue<User?>> {
     }
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<AuthResponse?> signIn(String email, String password) async {
     state = const AsyncValue.loading();
     try {
-      await _authService.signIn(email, password);
+      return await _authService.signIn(email, password);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
+      return null;
     }
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<AuthResponse?> signUp(String email, String password) async {
     state = const AsyncValue.loading();
     try {
-      await _authService.signUp(email, password);
+      return await _authService.signUp(email, password);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
+      return null;
     }
   }
 

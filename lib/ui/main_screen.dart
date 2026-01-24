@@ -43,6 +43,14 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(authViewModelProvider, (previous, next) {
+      if (next.valueOrNull != null && (previous?.valueOrNull == null)) {
+         // User logged in, close the profile overlay to show home screen
+         setState(() {
+           _isProfileOpen = false;
+         });
+      }
+    });
     ref.watch(authViewModelProvider); // Watch auth state
     return AutoTabsRouter(
       routes: [HomeRoute(), GenreRoute(), FavoriteRoute()],
@@ -67,7 +75,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     child: Container(
                       color: Colors.black.withOpacity(0.8), // Dim background
                       child: Center(
-                         child: ref.watch(authViewModelProvider).value != null 
+                         child: ref.watch(authViewModelProvider).valueOrNull != null 
                             ? ProfileScreen(
                                 onSignOut: () {
                                   setState(() {
