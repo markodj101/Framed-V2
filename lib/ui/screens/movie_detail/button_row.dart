@@ -72,7 +72,7 @@ class _UserScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final percentage = (voteAverage * 10).toInt();
+    final percentage = voteAverage.isFinite ? (voteAverage * 10).toInt() : 0;
 
     return Container(
       padding: const EdgeInsets.symmetric(

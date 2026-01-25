@@ -113,7 +113,21 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
       backgroundColor: Colors.transparent,
       body: movieViewModelAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              'Error: $err',
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
         data: (viewModel) {
           final movies = _getMovies(viewModel);
           return GlassContainer.frostedGlass(
@@ -181,23 +195,27 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                       const SizedBox(width: 12),
                       // Rectangular Title Box
                       Expanded(
-                        child: GlassContainer.frostedGlass(
-                          height: 50,
-                          width: double.infinity,
-                          borderRadius: BorderRadius.circular(30),
-                          borderWidth: 1,
-                          borderColor: Colors.white.withOpacity(0.1),
-                          blur: 20,
-                          child: Center(
-                            child: Text(
-                              _getTitle(),
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white,
-                                letterSpacing: -0.5,
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return GlassContainer.frostedGlass(
+                              height: 50,
+                              width: constraints.maxWidth,
+                              borderRadius: BorderRadius.circular(30),
+                              borderWidth: 1,
+                              borderColor: Colors.white.withOpacity(0.1),
+                              blur: 20,
+                              child: Center(
+                                child: Text(
+                                  _getTitle(),
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.white,
+                                    letterSpacing: -0.5,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          }
                         ),
                       ),
                     ],

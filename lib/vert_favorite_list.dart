@@ -20,14 +20,17 @@ class VerticalFavoriteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final crossAxisCount = width < 600 ? 3 : 5;
+
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, // 4 columns for favorites
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount, // Responsive columns
           mainAxisSpacing: 12,
           crossAxisSpacing: 6,
-          childAspectRatio: 0.62, // Adjusted for 4 columns
+          childAspectRatio: 0.62,
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {

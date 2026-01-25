@@ -36,51 +36,55 @@ class _GenreSearchRowState extends ConsumerState<GenreSearchRow> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: GlassContainer.frostedGlass(
-              height: 50,
-              width: double.infinity,
-              borderRadius: BorderRadius.circular(30),
-              borderWidth: 1,
-              borderColor: Colors.white.withOpacity(0.1),
-              blur: 20,
-              gradient: LinearGradient(
-                colors: [
-                  Colors.white.withOpacity(0.1),
-                  Colors.white.withOpacity(0.05),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              child: TextField(
-                textAlignVertical: TextAlignVertical.center,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white),
-                focusNode: textFocusNode,
-                keyboardType: TextInputType.text,
-                enableSuggestions: false,
-                autofocus: false,
-                onSubmitted: (value) {
-                  widget.onSearch(value);
-                },
-                controller: movieTextController,
-                autocorrect: false,
-                decoration: InputDecoration(
-                  filled: false,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  hintText: 'Search for movies, genres...',
-                  hintStyle: body1Regular.copyWith(color: Colors.white.withOpacity(0.5)),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      movieTextController.clear();
-                    },
-                    icon: Icon(Icons.close, color: Colors.white.withOpacity(0.7)),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return GlassContainer.frostedGlass(
+                  height: 50,
+                  width: constraints.maxWidth,
+                  borderRadius: BorderRadius.circular(30),
+                  borderWidth: 1,
+                  borderColor: Colors.white.withOpacity(0.1),
+                  blur: 20,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.white.withOpacity(0.1),
+                      Colors.white.withOpacity(0.05),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
-                ),
-              ),
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white),
+                    focusNode: textFocusNode,
+                    keyboardType: TextInputType.text,
+                    enableSuggestions: false,
+                    autofocus: false,
+                    onSubmitted: (value) {
+                      widget.onSearch(value);
+                    },
+                    controller: movieTextController,
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                      filled: false,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: 'Search for movies, genres...',
+                      hintStyle: body1Regular.copyWith(color: Colors.white.withOpacity(0.5)),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          movieTextController.clear();
+                        },
+                        icon: Icon(Icons.close, color: Colors.white.withOpacity(0.7)),
+                      ),
+                      prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
+                    ),
+                  ),
+                );
+              }
             ),
           ),
         ),

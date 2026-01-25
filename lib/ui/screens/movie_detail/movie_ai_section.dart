@@ -33,31 +33,35 @@ class MovieAiSection extends StatelessWidget {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () => showComingSoonDialog(context),
-              child: GlassContainer.frostedGlass(
-                height: 60,
-                width: double.infinity,
-                borderRadius: BorderRadius.circular(15),
-                borderWidth: 1,
-                borderColor: Colors.white.withOpacity(0.1),
-                blur: 20,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Icon(Icons.auto_awesome, color: Colors.white.withOpacity(0.7), size: 20),
-                      const SizedBox(width: 12),
-                      Text(
-                        "Ask AI something about this movie...",
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.5),
-                          fontSize: 14,
-                        ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return GlassContainer.frostedGlass(
+                    height: 60,
+                    width: constraints.maxWidth,
+                    borderRadius: BorderRadius.circular(15),
+                    borderWidth: 1,
+                    borderColor: Colors.white.withOpacity(0.1),
+                    blur: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          Icon(Icons.auto_awesome, color: Colors.white.withOpacity(0.7), size: 20),
+                          const SizedBox(width: 12),
+                          Text(
+                            "Ask AI something about this movie...",
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.5),
+                              fontSize: 14,
+                            ),
+                          ),
+                          const Spacer(),
+                          Icon(Icons.send_rounded, color: Colors.white.withOpacity(0.7), size: 20),
+                        ],
                       ),
-                      const Spacer(),
-                      Icon(Icons.send_rounded, color: Colors.white.withOpacity(0.7), size: 20),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                }
               ),
             ),
           ],

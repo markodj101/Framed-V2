@@ -163,7 +163,7 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          '${(currentMovie.voteAverage * 10).toInt()}% User Score',
+                          '${(currentMovie.voteAverage.isFinite ? (currentMovie.voteAverage * 10).toInt() : 0)}% User Score',
                           style: const TextStyle(
                             color: matchGreen,
                             fontSize: 12,
@@ -252,30 +252,34 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                        ),
                        const SizedBox(width: 12),
                        Expanded(
-                         child: GestureDetector(
-                           onTapDown: (_) => setState(() => _detailsAnimTarget = 1),
-                           onTapUp: (_) => setState(() => _detailsAnimTarget = 0),
-                           onTapCancel: () => setState(() => _detailsAnimTarget = 0),
-                           onTap: () {
-                             String uniqueHeroTag = '${currentMovie.posterPath}swiper';
-                             ref.read(heroTagProvider.notifier).state = uniqueHeroTag;
-                             widget.onMovieTap(currentMovie.id);
-                           },
-                           child: GlassContainer.frostedGlass(
-                             height: 52,
-                             width: double.infinity,
-                             borderRadius: BorderRadius.circular(30),
-                             borderWidth: 1.2,
-                             borderColor: Colors.white.withOpacity(0.1),
-                             blur: 20,
-                             child: const Center(
-                               child: Text(
-                                 'Details',
-                                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),
-                               ),
-                             ),
-                           ).animate(target: _detailsAnimTarget)
-                            .scale(begin: const Offset(1, 1), end: const Offset(0.95, 0.95), duration: 100.ms, curve: Curves.easeOut),
+                         child: LayoutBuilder(
+                           builder: (context, constraints) {
+                             return GestureDetector(
+                               onTapDown: (_) => setState(() => _detailsAnimTarget = 1),
+                               onTapUp: (_) => setState(() => _detailsAnimTarget = 0),
+                               onTapCancel: () => setState(() => _detailsAnimTarget = 0),
+                               onTap: () {
+                                 String uniqueHeroTag = '${currentMovie.posterPath}swiper';
+                                 ref.read(heroTagProvider.notifier).state = uniqueHeroTag;
+                                 widget.onMovieTap(currentMovie.id);
+                               },
+                               child: GlassContainer.frostedGlass(
+                                 height: 52,
+                                 width: constraints.maxWidth,
+                                 borderRadius: BorderRadius.circular(30),
+                                 borderWidth: 1.2,
+                                 borderColor: Colors.white.withOpacity(0.1),
+                                 blur: 20,
+                                 child: const Center(
+                                   child: Text(
+                                     'Details',
+                                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),
+                                   ),
+                                 ),
+                               ).animate(target: _detailsAnimTarget)
+                                .scale(begin: const Offset(1, 1), end: const Offset(0.95, 0.95), duration: 100.ms, curve: Curves.easeOut),
+                             );
+                           }
                          ),
                        ),
 

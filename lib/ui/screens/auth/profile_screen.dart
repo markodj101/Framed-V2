@@ -131,34 +131,38 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                    const SizedBox(height: 32),
 
                    // Username Input (Glass Pill)
-                   GlassContainer.frostedGlass(
-                     height: 60,
-                     width: double.infinity,
-                     borderRadius: BorderRadius.circular(30),
-                     borderWidth: 1,
-                     borderColor: Colors.white.withOpacity(0.1),
-                     blur: 15,
-                     gradient: LinearGradient(
-                       colors: [
-                         Colors.white.withOpacity(0.05),
-                         Colors.white.withOpacity(0.02),
-                       ],
-                     ),
-                     child: Center(
-                       child: TextField(
-                          controller: _usernameController, 
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                          decoration: InputDecoration(
-                            labelText: 'Username',
-                            labelStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            filled: false,
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
-                          ),
-                        ),
-                     ),
+                   LayoutBuilder(
+                     builder: (context, constraints) {
+                       return GlassContainer.frostedGlass(
+                         height: 60,
+                         width: constraints.maxWidth,
+                         borderRadius: BorderRadius.circular(30),
+                         borderWidth: 1,
+                         borderColor: Colors.white.withOpacity(0.1),
+                         blur: 15,
+                         gradient: LinearGradient(
+                           colors: [
+                             Colors.white.withOpacity(0.05),
+                             Colors.white.withOpacity(0.02),
+                           ],
+                         ),
+                         child: Center(
+                           child: TextField(
+                              controller: _usernameController, 
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                              decoration: InputDecoration(
+                                labelText: 'Username',
+                                labelStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                filled: false,
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+                              ),
+                            ),
+                         ),
+                       );
+                     }
                    ),
 
                   const SizedBox(height: 32),
@@ -166,29 +170,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   // Update Button
                   GestureDetector(
                     onTap: _updateProfile,
-                    child: GlassContainer.frostedGlass(
-                      height: 50,
-                      width: double.infinity,
-                      borderRadius: BorderRadius.circular(25),
-                      borderWidth: 1,
-                      borderColor: Colors.white.withOpacity(0.2),
-                      blur: 10,
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.white.withOpacity(0.2),
-                          Colors.white.withOpacity(0.1),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Update Profile',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return GlassContainer.frostedGlass(
+                          height: 50,
+                          width: constraints.maxWidth,
+                          borderRadius: BorderRadius.circular(25),
+                          borderWidth: 1,
+                          borderColor: Colors.white.withOpacity(0.2),
+                          blur: 10,
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white.withOpacity(0.2),
+                              Colors.white.withOpacity(0.1),
+                            ],
                           ),
-                        ),
-                      ),
+                          child: const Center(
+                            child: Text(
+                              'Update Profile',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     ),
                   ),
 

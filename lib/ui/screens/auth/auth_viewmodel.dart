@@ -45,6 +45,8 @@ class AuthViewModel extends StateNotifier<AsyncValue<User?>> {
     }
   }
 
+
+
   Future<void> signOut() async {
     await _authService.signOut();
   }

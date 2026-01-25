@@ -124,80 +124,43 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             ),
           ),
           Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+            child: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 32),
 
-                    Text(
-                      'Begin your journey',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.outfit(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 32),
 
-                    // Social Buttons (Removed as requested)
-                    // Row(children: [...]),
-                    // const SizedBox(height: 24),
 
-                    // Divider
-                    Row(
-                      children: [
-                        Expanded(child: Divider(color: Colors.white24)),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            'Or continue with',
-                            style: TextStyle(color: Colors.white54, fontSize: 12),
+                      // Inputs
+                      TextFormField(
+                        controller: _emailController,
+                        style: const TextStyle(color: Colors.white),
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                           // Validation logic preserved
+                          if (value == null || value.isEmpty) return 'Email cannot be empty';
+                          final emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                          if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xFF2C2C2E),
+                          hintText: 'Email Address',
+                          hintStyle: TextStyle(color: Colors.white38),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
                           ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                         ),
-                        Expanded(child: Divider(color: Colors.white24)),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Social Button (Google Only - assuming keeping generic if Apple is "logo")
-                    // Wait, user said "remove apple logo" but maybe meant just the Apple button.
-                    // If I remove Apple, I have 1 button.
-                    _SocialButton(
-                       icon: Icons.g_mobiledata,
-                       label: '',
-                       onTap: () {},
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Inputs
-                    TextFormField(
-                      controller: _emailController,
-                      style: const TextStyle(color: Colors.white),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                         // Validation logic preserved
-                        if (value == null || value.isEmpty) return 'Email cannot be empty';
-                        final emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                        if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xFF2C2C2E),
-                        hintText: 'Email Address',
-                        hintStyle: TextStyle(color: Colors.white38),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                       ),
-                    ),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _passwordController,
@@ -292,6 +255,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 ),
               ),
             ),
+            ),
           ),
         ],
       ),
@@ -299,27 +263,4 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   }
 }
 
-class _SocialButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
 
-  const _SocialButton({required this.icon, required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 56,
-        decoration: BoxDecoration(
-          color: Color(0xFF2C2C2E),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: Icon(icon, color: Colors.white, size: 28),
-        ),
-      ),
-    );
-  }
-}

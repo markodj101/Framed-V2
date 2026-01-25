@@ -34,7 +34,24 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
     ref.watch(authViewModelProvider);
     final movieViewModelAsync = ref.watch(movieViewModelProvider);
     return movieViewModelAsync.when(
-      error: (e, st) => Text(e.toString()),
+      error: (e, st) => Container(
+        color: Colors.black.withOpacity(0.7),
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              e.toString(),
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
       loading: () => const NotReady(),
       data: (viewModel) {
         movieViewModel = viewModel;
@@ -81,16 +98,18 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
               }
             });
 
-            return GlassContainer.frostedGlass(
-                height: double.infinity,
-                width: double.infinity,
-                borderWidth: 1.5,
-                borderColor: Colors.white.withOpacity(0.2), // Visible border
-                frostedOpacity: 0.1, // Slight opacity to differentiate from transparent
-                blur: 30, // Reduced blur slightly for sharper glass feel, or keeping high
-                elevation: 10,
-                shadowColor: Colors.black.withOpacity(0.5),
-                child: Stack(
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return GlassContainer.frostedGlass(
+                    height: constraints.maxHeight,
+                    width: constraints.maxWidth,
+                    borderWidth: 1.5,
+                    borderColor: Colors.white.withOpacity(0.2), // Visible border
+                    frostedOpacity: 0.1, // Slight opacity to differentiate from transparent
+                    blur: 30, // Reduced blur slightly for sharper glass feel, or keeping high
+                    elevation: 10,
+                    shadowColor: Colors.black.withOpacity(0.5),
+                    child: Stack(
                   children: [
                     CustomScrollView(
                       slivers: [
@@ -132,62 +151,69 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                       top: 40,
                       left: 20,
                       right: 20,
-                      child: GlassContainer.frostedGlass(
-                        height: 50,
-                        width: double.infinity,
-                        borderRadius: BorderRadius.circular(30),
-                        borderWidth: 1,
-                        borderColor: Colors.white.withOpacity(0.1),
-                        blur: 20,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                  Text(
-                                    "Saved",
-                                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.white,
-                                      letterSpacing: -0.5,
-                                    ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return GlassContainer.frostedGlass(
+                            height: 50,
+                            width: constraints.maxWidth,
+                            borderRadius: BorderRadius.circular(30),
+                            borderWidth: 1,
+                            borderColor: Colors.white.withOpacity(0.1),
+                            blur: 20,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                      Text(
+                                        "Saved",
+                                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.white,
+                                          letterSpacing: -0.5,
+                                        ),
+                                      ),
+                                      FutureBuilder<int>(
+                                // ...
+                                    future: _calculateTotalRuntime(favorites), // Pass the specific list
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return const SizedBox(
+                                          height: 20, 
+                                          width: 20, 
+                                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white54)
+                                        );
+                                      }
+                                      if (!snapshot.hasData) return const Text("0.0 Hours", style: TextStyle(color: Colors.white70));
+                                      
+                                      final totalMinutes = snapshot.data!;
+                                      final hours = (totalMinutes / 60).toStringAsFixed(1);
+                                      return Text(
+                                        "$hours Hours Watched",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: Colors.white70,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      );
+                                    }
                                   ),
-                                  FutureBuilder<int>(
-// ...
-                                future: _calculateTotalRuntime(favorites), // Pass the specific list
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return const SizedBox(
-                                      height: 20, 
-                                      width: 20, 
-                                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white54)
-                                    );
-                                  }
-                                  if (!snapshot.hasData) return const Text("0.0 Hours", style: TextStyle(color: Colors.white70));
-                                  
-                                  final totalMinutes = snapshot.data!;
-                                  final hours = (totalMinutes / 60).toStringAsFixed(1);
-                                  return Text(
-                                    "$hours Hours Watched",
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  );
-                                }
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        }
                       ),
                     ),
                   ],
                 ),
             );
           }
-        ),
-      ),
-    );
+        );
+      }
+    ),
+  ),
+);
+
   }
 
   Stream<List<Favorite>> getFavoritesStream() {

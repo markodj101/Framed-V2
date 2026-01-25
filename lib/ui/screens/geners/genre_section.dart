@@ -108,31 +108,35 @@ class _GenreSectionState extends ConsumerState<GenreSection> {
             widget.onGenresSelected(widget.genreStates);
           });
         },
-        child: GlassContainer.frostedGlass(
-          height: 40,
-          width: double.infinity,
-          borderRadius: BorderRadius.circular(20),
-          borderWidth: 1,
-          borderColor: isSelected 
-              ? Colors.white.withOpacity(0.5) 
-              : Colors.white.withOpacity(0.1),
-          blur: 15,
-          gradient: LinearGradient(
-              colors: isSelected
-                  ? [Colors.white.withOpacity(0.3), Colors.white.withOpacity(0.2)]
-                  : [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          child: Center(
-            child: Text(
-              genre.name, 
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: isSelected ? Colors.white : Colors.white70,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              )
-            ),
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return GlassContainer.frostedGlass(
+              height: 40,
+              width: constraints.maxWidth,
+              borderRadius: BorderRadius.circular(20),
+              borderWidth: 1,
+              borderColor: isSelected 
+                  ? Colors.white.withOpacity(0.5) 
+                  : Colors.white.withOpacity(0.1),
+              blur: 15,
+              gradient: LinearGradient(
+                  colors: isSelected
+                      ? [Colors.white.withOpacity(0.3), Colors.white.withOpacity(0.2)]
+                      : [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              child: Center(
+                child: Text(
+                  genre.name, 
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: isSelected ? Colors.white : Colors.white70,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  )
+                ),
+              ),
+            );
+          }
         ),
       );
     }).toList();

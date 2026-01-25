@@ -24,14 +24,18 @@ class VerticalMovieList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+    final crossAxisCount = width < 600 ? 3 : 5;
+    
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
           mainAxisSpacing: 12,
           crossAxisSpacing: 6,
-          childAspectRatio: 0.62, // Adjusted for 4 columns
+          childAspectRatio: 0.62,
         ),
         delegate: SliverChildBuilderDelegate(
           childCount: movies.length,
