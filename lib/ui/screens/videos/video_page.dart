@@ -96,20 +96,26 @@ class _VideoPageState extends ConsumerState<VideoPage> {
                 ],
               ),
 
-              // Back Button (Overlay)
+              // Enhanced Back Button (Overlay)
               Positioned(
                 top: 50,
                 left: 20,
-                child: GlassContainer.frostedGlass(
-                  height: 50,
-                  width: 50,
-                  shape: BoxShape.circle,
-                  borderWidth: 1,
-                  borderColor: Colors.white.withOpacity(0.1),
-                  blur: 20,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
-                    onPressed: () => context.router.back(),
+                child: GestureDetector(
+                  onTap: () => context.router.back(),
+                  child: GlassContainer.frostedGlass(
+                    height: 68,
+                    width: 68,
+                    shape: BoxShape.circle,
+                    borderWidth: 1.5,
+                    borderColor: Colors.white.withOpacity(0.2),
+                    blur: 25,
+                    child: const Center(
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
                   ),
                 ),
               ),

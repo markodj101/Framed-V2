@@ -97,146 +97,148 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
         }
         return Scaffold(
           backgroundColor: screenBackground,
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leadingWidth: 80,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 40), // Standardized vertical offset
-              child: GestureDetector(
-                onTap: () {
-                   context.router.maybePop(); // Using maybePop is safer
-                },
-                child: GlassContainer.frostedGlass(
-                  height: 50,
-                  width: 50,
-                  shape: BoxShape.circle,
-                  borderWidth: 1,
-                  borderColor: Colors.white.withOpacity(0.1),
-                  blur: 20,
-                  child: const Center(
-                    child: Icon(Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white, size: 20),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: DetailImage(
-                  details: movieDetails,
-                  movieConfiguration: movieViewModel.movieConfiguration!,
-                  onTrailerPressed: () {
-                    if (movieVideos?.results.isNotEmpty ?? false) {
-                      context.router.push(
-                        VideoPageRoute(movieVideo: movieVideos!.results.first),
-                      );
-                    }
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: MovieOverview(details: movieDetails),
-              ),
-              SliverToBoxAdapter(
-                child: StreamBuilder<List<Favorite>>(
-                  stream: movieViewModel.streamFavorites(),
-                  builder: (context, snapshot) {
-                    final favorites = snapshot.data ?? [];
-                    final isFavorite = favorites
-                        .any((element) => element.movieId == widget.movieId);
-                    return ButtonRow(
-                      movieId: widget.movieId,
-                      favoriteSelected: isFavorite,
-                      voteAverage: movieDetails.voteAverage,
-                      onFavoriteSelected: () async {
-
-                        if (isFavorite) {
-                          await movieViewModel.removeFavorite(
-                            widget.movieId,
-                          );
-                        } else {
-                          await movieViewModel.saveFavorite(
-                            movieDetails,
+          body: Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: DetailImage(
+                      details: movieDetails,
+                      movieConfiguration: movieViewModel.movieConfiguration!,
+                      onTrailerPressed: () {
+                        if (movieVideos?.results.isNotEmpty ?? false) {
+                          context.router.push(
+                            VideoPageRoute(movieVideo: movieVideos!.results.first),
                           );
                         }
                       },
-                    );
-                  },
-                ),
-              ),
-              HorizontalCast(
-                castList: credits?.cast ?? [],
-                movieViewModel: movieViewModel,
-              ),
-              HorizontalCrew(
-                crewList: credits?.crew ?? [],
-                movieViewModel: movieViewModel,
-              ),
-              MovieStatsRow(details: movieDetails),
-
-              const MovieAiSection(),
-              if (similarMovies?.results.isNotEmpty ?? false) ...[
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 24, 20, 12),
-                    child: Text(
-                      "More Like This",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
                     ),
                   ),
-                ),
-                SliverToBoxAdapter(
-                  child: HorizontalMovies(
-                    movies: similarMovies!.results,
-                    onMovieTap: (movieId) {
-                      context.router.push(
-                        MovieDetailRoute(movieId: movieId),
-                      );
-                    },
-                    movieType: MovieType.similar,
+                  SliverToBoxAdapter(
+                    child: MovieOverview(details: movieDetails),
                   ),
-                ),
-              ],
+                  SliverToBoxAdapter(
+                    child: StreamBuilder<List<Favorite>>(
+                      stream: movieViewModel.streamFavorites(),
+                      builder: (context, snapshot) {
+                        final favorites = snapshot.data ?? [];
+                        final isFavorite = favorites
+                            .any((element) => element.movieId == widget.movieId);
+                        return ButtonRow(
+                          movieId: widget.movieId,
+                          favoriteSelected: isFavorite,
+                          voteAverage: movieDetails.voteAverage,
+                          onFavoriteSelected: () async {
+
+                            if (isFavorite) {
+                              await movieViewModel.removeFavorite(
+                                widget.movieId,
+                              );
+                            } else {
+                              await movieViewModel.saveFavorite(
+                                movieDetails,
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  HorizontalCast(
+                    castList: credits?.cast ?? [],
+                    movieViewModel: movieViewModel,
+                  ),
+                  HorizontalCrew(
+                    crewList: credits?.crew ?? [],
+                    movieViewModel: movieViewModel,
+                  ),
+                  MovieStatsRow(details: movieDetails),
+
+                  const MovieAiSection(),
+                  if (similarMovies?.results.isNotEmpty ?? false) ...[
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(20, 24, 20, 12),
+                        child: Text(
+                          "More Like This",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: HorizontalMovies(
+                        movies: similarMovies!.results,
+                        onMovieTap: (movieId) {
+                          context.router.push(
+                            MovieDetailRoute(movieId: movieId),
+                          );
+                        },
+                        movieType: MovieType.similar,
+                      ),
+                    ),
+                  ],
+                  
+                  if (_directorMovies?.results.isNotEmpty ?? false) ...[
+                     SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
+                        child: Text(
+                          "More from ${_directorName ?? 'Director'}",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: HorizontalMovies(
+                        movies: _directorMovies!.results,
+                        onMovieTap: (movieId) {
+                          context.router.push(
+                            MovieDetailRoute(movieId: movieId),
+                          );
+                        },
+                        movieType: MovieType.similar, // Reusing similar type for style
+                      ),
+                    ),
+                  ],
+
+
+
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: 50),
+                  ),
+                ],
+              ),
               
-              if (_directorMovies?.results.isNotEmpty ?? false) ...[
-                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
-                    child: Text(
-                      "More from ${_directorName ?? 'Director'}",
-                      style: const TextStyle(
+              // New Enhanced Back Button
+              Positioned(
+                top: 50,
+                left: 20,
+                child: GestureDetector(
+                  onTap: () => context.router.maybePop(),
+                  child: GlassContainer.frostedGlass(
+                    height: 68,
+                    width: 68,
+                    shape: BoxShape.circle,
+                    borderWidth: 1.5,
+                    borderColor: Colors.white.withOpacity(0.2),
+                    blur: 25,
+                    child: const Center(
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
                         color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                        size: 32,
                       ),
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: HorizontalMovies(
-                    movies: _directorMovies!.results,
-                    onMovieTap: (movieId) {
-                      context.router.push(
-                        MovieDetailRoute(movieId: movieId),
-                      );
-                    },
-                    movieType: MovieType.similar, // Reusing similar type for style
-                  ),
-                ),
-              ],
-
-
-
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 50),
               ),
             ],
           ),
