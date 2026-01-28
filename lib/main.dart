@@ -6,6 +6,8 @@ import 'package:framed_v2/providers.dart';
 import 'package:framed_v2/ui/main_screen.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:framed_v2/providers/connectivity_provider.dart';
+import 'package:framed_v2/ui/screens/offline/offline_screen.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:framed_v2/data/models/movie.dart';
@@ -41,11 +43,23 @@ class _MainAppState extends ConsumerState<MainApp> {
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(appRouterProvider);
+    final connectivityStatus = ref.watch(connectivityProvider);
+
     return MaterialApp.router(
       routerConfig: router.config(),
       title: "Framed",
       debugShowCheckedModeBanner: false,
       theme: createTheme(),
+      builder: (context, child) {
+        if (connectivityStatus == ConnectivityStatus.isDisconnected) {
+          return OfflineScreen(
+            onRefresh: () {
+              ref.read(connectivityProvider.notifier).checkConnectivity();
+            },
+          );
+        }
+        return child!;
+      },
     );
   }
 }

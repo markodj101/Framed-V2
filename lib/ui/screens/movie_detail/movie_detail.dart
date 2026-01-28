@@ -103,7 +103,7 @@ class _MovieDetailState extends ConsumerState<MovieDetail> {
             elevation: 0,
             leadingWidth: 80,
             leading: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10),
+              padding: const EdgeInsets.only(left: 20, top: 40), // Standardized vertical offset
               child: GestureDetector(
                 onTap: () {
                    context.router.maybePop(); // Using maybePop is safer

@@ -25,12 +25,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   String _getErrorMessage(dynamic error) {
     if (error is AuthException) {
       if (error.statusCode == '400' && error.message.contains('Invalid login credentials')) {
-        return 'Wrong email or password (400).'; // Specific request compliance
+        return 'Wrong email or password (400).';
       }
       if (error.message.contains('User already registered')) {
         return 'Email already used. Please login instead.';
       }
-      return error.message; // Return Supabase message directly if no override
+      return error.message;
     }
     
     final message = error.toString();
@@ -62,8 +62,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (_isLogin) {
       await ref.read(authViewModelProvider.notifier).signIn(email, password);
     } else {
-      final response = await ref.read(authViewModelProvider.notifier).signUp(email, password);
-       // Check for email verification case (success but no session)
+       final response = await ref.read(authViewModelProvider.notifier).signUp(email, password);
        if (response != null && response.session == null && response.user != null) {
           if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -78,7 +77,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
        }
     }
 
-    // Check for error in state
+
     final authState = ref.read(authViewModelProvider);
     if (authState.hasError && mounted) {
        ScaffoldMessenger.of(context).showSnackBar(
@@ -105,10 +104,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     });
 
     return Scaffold(
-      backgroundColor: Colors.transparent, // Overlay support
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-           // Dark Gradient Background
            Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -137,7 +135,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
 
 
-                      // Inputs
                       TextFormField(
                         controller: _emailController,
                         style: const TextStyle(color: Colors.white),
@@ -200,7 +197,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
 
 
-                    // Continue Button
                     SizedBox(
                       height: 56,
                       child: ElevatedButton(
@@ -224,7 +220,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     ),
                     const SizedBox(height: 24),
                     
-                    // Toggle Link
                     Center(
                       child: GestureDetector(
                         onTap: () {

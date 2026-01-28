@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:framed_v2/data/models/movie_videos.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/utils/utils.dart';
-import 'package:pod_player/pod_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glass_kit/glass_kit.dart';
 
 @RoutePage(name: 'VideoPageRoute')
 class VideoPage extends ConsumerStatefulWidget {
@@ -16,68 +17,106 @@ class VideoPage extends ConsumerStatefulWidget {
 }
 
 class _VideoPageState extends ConsumerState<VideoPage> {
-  late final PodPlayerController podPlayerController;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    final playVideoFrom = PlayVideoFrom.youtube(
-      youtubeUrlFromId(widget.movieVideo.key),
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.movieVideo.key,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+        enableCaption: true,
+        forceHD: true,
+        useHybridComposition: true,
+      ),
     );
+  }
 
-    podPlayerController = PodPlayerController(
-      playVideoFrom: playVideoFrom,
-      podPlayerConfig: const PodPlayerConfig(autoPlay: true),
-    )..initialise();
+  @override
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
   }
 
   @override
   void dispose() {
-    podPlayerController.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-
-  Widget getVideoPlayer(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: screenBackground,
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            context.router.back();
-          },
-        ),
-        centerTitle: false,
-        title: Text('Back', style: Theme.of(context).textTheme.headlineMedium),
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: screenBackground,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: PodVideoPlayer(
-                controller: podPlayerController,
-                matchVideoAspectRatioToFrame: true,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    return getVideoPlayer(context);
+    return YoutubePlayerBuilder(
+      onEnterFullScreen: () {
+        // Handled by plugin
+      },
+      player: YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Colors.white,
+        progressColors: const ProgressBarColors(
+          playedColor: Colors.white,
+          handleColor: Colors.white60,
+        ),
+      ),
+      builder: (context, player) {
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              // Background Gradient
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFF1a1a1a), Colors.black],
+                  ),
+                ),
+              ),
+              
+              // Main Content
+              Column(
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: player,
+                        );
+                      }
+                    ),
+                  ),
+                  const Spacer(flex: 2),
+                ],
+              ),
+
+              // Back Button (Overlay)
+              Positioned(
+                top: 50,
+                left: 20,
+                child: GlassContainer.frostedGlass(
+                  height: 50,
+                  width: 50,
+                  shape: BoxShape.circle,
+                  borderWidth: 1,
+                  borderColor: Colors.white.withOpacity(0.1),
+                  blur: 20,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+                    onPressed: () => context.router.back(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

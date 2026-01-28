@@ -10,6 +10,7 @@ import 'package:framed_v2/ui/movie_viewmodel.dart';
 import 'package:framed_v2/ui/theme/theme.dart';
 import 'package:framed_v2/vert_movie_list.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:framed_v2/ui/widgets/error_widget.dart';
 
 
 
@@ -34,7 +35,6 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    // Initial fetch to ensure we have at least 30 movies (2 pages = 40 movies)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initialFetch();
     });
@@ -43,9 +43,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   Future<void> _initialFetch() async {
     final viewModel = ref.read(movieViewModelProvider).value;
     if (viewModel != null) {
-      // Clear and fetch first page
       await _fetchPage(viewModel, 1, append: false);
-      // Fetch second page immediately to reach 30+ movies
       await _fetchPage(viewModel, 2, append: true);
     }
   }
@@ -68,8 +66,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
         await viewModel.getUpcomingMovies(page, append: append);
         break;
       case MovieType.similar:
-         // Not supported in ExploreScreen yet
-        break;
+         break;
     }
     if (mounted) setState(() {});
   }
@@ -114,18 +111,11 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
       body: movieViewModelAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.6),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              'Error: $err',
-              style: const TextStyle(color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
+          child: CustomErrorWidget(
+            errorMessage: err.toString(),
+            onRetry: () {
+              ref.refresh(movieViewModelProvider);
+            },
           ),
         ),
         data: (viewModel) {
@@ -135,7 +125,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
             width: double.infinity,
             borderWidth: 0,
             borderColor: Colors.transparent,
-            blur: 40, // More blur for the background
+            blur: 40,
             gradient: LinearGradient(
               colors: [
                 Colors.black.withOpacity(0.7),
@@ -149,7 +139,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 CustomScrollView(
                   controller: _scrollController,
                   slivers: [
-                    const SliverToBoxAdapter(child: SizedBox(height: 140)), // Increased spacing for floating header
+                    const SliverToBoxAdapter(child: SizedBox(height: 140)),
                     VerticalMovieList(
                       movies: movies,
                       movieViewModel: viewModel,
@@ -168,14 +158,12 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                   ],
                 ),
                 
-                // Modular Floating Header
                 Positioned(
                   top: 40,
                   left: 20,
                   right: 20,
                   child: Row(
                     children: [
-                      // Circular Back Button
                       GestureDetector(
                         onTap: () => context.router.back(),
                         child: GlassContainer.frostedGlass(
@@ -193,7 +181,6 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
 
 
                       const SizedBox(width: 12),
-                      // Rectangular Title Box
                       Expanded(
                         child: LayoutBuilder(
                           builder: (context, constraints) {

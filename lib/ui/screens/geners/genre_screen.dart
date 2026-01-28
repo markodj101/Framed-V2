@@ -121,19 +121,17 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
           ),
           
           // Content Layer
-          SafeArea(
-            bottom: false,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          const SizedBox(height: 10), // Reduced spacing
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        const SizedBox(height: 40), // Standardized top offset
                           GenreSearchRow((searchString) {
                             currentSearchString = searchString;
                             currentMovieResponse = null;
@@ -193,10 +191,9 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
   }
 
   Future<List<MovieResults>?> search() async {

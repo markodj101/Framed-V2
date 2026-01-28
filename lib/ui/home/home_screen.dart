@@ -14,6 +14,7 @@ import 'package:framed_v2/vert_movie_list.dart';
 import 'package:framed_v2/data/models/movie.dart';
 import 'package:framed_v2/not_ready.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:framed_v2/ui/widgets/error_widget.dart';
 
 
 
@@ -35,7 +36,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final MovieViewModelAsync = ref.watch(movieViewModelProvider);
     return MovieViewModelAsync.when(
-      error: (e, st) => Text(e.toString()),
+      error: (e, st) => CustomErrorWidget(
+        errorMessage: e.toString(),
+        onRetry: () {
+          ref.refresh(movieViewModelProvider);
+        },
+      ),
       loading: () => const NotReady(),
       data: (viewModel) {
         movieViewModel = viewModel;
@@ -47,22 +53,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget buildScreen() {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-             FutureBuilder(
-              future: movieFuture,
-              builder: (context, snapshot) {
-                if ((snapshot.connectionState != ConnectionState.active) &&
-                    (snapshot.connectionState != ConnectionState.done)) {
-                  return const NotReady();
-                }
-                return SingleChildScrollView(
-                  child: Container(
-                    color: screenBackground,
-                    child: Column(
-                      children: [
-                        HomeScreenImage(
+      body: Stack(
+        children: [
+           FutureBuilder(
+            future: movieFuture,
+            builder: (context, snapshot) {
+              if ((snapshot.connectionState != ConnectionState.active) &&
+                  (snapshot.connectionState != ConnectionState.done)) {
+                return const NotReady();
+              }
+              return SingleChildScrollView(
+                child: Container(
+                  color: screenBackground,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 40), // Standardized top offset
+                      HomeScreenImage(
                           movieViewModel: movieViewModel,
                           onMovieTap: (movieId) {
                             context.router.push(MovieDetailRoute(movieId: movieId));
@@ -129,8 +135,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   Future<List<MovieResponse?>> loadData() async {

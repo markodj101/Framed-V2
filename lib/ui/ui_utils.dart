@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:framed_v2/ui/crystal_loader.dart';
 
 void showComingSoonDialog(BuildContext context) {
   showDialog(
@@ -13,7 +12,7 @@ void showComingSoonDialog(BuildContext context) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CrystalLoader(),
+              const CircularProgressIndicator(color: Colors.white),
               const SizedBox(height: 20),
               Text(
                 "Coming Soon",

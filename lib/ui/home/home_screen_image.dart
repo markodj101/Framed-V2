@@ -58,10 +58,9 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
         .join(', ');
 
     return SizedBox(
-      height: screenHeight * 0.75, // Occupy most of the screen
+      height: screenHeight * 0.75,
       child: Stack(
         children: [
-          // Background Swiper (Images Only)
           Positioned.fill(
             child: Swiper(
               autoplayDelay: delayTime,
@@ -95,7 +94,6 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
             ),
           ),
 
-          // Gradient Overlay (Static)
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -103,10 +101,10 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.3), // Top darkening
+                    Colors.black.withOpacity(0.3),
                     Colors.transparent,
                     Colors.black.withOpacity(0.0),
-                    screenBackground.withOpacity(0.8), // Bottom darkening
+                    screenBackground.withOpacity(0.8),
                     screenBackground,
                   ],
                   stops: const [0.0, 0.2, 0.5, 0.8, 1.0],
@@ -116,8 +114,6 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
             ),
           ),
 
-          // Bottom Content (Dynamic but Static Position)
-          // AnimatedSwitcher for smooth transition when movie changes
           Positioned(
             bottom: 20,
             left: 20,
@@ -127,11 +123,10 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
               child: Column(
                 key: ValueKey<int>(
                   _currentIndex,
-                ), // Trigger animation on index change
+                ),
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Badges
                   Row(
                     children: [
                       Container(
@@ -175,7 +170,6 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                   ),
                   const SizedBox(height: 12),
 
-                  // Title
                   Text(
                     currentMovie.title,
                     textAlign: TextAlign.left,
@@ -196,7 +190,6 @@ class _HomeScreenImageState extends ConsumerState<HomeScreenImage> {
                   ),
                   const SizedBox(height: 8),
 
-                  // Metadata
                   Text(
                     '${currentMovie.releaseDate?.year ?? "N/A"} • $genres',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(

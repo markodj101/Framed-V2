@@ -42,7 +42,7 @@ dependencies:
   riverpod_annotation: ^2.3.5
   auto_size_text: ^3.0.0
   collection:
-  pod_player:
+  youtube_player_flutter: ^9.1.1
   auto_route: ^7.0.0
   flutter_animate: ^4.5.0
   intl: ^0.18.1
@@ -52,13 +52,15 @@ dependencies:
   flutter_dotenv: ^5.1.0
   lumberdash: ^3.0.0
   colorize_lumberdash: ^3.0.0
-  shared_preferences: ^2.2.3
+  shared_preferences: ^2.3.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.1.4
   path: ^1.9.0
   glass_kit: ^4.0.2
   supabase_flutter: ^2.5.0
+  connectivity_plus: ^7.0.0
+  internet_connection_checker_plus: ^2.9.1+2
 
 
 dev_dependencies:

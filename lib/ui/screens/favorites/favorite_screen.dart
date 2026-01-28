@@ -62,7 +62,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
 
   Widget buildScreen() {
     return Scaffold(
-      backgroundColor: Colors.transparent, // Transparent for glass effect
+      backgroundColor: Colors.transparent,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -84,7 +84,6 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
             if (snapshot.hasError) return Center(child: Text(snapshot.error.toString()));
             
             var favorites = snapshot.data ?? [];
-            // Apply sorting
             favorites = favorites.sorted((a, b) {
               switch (selectedSort) {
                 case Sorting.aToz:
@@ -92,9 +91,9 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                 case Sorting.zToa:
                   return b.title.compareTo(a.title);
                 case Sorting.rating:
-                  return b.popularity.compareTo(a.popularity); // Descending popularity
+                  return b.popularity.compareTo(a.popularity);
                 case Sorting.year:
-                  return b.releaseDate.compareTo(a.releaseDate); // Descending year (newest first)
+                  return b.releaseDate.compareTo(a.releaseDate);
               }
             });
 
@@ -104,19 +103,19 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                     height: constraints.maxHeight,
                     width: constraints.maxWidth,
                     borderWidth: 1.5,
-                    borderColor: Colors.white.withOpacity(0.2), // Visible border
-                    frostedOpacity: 0.1, // Slight opacity to differentiate from transparent
-                    blur: 30, // Reduced blur slightly for sharper glass feel, or keeping high
+                    borderColor: Colors.white.withOpacity(0.2),
+                    frostedOpacity: 0.1,
+                    blur: 30,
                     elevation: 10,
                     shadowColor: Colors.black.withOpacity(0.5),
                     child: Stack(
                   children: [
                     CustomScrollView(
                       slivers: [
-                        const SliverToBoxAdapter(child: SizedBox(height: 140)), // Spacing for floating header
+                        const SliverToBoxAdapter(child: SizedBox(height: 40)), // Standardized top offset
                          SliverToBoxAdapter(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20), // Added bottom margin
+                              padding: const EdgeInsets.only(bottom: 20),
                               child: SortPicker(
                                 useSliver: false,
                                 onSortSelected: (sorting) {
@@ -140,13 +139,12 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                             removeFavorite(favorite);
                           },
                         ),
-                        const SliverToBoxAdapter(child: SizedBox(height: 100)), // Bottom spacing
+                        const SliverToBoxAdapter(child: SizedBox(height: 100)),
                       ],
                     ),
 
 
 
-                    // Floating Header
                     Positioned(
                       top: 40,
                       left: 20,
@@ -174,8 +172,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                                         ),
                                       ),
                                       FutureBuilder<int>(
-                                // ...
-                                    future: _calculateTotalRuntime(favorites), // Pass the specific list
+                                    future: _calculateTotalRuntime(favorites),
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState == ConnectionState.waiting) {
                                         return const SizedBox(
@@ -239,11 +236,9 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
     valueNotifier.value = currentFavorites;
   }
 
-  Future<int> _calculateTotalRuntime(List<Favorite> favorites) async { // Changed signature
-    // Removed movieViewModel.getFavorites() call to rely on the passed list
+  Future<int> _calculateTotalRuntime(List<Favorite> favorites) async {
     int totalMinutes = 0;
     
-    // Fetch details for all favorites in parallel
     final futures = favorites.map((fav) => movieViewModel.getMovieDetails(fav.movieId));
     final detailsList = await Future.wait(futures);
 
