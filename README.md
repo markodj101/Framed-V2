@@ -1,8 +1,8 @@
-# Framed V2 - Premium Movie Discovery Aplikacija
+# Framed
 
 ![Logo]([screenshot])
 
-**Framed V2** je moderna Flutter aplikacija dizajnirana za ljubitelje kinematografije koji traže vizuelno impresivno i fluidno iskustvo istraživanja filmova. Fokusirana na "Glassmorphism" estetiku, aplikacija pruža premium osjećaj pri svakoj interakciji.
+**Framed** je moderna Flutter aplikacija dizajnirana za ljubitelje kinematografije koji traže vizuelno impresivno i fluidno iskustvo istraživanja filmova. Fokusirana na "Glassmorphism" estetiku, aplikacija pruža premium osjećaj pri svakoj interakciji.
 
 ## 🚀 Ključne Karakteristike
 
@@ -63,7 +63,7 @@ Aplikacija prati modernu MVVM (Model-View-ViewModel) arhitekturu:
 3.  **Podešavanje API ključa:**
     Kreirajte `.env` datoteku u korijenu projekta i dodajte svoj TMDB API ključ:
     ```env
-    TMDB_API_KEY=vash_api_kljuch_ovde
+    TMDB_API_KEY=vash_api_kljuc_ovde
     ```
 
 4.  **Pokretanje aplikacije:**
@@ -74,5 +74,3 @@ Aplikacija prati modernu MVVM (Model-View-ViewModel) arhitekturu:
 ## 📝 Napomena o dizajnu
 Aplikacija koristi standardizovane layout-e sa vertikalnim offsetom od **40px** za sve headere, osiguravajući vizuelnu konzistentnost kroz cijeli korisnički put. Ikone su optimizovane sa dodatnim paddingom kako bi se izbjegao OS "zoom" efekat na različitim uređajima.
 
----
-*Dokumentacija ažurirana: 28.01.2026.*
