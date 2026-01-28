@@ -1,6 +1,6 @@
 # Framed
 
-![Logo](assets/icon/app_icon.png)
+<img src="assets/icon/app_icon.png" width="100">
 
 **Framed** je moderna Flutter aplikacija dizajnirana za ljubitelje kinematografije koji traže vizuelno impresivno i fluidno iskustvo istraživanja filmova. Fokusirana na "Glassmorphism" estetiku, aplikacija pruža premium osjećaj pri svakoj interakciji.
 
