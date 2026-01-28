@@ -1,6 +1,6 @@
 # Framed
 
-![Logo]([screenshot])
+![Logo](assets/screenshots/Home%20Page.png)
 
 **Framed** je moderna Flutter aplikacija dizajnirana za ljubitelje kinematografije koji traže vizuelno impresivno i fluidno iskustvo istraživanja filmova. Fokusirana na "Glassmorphism" estetiku, aplikacija pruža premium osjećaj pri svakoj interakciji.
 
@@ -18,11 +18,11 @@
 
 | Home Screen | Detalji Filma | Pretraga |
 | :---: | :---: | :---: |
-| ![Home]([screenshot]) | ![Details]([screenshot]) | ![Search]([screenshot]) |
+| ![Home](assets/screenshots/Home%20Page.png) | ![Details](assets/screenshots/Detail%20Page.jpeg) | ![Search](assets/screenshots/Profile%20Page.jpeg) |
 
 | Favoriti | Video Player | Offline Stanje |
 | :---: | :---: | :---: |
-| ![Favorites]([screenshot]) | ![Player]([screenshot]) | ![Offline]([screenshot]) |
+| ![Favorites](assets/screenshots/Saved%20Page.jpeg) | ![Player](assets/screenshots/Detail%20Page.jpeg) | ![Offline](assets/screenshots/No%20Connection%20Page.png) |
 
 ## 🛠 Tehnologije
 
