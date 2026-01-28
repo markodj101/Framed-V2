@@ -18,11 +18,11 @@
 
 | Home Screen | Detalji Filma | Pretraga |
 | :---: | :---: | :---: |
-| ![Home](assets/screenshots/Home%20Page.png) | ![Details](assets/screenshots/Detail%20Page.jpeg) | ![Search](assets/screenshots/Profile%20Page.jpeg) |
+| <img src="assets/screenshots/Home%20Page.png" width="368" height="687"> | <img src="assets/screenshots/Detail%20Page.jpeg" width="368" height="687"> | <img src="assets/screenshots/Profile%20Page.jpeg" width="368" height="687"> |
 
 | Favoriti | Video Player | Offline Stanje |
 | :---: | :---: | :---: |
-| ![Favorites](assets/screenshots/Saved%20Page.jpeg) | ![Player](assets/screenshots/Detail%20Page.jpeg) | ![Offline](assets/screenshots/No%20Connection%20Page.png) |
+| <img src="assets/screenshots/Saved%20Page.jpeg" width="368" height="687"> | <img src="assets/screenshots/Detail%20Page.jpeg" width="368" height="687"> | <img src="assets/screenshots/No%20Connection%20Page.png" width="368" height="687"> |
 
 ## 🛠 Tehnologije
 
